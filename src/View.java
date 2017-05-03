@@ -38,7 +38,6 @@ public class View {
 		LP.setPreferredSize(new Dimension(300,(size*SCALE)+50));
 		LP.setBackground(Color.BLACK);
 		LP.add(label);
-		
 		cp.add(LP, BorderLayout.EAST);
 		
 		frame.setVisible(true);
