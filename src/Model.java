@@ -25,7 +25,9 @@ public class Model {
 		}
 		this.hero = new Hero(this.map[1][1]);
 		this.Lmonstre = new Monstre[1];
-		this.Lmonstre[0] = new Monstre(this.map[this.size-2][this.size-2],this.map);
+
+        this.Lmonstre[0] = new Monstre(this.map[this.size-2][this.size-2],this);
+        this.Lmonstre[0].start();
 
         this.map[10][1] = new Cell(0,10,1);
         this.map[10][2] = new Cell(0,10,2);
@@ -101,6 +103,11 @@ public class Model {
         this.map[14][18] = new Cell(0,14, 18);
         this.map[15][18] = new Cell(0,15, 18);
 
+
+
+		
+//		this.map[2][1] = new Cell(0,2,1);
+
 //		this.map[2][2] = new Cell(0,2,2);
 //		this.map[2][3] = new Cell(0,2,3);
 //		this.map[2][4] = new Cell(0,2,4);
@@ -121,9 +128,6 @@ public class Model {
 	
 	public void heroMove(Direction dir){
 		this.hero.move(dir, this.map);
-		for(Monstre m : this.Lmonstre){
-			m.move(m.randDir());
-		}
 	}
 	
 	public Hero getHero(){

@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
-public class View {
+public class View extends Thread{
 
 	private JFrame frame;
 	private static final int SCALE = 20;
@@ -48,6 +48,19 @@ public class View {
 
 	public JFrame getFrame() {
 		return this.frame;
+	}
+	
+	public void run(){
+		while(true){
+			this.frame.repaint();
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 	}
 
 }
