@@ -55,7 +55,7 @@ public class Cell {
 		g2d.setPaint(this.color);
 		g2d.fill(rect);
 		if(this.bonbon){
-			Ellipse2D ellipse = new Ellipse2D.Double(leftX+(scale/2)-5, topY+(scale/2)-5, 10, 10);
+			Ellipse2D ellipse = new Ellipse2D.Double(leftX+(scale/2)-5, topY+(scale/2)-5, 6, 6);
 			g2d.setPaint(Color.BLUE);
 			g2d.fill(ellipse);
 		}
