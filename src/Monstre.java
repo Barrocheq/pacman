@@ -5,12 +5,15 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class Monstre {
+public class Monstre extends Thread{
 
 	private Cell cell;
 	private Cell[][] map;
-	public Monstre(Cell cell,Cell[][] map) {
-		this.map = map;
+	private Model model;
+	
+	public Monstre(Cell cell,Model model) {
+		this.model = model;
+		this.map = model.getMap();
 		this.cell = cell;
 	}
 	
@@ -52,11 +55,29 @@ public class Monstre {
 		
 	}
 	
+	
+	
 
 	public void paintMonstre(Graphics2D g2d, int scale) throws IOException {
 
 		BufferedImage image = ImageIO.read(new File("images\\"
 				+ "monstre.png"));
 		g2d.drawImage(image, this.cell.geti() * scale, this.cell.getj() * scale, scale, scale, null);
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		while(true){
+			this.move(this.randDir());
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		
 	}
 }

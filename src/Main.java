@@ -4,6 +4,7 @@ public class Main {
 		int taille = 17;
 		Model model = new Model(taille);
 		View view = new View(model,taille);
+		view.start();
 		Controller controller = new Controller(model, view);
 	}
 }
