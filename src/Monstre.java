@@ -31,7 +31,7 @@ public class Monstre {
 
 	public void paintMonstre(Graphics2D g2d, int scale) throws IOException {
 
-		BufferedImage image = ImageIO.read(new File("monstre.png"));
+		BufferedImage image = ImageIO.read(new File("images/monstre.png"));
 		g2d.drawImage(image, this.cell.geti() * scale, this.cell.getj() * scale, scale, scale, null);
 	}
 }

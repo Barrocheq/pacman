@@ -38,7 +38,7 @@ public class Hero {
 
 	public void paintHero(Graphics2D g2d, int scale) throws IOException {
 
-		BufferedImage image = ImageIO.read(new File("pacman.png"));
+		BufferedImage image = ImageIO.read(new File("images/pacman.png"));
 		g2d.drawImage(image, this.cell.geti() * scale, this.cell.getj() * scale, scale, scale, null);
 	}
 }
