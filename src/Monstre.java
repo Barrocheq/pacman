@@ -10,17 +10,25 @@ public class Monstre extends Thread{
 	private Cell cell;
 	private Cell[][] map;
 	private Model model;
+	private Direction lastMove;
+	
 	
 	public Monstre(Cell cell,Model model) {
 		this.model = model;
 		this.map = model.getMap();
 		this.cell = cell;
+		this.start();
 	}
 	
 	public void move(Direction dir){
 		Cell celltemp = this.map[this.cell.geti()+dir.dI()][this.cell.getj()+dir.dJ()];
+		if(this.model.getHero().getCell().equals(celltemp)){
+			System.out.println("Perdu");
+			System.exit(0);
+		}
 		if(celltemp.passable()){
 			this.cell = celltemp;
+			this.lastMove = dir;
 		}
 	}
 
@@ -36,9 +44,21 @@ public class Monstre extends Thread{
 		int i=0;
 		Direction[] tmp = new Direction[4];
 		for(Direction dir: Direction.values()){
+			if(this.lastMove != null && (this.lastMove.dI() == (dir.dI()*-1) && this.lastMove.dJ() == (dir.dJ()*-1))){
+				continue;
+			}
 			if(this.map[this.cell.geti()+dir.dI()][this.cell.getj()+dir.dJ()].passable()){
 				tmp[i]=dir;
 				i++;
+			}
+		}
+		
+		if(i==0){
+			for(Direction dir: Direction.values()){
+				if(this.map[this.cell.geti()+dir.dI()][this.cell.getj()+dir.dJ()].passable()){
+					tmp[i]=dir;
+					i++;
+				}
 			}
 		}
 		Direction[] res = new Direction[i];

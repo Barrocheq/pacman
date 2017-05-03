@@ -24,10 +24,13 @@ public class Model {
 			}
 		}
 		this.hero = new Hero(this.map[1][1]);
-		this.Lmonstre = new Monstre[1];
+		this.Lmonstre = new Monstre[4];
 
         this.Lmonstre[0] = new Monstre(this.map[this.size-2][this.size-2],this);
-        this.Lmonstre[0].start();
+        this.Lmonstre[1] = new Monstre(this.map[this.size-2][this.size-2],this);
+        this.Lmonstre[2] = new Monstre(this.map[this.size-2][this.size-2],this);
+        this.Lmonstre[3] = new Monstre(this.map[this.size-2][this.size-2],this);
+        
 
         this.map[10][1] = new Cell(0,10,1);
         this.map[10][2] = new Cell(0,10,2);
