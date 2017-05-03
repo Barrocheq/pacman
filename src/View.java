@@ -18,6 +18,7 @@ public class View {
 	private static final int SCALE = 50;
 	private plateau plateau;
 	private Model model;
+	public JLabel label;
 			
 	public View(Model model, int size) {
 		this.model = model;
@@ -38,7 +39,7 @@ public class View {
 		LP.setPreferredSize(new Dimension(300,(size*SCALE)+50));
 		LP.setBackground(Color.BLACK);
 		LP.add(label);
-		
+		this.label = label;
 		cp.add(LP, BorderLayout.EAST);
 		
 		frame.setVisible(true);

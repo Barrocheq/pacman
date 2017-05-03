@@ -7,10 +7,12 @@ public class Controller implements KeyListener {
 
 	private Model model;
 	private JFrame frame;
+	private View view;
 
-	public Controller(Model model, JFrame frame) {
+	public Controller(Model model, View view) {
 		this.model = model;
-		this.frame = frame;
+		this.frame = view.getFrame();
+		this.view = view;
 		this.frame.addKeyListener(this);
 		this.frame.setFocusable(true);
 	}
@@ -46,6 +48,7 @@ public class Controller implements KeyListener {
 		if (e.getKeyChar() == 'q') {
 			this.model.heroMove(Direction.WEST);
 		}
+		this.view.label.setText("Score : "+this.model.getHero().getScore());
 		this.frame.repaint();
 		
 	}
