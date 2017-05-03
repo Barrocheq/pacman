@@ -1,3 +1,7 @@
 *.iml
 out
 .idea
+bin/
+.project
+.classpath
+.settings/org.eclipse.jdt.core.prefs
