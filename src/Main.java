@@ -4,6 +4,6 @@ public class Main {
 		int taille = 10;
 		Model model = new Model(taille);
 		View view = new View(model,taille);
-		Controller controller = new Controller(model, view.getFrame());
+		Controller controller = new Controller(model, view);
 	}
 }
