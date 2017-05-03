@@ -125,12 +125,28 @@ public class Model {
 		
 	}
 	
+	public int nbBonbon(){
+		int res=0;
+		for(Cell[] c : this.map){
+			for(Cell cell : c){
+				if(cell.getBonbon()){
+					res++;
+				}
+			}
+		}
+		return res;
+	}
+	
 	public Monstre[] getMonstre(){
 		return this.Lmonstre;
 	}
 	
 	public void heroMove(Direction dir){
 		this.hero.move(dir, this.map);
+		if(this.nbBonbon()==0){
+			System.out.println("GG");
+			System.exit(0);
+		}
 	}
 	
 	public Hero getHero(){
