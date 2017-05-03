@@ -25,20 +25,20 @@ public class Model {
 		}
 		this.hero = new Hero(this.map[1][1]);
 		this.Lmonstre = new Monstre[1];
-		this.Lmonstre[0] = new Monstre(this.map[this.size-2][this.size-2]);
+		this.Lmonstre[0] = new Monstre(this.map[this.size-2][this.size-2],this.map);
 		
-		this.map[2][1] = new Cell(0,2,1);
-		this.map[2][2] = new Cell(0,2,2);
-		this.map[2][3] = new Cell(0,2,3);
-		this.map[2][4] = new Cell(0,2,4);
-		this.map[2][5] = new Cell(0,2,5);
-		
-		this.map[4][8] = new Cell(0,4,8);
-		this.map[4][7] = new Cell(0,4,7);
-		this.map[4][6] = new Cell(0,4,6);
-		this.map[4][5] = new Cell(0,4,5);
-		this.map[4][4] = new Cell(0,4,4);
-		this.map[4][3] = new Cell(0,4,3);
+//		this.map[2][1] = new Cell(0,2,1);
+//		this.map[2][2] = new Cell(0,2,2);
+//		this.map[2][3] = new Cell(0,2,3);
+//		this.map[2][4] = new Cell(0,2,4);
+//		this.map[2][5] = new Cell(0,2,5);
+//		
+//		this.map[4][8] = new Cell(0,4,8);
+//		this.map[4][7] = new Cell(0,4,7);
+//		this.map[4][6] = new Cell(0,4,6);
+//		this.map[4][5] = new Cell(0,4,5);
+//		this.map[4][4] = new Cell(0,4,4);
+//		this.map[4][3] = new Cell(0,4,3);
 		
 	}
 	
@@ -49,7 +49,7 @@ public class Model {
 	public void heroMove(Direction dir){
 		this.hero.move(dir, this.map);
 		for(Monstre m : this.Lmonstre){
-			m.move(Direction.random(),this.map);
+			m.move(m.randDir());
 		}
 	}
 	
