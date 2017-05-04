@@ -11,14 +11,42 @@ public class Monstre extends Thread{
 	private Cell[][] map;
 	private Model model;
 	private Direction lastMove;
+	private BufferedImage image;
 	
 	
 	public Monstre(Cell cell,Model model) {
 		this.model = model;
 		this.map = model.getMap();
 		this.cell = cell;
+
+		try {
+            this.loadImage();
+        } catch (IOException e) {
+            System.out.println("Erreur lors du chargement de l'image monster");
+            e.printStackTrace();
+        }
+
 		this.start();
 	}
+
+	protected void loadImage() throws IOException {
+        String os = System.getProperty("os.name").toLowerCase();
+
+        try {
+            if (os.contains("win")) {
+                image = ImageIO.read(new File("images\\"
+                        + "monstre.png"));
+            } else if (os.contains("nux") || os.contains("nix")) {
+                System.out.println("Linux");
+            } else {
+                image = ImageIO.read(new File("images/"
+                        + "monstre.png"));
+            }
+        } catch (IOException e) {
+            System.out.println("Erreur lors du chargement de l'image monster");
+            e.printStackTrace();
+        }
+    }
 	
 	public void move(Direction dir){
 		Cell celltemp = this.map[this.cell.geti()+dir.dI()][this.cell.getj()+dir.dJ()];
@@ -79,9 +107,6 @@ public class Monstre extends Thread{
 	
 
 	public void paintMonstre(Graphics2D g2d, int scale) throws IOException {
-
-		BufferedImage image = ImageIO.read(new File("images\\"
-				+ "monstre.png"));
 		g2d.drawImage(image, this.cell.geti() * scale, this.cell.getj() * scale, scale, scale, null);
 	}
 
