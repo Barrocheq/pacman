@@ -7,20 +7,30 @@ public class Cell {
 	
 	private int stats; //0 = mur; 1 = libre
 	private Color color;//mur = GRAY; libre = WHITE
+	private Color colorBonbon;//1=bleu;2=red
 	private int i;
 	private int j;
-	private boolean bonbon;
+	private int bonbon; //0=pas de bonbon ;1=bonbon norale; 2=super bonbon
+	private int tailleBonbon;
 	
-	public Cell(int stats,int i, int j){
+	public Cell(int stats,int i, int j,int bonbon){
 		this.i = i;
 		this.j = j;
 		this.stats = stats;
+		this.bonbon=bonbon;
 		if(stats == 0){
 			this.color = Color.GRAY;
-			this.bonbon = false;
+			this.bonbon = 0;
 		}else{
 			this.color = Color.WHITE;
-			this.bonbon = true;
+			if(bonbon==2){
+				this.colorBonbon = Color.RED;
+				this.tailleBonbon = 10;
+			}else{
+				this.colorBonbon = Color.BLUE;
+				this.tailleBonbon = 6;
+			}
+			
 		}
 	}
 	
@@ -32,18 +42,14 @@ public class Cell {
 		return j;
 	}
 	
-	public boolean getBonbon(){
+	public int getBonbon(){
 		return this.bonbon;
 	}
 	
-	public boolean mangeBonbon(){
-		boolean tmp = this.bonbon;
-		this.bonbon = false;
-		if(tmp){
-			return true;
-		}else{
-			return false;
-		}
+	public int mangeBonbon(){
+		int tmp = this.bonbon;
+		this.bonbon = 0;
+		return tmp;
 	}
 	
 	public boolean passable(){
@@ -54,9 +60,9 @@ public class Cell {
 		Rectangle2D rect = new Rectangle2D.Double(leftX, topY, scale, scale);
 		g2d.setPaint(this.color);
 		g2d.fill(rect);
-		if(this.bonbon){
-			Ellipse2D ellipse = new Ellipse2D.Double(leftX+(scale/2)-5, topY+(scale/2)-5, 6, 6);
-			g2d.setPaint(Color.BLUE);
+		if(this.bonbon>0){
+			Ellipse2D ellipse = new Ellipse2D.Double(leftX+(scale/2)-(this.tailleBonbon/2), topY+(scale/2)-(this.tailleBonbon/2), this.tailleBonbon, this.tailleBonbon);
+			g2d.setPaint(this.colorBonbon);
 			g2d.fill(ellipse);
 		}
 	}

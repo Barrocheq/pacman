@@ -8,16 +8,22 @@ import javax.imageio.ImageIO;
 public class Monstre extends Thread{
 
 	private Cell cell;
+	private Cell cellpop;
 	private Cell[][] map;
 	private Model model;
 	private Direction lastMove;
 	private BufferedImage image;
+	private boolean vivant;
+	private int repop;
 	
 	
-	public Monstre(Cell cell,Model model) {
+	public Monstre(Cell cell,Model model,int repop) {
+		this.repop = repop;
 		this.model = model;
 		this.map = model.getMap();
 		this.cell = cell;
+		this.cellpop = cell;
+		this.vivant = true;
 
 		try {
             this.loadImage();
@@ -50,10 +56,6 @@ public class Monstre extends Thread{
 	
 	public void move(Direction dir){
 		Cell celltemp = this.map[this.cell.geti()+dir.dI()][this.cell.getj()+dir.dJ()];
-		if(this.model.getHero().getCell().equals(celltemp)){
-			System.out.println("Perdu");
-			System.exit(0);
-		}
 		if(celltemp.passable()){
 			this.cell = celltemp;
 			this.lastMove = dir;
@@ -103,24 +105,46 @@ public class Monstre extends Thread{
 		
 	}
 	
+	public void meur(){
+		this.vivant = false;
+		this.cell = this.cellpop;
+	}
+	
+	public void repop(){
+		this.vivant = true;
+	}
 	
 	
 
 	public void paintMonstre(Graphics2D g2d, int scale) throws IOException {
-		g2d.drawImage(image, this.cell.geti() * scale, this.cell.getj() * scale, scale, scale, null);
+		if(this.vivant){
+			g2d.drawImage(image, this.cell.geti() * scale, this.cell.getj() * scale, scale, scale, null);
+
+		}
 	}
 
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
 		while(true){
-			this.move(this.randDir());
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if(this.vivant){
+				this.move(this.randDir());
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}else{
+				try {
+					Thread.sleep(this.repop);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				this.vivant = true;
 			}
+
 		}
 
 		

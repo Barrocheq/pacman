@@ -10,9 +10,11 @@ public class Hero {
 	private Cell cell;
 	private int Score;
 	private BufferedImage image;
+	private Model model;
 
-	public Hero(Cell cell) {
+	public Hero(Cell cell, Model model) {
 		this.cell = cell;
+		this.model = model;
 
 		try {
 		    this.loadImage();
@@ -45,16 +47,22 @@ public class Hero {
 	public int getScore(){
 		return this.Score;
 	}
+	
+	public void incScore(int x){
+		this.Score = this.Score +x;
+	}
 
 	
 	public void move(Direction dir,Cell[][] map){
 		Cell celltemp = map[this.cell.geti()+dir.dI()][this.cell.getj()+dir.dJ()];
 		if(celltemp.passable()){
 			this.cell = celltemp;
-			
-			if(this.cell.mangeBonbon()){
+			int tmpbonbon = this.cell.mangeBonbon();
+			if(tmpbonbon==1){
 				this.Score++;
-				System.out.println("Score : " + this.Score);
+			}else if(tmpbonbon==2){
+				this.Score = this.Score +10;
+				this.model.changeState();
 			}
 		}
 	}

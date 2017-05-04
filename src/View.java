@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
-public class View extends Thread{
+public class View {
 
 	private JFrame frame;
 	private static final int SCALE = 20;
@@ -49,19 +49,6 @@ public class View extends Thread{
 	public JFrame getFrame() {
 		return this.frame;
 	}
-	
-	public void run(){
-		while(true){
-			this.frame.repaint();
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-	}
 
 }
 
@@ -92,30 +79,6 @@ class plateau extends JPanel {
 		}
 	}
 }
-
-//class LeftPanel extends JPanel{
-//	
-//	private Model model;
-//	private int size;
-//	private static final int SCALE = 50;
-//	
-//	public LeftPanel(Model model, int size){
-//		this.model = model;
-//		this.size = size;
-//
-//
-//		
-//	}
-//	
-//	public void paintComponent(Graphics g) {
-//		
-//
-//		
-//		
-//	}
-//}
-//
-
 
 
 
