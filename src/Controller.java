@@ -34,19 +34,19 @@ public class Controller implements KeyListener {
 		// TODO Auto-generated method stub
 		
 		if (e.getKeyChar() == 'z') {
-			this.model.heroMove(Direction.NORTH);
+			this.model.getHero().nextDir(Direction.NORTH);
 		}
 
 		if (e.getKeyChar() == 's') {
-			this.model.heroMove(Direction.SOUTH);
+			this.model.getHero().nextDir(Direction.SOUTH);
 		}
 
 		if (e.getKeyChar() == 'd') {
-			this.model.heroMove(Direction.EAST);
+			this.model.getHero().nextDir(Direction.EAST);
 		}
 
 		if (e.getKeyChar() == 'q') {
-			this.model.heroMove(Direction.WEST);
+			this.model.getHero().nextDir(Direction.WEST);
 		}
 		this.view.label.setText("Score : "+this.model.getHero().getScore());
 		this.frame.repaint();

@@ -110,6 +110,7 @@ public class Model {
     public int getSizeL() { return this.sizeL ;}
 
 	public Model(int size) {
+		this.timeToEat = 5000;
 		this.State = false;
 		this.size = size;
 		this.sizeL = size;
@@ -231,20 +232,18 @@ public class Model {
 		return this.State;
 	}
 	
-	public void changeState(){
-		this.State = !this.State;
+	public void mangeBonbonRouge() {
+		this.State = true;
+		new bonbonrouge(timeToEat,this);
+	}
+	
+	public void finTime(){
+		System.out.println("Fin du temps pour manger");
+		this.State =false;
 	}
 	
 	public Monstre[] getMonstre(){
 		return this.Lmonstre;
-	}
-	
-	public void heroMove(Direction dir){
-		this.hero.move(dir, this.map);
-		if(this.nbBonbon()==0){
-			System.out.println("GG");
-			System.exit(0);
-		}
 	}
 	
 	public Hero getHero(){
@@ -259,4 +258,27 @@ public class Model {
 		return this.size;
 	}
 
+}
+
+
+class bonbonrouge extends Thread{
+	
+	private int time;
+	private Model model;
+	
+	public bonbonrouge(int time,Model model){
+		this.time = time;
+		this.model = model;
+		this.start();
+	}
+	
+	public void run(){
+		try {
+			Thread.sleep(this.time);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.model.finTime();
+	}
 }

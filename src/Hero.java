@@ -5,12 +5,14 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class Hero {
+public class Hero extends Thread{
 
 	private Cell cell;
 	private int Score;
 	private BufferedImage image;
 	private Model model;
+	private Direction lastDir;
+	private Direction nextDir;
 
 	public Hero(Cell cell, Model model) {
 		this.cell = cell;
@@ -23,7 +25,7 @@ public class Hero {
             e.printStackTrace();
         }
 
-
+		this.start();
 
 	}
 
@@ -53,8 +55,8 @@ public class Hero {
 	}
 
 	
-	public void move(Direction dir,Cell[][] map){
-		Cell celltemp = map[this.cell.geti()+dir.dI()][this.cell.getj()+dir.dJ()];
+	public void move(Direction dir) {
+		Cell celltemp = this.model.getMap()[this.cell.geti()+dir.dI()][this.cell.getj()+dir.dJ()];
 		if(celltemp.passable()){
 			this.cell = celltemp;
 			int tmpbonbon = this.cell.mangeBonbon();
@@ -62,9 +64,13 @@ public class Hero {
 				this.Score++;
 			}else if(tmpbonbon==2){
 				this.Score = this.Score +10;
-				this.model.changeState();
+				this.model.mangeBonbonRouge();
 			}
 		}
+	}
+	
+	public void nextDir(Direction dir){
+		this.nextDir = dir;
 	}
 
 	public Cell getCell() {
@@ -74,5 +80,37 @@ public class Hero {
 
 	public void paintHero(Graphics2D g2d, int scale) throws IOException {
 		g2d.drawImage(image, this.cell.geti() * scale, this.cell.getj() * scale, scale, scale, null);
+	}
+	
+	public void run(){
+		while(true){
+			
+			if(this.nextDir != null){
+				Cell celltempnext = this.model.getMap()[this.cell.geti()+this.nextDir.dI()][this.cell.getj()+this.nextDir.dJ()];
+				if(celltempnext.passable()){
+					this.lastDir = this.nextDir;
+					this.move(this.lastDir);
+					this.nextDir = null;
+				}else{
+					if(this.lastDir != null){
+						Cell celltemplast = this.model.getMap()[this.cell.geti()+this.lastDir.dI()][this.cell.getj()+this.lastDir.dJ()];
+						if(celltemplast.passable()){
+							this.move(this.lastDir);
+						}
+					}
+				}
+			}else if(this.lastDir != null){
+				Cell celltemplast = this.model.getMap()[this.cell.geti()+this.lastDir.dI()][this.cell.getj()+this.lastDir.dJ()];
+				if(celltemplast.passable()){
+					this.move(this.lastDir);
+				}
+			}
+			try {
+				Thread.sleep(250);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 }
