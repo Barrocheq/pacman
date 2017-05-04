@@ -82,34 +82,25 @@ public class Hero extends Thread{
 
     public void paintHeroAnim(Graphics2D g2d, int scale, int i) throws IOException {
 
-        int rotate = 0;
-        int x = 0;
-        int y = 0;
+	    int x = 0;
+	    int y = 0;
 
 	    if(this.lastDir == Direction.NORTH) {
-            rotate = 90;
-            x = 0;
-            y = 0;
+            x = 120;
+            y = 4;
         } else if(this.lastDir == Direction.SOUTH) {
-            rotate = 90;
-            x = 190;
-            y = -20;
+            x = 300;
+            y = 4;
         } else if(this.lastDir == Direction.EAST) {
-            rotate = 0;
-            x = 0;
-            y = 0;
+            x = 30;
+            y = 2;
         } else if(this.lastDir == Direction.WEST) {
-            rotate = 0;
-            x = 190;
-            y = -20;
+            x = 210;
+            y = 2;
         } else {
-            rotate = 0;
-            x = 0;
-            y = 0;
+            x = 30;
+            y = 2;
         }
-
-        g2d.rotate(Math.toDegrees(rotate), this.cell.geti() * scale + scale/2, this.cell.getj() * scale + scale/2);
-
 
         if(!this.model.getState()){
             g2d.setPaint(Color.YELLOW);
@@ -117,18 +108,13 @@ public class Hero extends Thread{
             g2d.setPaint(Color.RED);
         }
 
-
-        g2d.fillArc(this.cell.geti() * scale, this.cell.getj() * scale, scale, scale, 30 + x -i, 300 + y + 2 * i);
-        //g2d.fillArc(this.cell.geti() * scale, this.cell.getj() * scale, scale, scale, 30-i+2 * x, 300+2*i-y);
+        g2d.fillArc(this.cell.geti() * scale, this.cell.getj() * scale, scale, scale, x - i, 300 + 2 * i);
 
         g2d.setColor(Color.black);
-        g2d.drawArc(this.cell.geti() * scale, this.cell.getj() * scale, scale, scale, 30-i + x, 300+2*i + y);
-
+        g2d.drawArc(this.cell.geti() * scale, this.cell.getj() * scale, scale, scale, x - i, 300 + 2 * i);
 
         g2d.setPaint(Color.BLACK);
-        g2d.fillOval((this.cell.geti() * scale) + (scale / 2), (this.cell.getj() * scale + (scale / 5)), scale / 6, scale / 6);
-
-        g2d.rotate(Math.toDegrees(-rotate));
+        g2d.fillOval((this.cell.geti() * scale) + (scale / y), (this.cell.getj() * scale + (scale / 5)), scale / 6, scale / 6);
 
     }
 
