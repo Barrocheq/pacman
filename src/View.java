@@ -2,9 +2,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.io.IOException;
 
 import javax.swing.JFrame;
@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 public class View {
 
 	private JFrame frame;
-	private static final int SCALE = 40;
+	private static final int SCALE = 48;
 	private plateau plateau;
 	private Model model;
 	public JLabel label;
@@ -84,14 +84,17 @@ public class View {
 class plateau extends JPanel {
 
 	private Model model;
-	private static final int SCALE = 40;
+	private static final int SCALE = 48;
 
 	public plateau(Model model) {
 		this.model = model;
 	}
 
 	public void paintComponent(Graphics g) {
-		Graphics2D g2 = (Graphics2D) g;
+        Graphics2D g2 = (Graphics2D) g.create();
+        RenderingHints hints = new RenderingHints(
+                RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setRenderingHints(hints);
 		for (int i = 0; i < this.model.getSizeH(); i++) {
 			for (int j = 0; j < this.model.getSizeL(); j++) {
 				this.model.getMap()[i][j].paintCell(g2, i * this.SCALE, j * this.SCALE, this.SCALE);

@@ -82,9 +82,7 @@ public class Hero extends Thread{
 
 	public void paintHero(Graphics2D g2d, int scale) throws IOException {
 		//g2d.drawImage(image, this.cell.geti() * scale, this.cell.getj() * scale, scale, scale, null);
-		g2d.setPaint(Color.BLACK);
-		g2d.setStroke(new BasicStroke(3));
-		g2d.drawOval(this.cell.geti() * scale, this.cell.getj() * scale, scale-3, scale-3);
+
 		
 		if(!this.model.getState()){
 			g2d.setPaint(Color.YELLOW);
@@ -93,6 +91,10 @@ public class Hero extends Thread{
 		}
 		
 		g2d.fillOval(this.cell.geti() * scale, this.cell.getj() * scale, scale-3, scale-3);
+		
+		g2d.setPaint(Color.BLACK);
+		g2d.setStroke(new BasicStroke(3));
+		g2d.drawOval(this.cell.geti() * scale, this.cell.getj() * scale, scale-3, scale-3);
 		
 		g2d.setPaint(Color.BLACK);
 		g2d.fillOval((this.cell.geti() * scale)+(scale/2), (this.cell.getj() * scale+(scale/5)), scale/4, scale/4);
