@@ -19,7 +19,7 @@ public class Moteur extends Thread {
 			this.frame.repaint();
 			if(this.model.getState()){
 				for(Monstre m : this.model.getMonstre()){
-					if(this.model.getHero().getCell().equals(m.getCell())){
+					if(m!=null && this.model.getHero().getCell().equals(m.getCell())){
 						m.meur();
 						this.model.getHero().incScore(20);
 					}

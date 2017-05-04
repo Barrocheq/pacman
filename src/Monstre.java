@@ -107,11 +107,12 @@ public class Monstre extends Thread{
 	
 	public void meur(){
 		this.vivant = false;
-		this.cell = this.cellpop;
+		this.cell=this.cellpop;
 	}
 	
 	public void repop(){
 		this.vivant = true;
+		
 	}
 	
 	

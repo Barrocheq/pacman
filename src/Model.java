@@ -137,11 +137,15 @@ public class Model {
 		this.hero = new Hero(this.map[1][1],this);
 		this.Lmonstre = new Monstre[4];
 
-        this.Lmonstre[0] = new Monstre(this.map[this.size-2][this.size-2],this, 2000);
-        this.Lmonstre[1] = new Monstre(this.map[this.size-2][this.size-2],this, 2000);
-        this.Lmonstre[2] = new Monstre(this.map[this.size-2][this.size-2],this, 2000);
-        this.Lmonstre[3] = new Monstre(this.map[this.size-2][this.size-2],this, 2000);
+        this.Lmonstre[0] = new Monstre(this.map[this.size-3][this.size-3],this, 2000);
+        this.Lmonstre[1] = new Monstre(this.map[this.size-4][this.size-4],this, 2000);
+        this.Lmonstre[2] = new Monstre(this.map[this.size-3][this.size-4],this, 2000);
+        this.Lmonstre[3] = new Monstre(this.map[this.size-4][this.size-3],this, 2000);
 
+//        this.Lmonstre[0] = new Monstre(this.map[this.size-2][this.size-2],this, 2000);
+//        this.Lmonstre[1] = new Monstre(this.map[this.size-2][this.size-2],this, 2000);
+//        this.Lmonstre[2] = new Monstre(this.map[this.size-2][this.size-2],this, 2000);
+//        this.Lmonstre[3] = new Monstre(this.map[this.size-2][this.size-2],this, 2000);
 
         this.map[10][1] = new Cell(0,10,1,0);
         this.map[10][2] = new Cell(0,10,2,0);
