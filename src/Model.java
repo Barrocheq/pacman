@@ -129,7 +129,7 @@ public class Model {
 		int res=0;
 		for(Cell[] c : this.map){
 			for(Cell cell : c){
-				if(cell.getBonbon()){
+				if(cell.getBonbon()>0){
 					res++;
 				}
 			}

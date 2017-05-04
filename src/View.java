@@ -54,7 +54,7 @@ public class View extends Thread{
 		while(true){
 			this.frame.repaint();
 			try {
-				Thread.sleep(100);
+				Thread.sleep(500);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
