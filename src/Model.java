@@ -48,11 +48,12 @@ public class Model {
 
 
                     this.Lmonstre = new Monstre[numberOfMonster];
-                    this.map = new Cell[this.sizeH][this.sizeL];
+                    this.map = new Cell[this.sizeL][this.sizeH];
 
 
-                    for (int k = 0; k < sizeH; k++)
-                        for (int n = 0; n < sizeL; n++)
+
+                    for (int k = 0; k < sizeL; k++)
+                        for (int n = 0; n < sizeH; n++)
                                 this.map[k][n] = new Cell(0,k,n,0);
 
 
@@ -61,33 +62,43 @@ public class Model {
 
                     for(String s : symbol) {
                         if(s.equals("#")) {
-                            this.map[i - 1][j] = new Cell(0, i - 1, j, 0);
+                            //System.out.print("#");
+                           // System.out.println("larg(j) :" + j + " haut(i)" + i);
+                            this.map[j][i-1] = new Cell(0,j, i-1, 0);
                         }
                         else if(s.equals(".")) {
-                            this.map[i - 1][j] = new Cell(1, i - 1, j, 1);
+                            //System.out.print(".");
+                            this.map[j][i-1] = new Cell(1,j, i-1, 1);
                         }
                         else if(s.equals("o")) {
-                            this.map[i - 1][j]= new Cell(1, i - 1, j, 2);
+                            //System.out.print("o");
+                            this.map[j][i-1]= new Cell(1,j, i-1, 2);
                         }
                         else if(s.equals("C")) {
-                            this.map[i - 1][j] = new Cell(1, i - 1, j, 0);
-                            this.hero = new Hero(this.map[i - 1][j], this);
+                            //System.out.print("C");
+                            this.map[j][i-1] = new Cell(1,j, i-1, 0);
+                            this.hero = new Hero(this.map[j][i-1], this);
                         }
                         else if (Integer.parseInt(s) >= 0 && Integer.parseInt(s) <= 9) {
+                            //System.out.print("M (" + i + ", " + j + ")");
                             indexMonster++;
                             if(indexMonster == numberOfMonster) {
                                 System.err.println("Erreur Monstre : config et description");
                                 System.exit(0);
                             }
 
+
                             this.map[i - 1][j]= new Cell(1, i - 1, j, 0);
                             this.Lmonstre[indexMonster] = new Monstre(this.map[i - 1][j],this, this.respawnMonster,Color.GREEN);
+
                         }
                         else
                             System.err.println("Symbol non reconnu lors de l'initialisation du tableau : " + s);
 
                         j++;
+
                     }
+                    System.out.println();
 
                 }
 
@@ -103,7 +114,6 @@ public class Model {
         }
 
 
-        //System.out.println(map[2][3]);
 
     }
 
