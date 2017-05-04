@@ -30,6 +30,7 @@ public class Model {
 	}
 
     public void setFromFile(String fileName) throws IOException {
+
         try {
             String line;
             int i = 0, j = 0, indexMonster = -1;
@@ -44,22 +45,32 @@ public class Model {
                     this.timeToEat          = Integer.parseInt(config[4]);
                     this.numberOfMonster    = Integer.parseInt(config[5]);
 
-                    this.map = new Cell[this.sizeL][this.sizeH];
+
                     this.Lmonstre = new Monstre[numberOfMonster];
+                    this.map = new Cell[this.sizeH][this.sizeL];
+
+
+                    for (int k = 0; k < sizeH; k++)
+                        for (int n = 0; n < sizeL; n++)
+                                this.map[k][n] = new Cell(0,k,n,0);
+
 
                 } else {
                     String[] symbol = line.split("");
 
                     for(String s : symbol) {
-                        if(s.equals("#"))
-                            this.map[i-1][j] = new Cell(0, i-1, j, 0);
-                        else if(s.equals("."))
-                            this.map[i-1][j] = new Cell(1, i-1, j, 1);
-                        else if(s.equals("o"))
-                            this.map[i-1][j] = new Cell(1, i-1, j, 2);
+                        if(s.equals("#")) {
+                            this.map[i - 1][j] = new Cell(0, i - 1, j, 0);
+                        }
+                        else if(s.equals(".")) {
+                            this.map[i - 1][j] = new Cell(1, i - 1, j, 1);
+                        }
+                        else if(s.equals("o")) {
+                            this.map[i - 1][j]= new Cell(1, i - 1, j, 2);
+                        }
                         else if(s.equals("C")) {
                             this.map[i - 1][j] = new Cell(1, i - 1, j, 0);
-                            this.hero = new Hero(this.map[i-i][j], this);
+                            this.hero = new Hero(this.map[i - 1][j], this);
                         }
                         else if (Integer.parseInt(s) >= 0 && Integer.parseInt(s) <= 9) {
                             indexMonster++;
@@ -68,16 +79,16 @@ public class Model {
                                 System.exit(0);
                             }
 
-                            this.map[i - 1][j] = new Cell(1, i - 1, j, 0);
-                            this.Lmonstre[indexMonster] = new Monstre(this.map[i-1][j],this, this.respawnMonster);
+                            this.map[i - 1][j]= new Cell(1, i - 1, j, 0);
+                            this.Lmonstre[indexMonster] = new Monstre(this.map[i - 1][j],this, this.respawnMonster);
                         }
                         else
                             System.err.println("Symbol non reconnu lors de l'initialisation du tableau : " + s);
 
+                        j++;
                     }
 
                 }
-
 
 
                 j = 0;
@@ -90,12 +101,19 @@ public class Model {
             e.printStackTrace();
         }
 
+
+        //System.out.println(map[2][3]);
+
     }
 
+    public int getSizeH() { return this.sizeH ;}
+    public int getSizeL() { return this.sizeL ;}
 
 	public Model(int size) {
 		this.State = false;
 		this.size = size;
+		this.sizeL = size;
+		this.sizeH = size;
 		this.map = new Cell[this.size][this.size];
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {

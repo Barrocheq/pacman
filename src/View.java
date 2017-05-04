@@ -19,7 +19,36 @@ public class View {
 	private plateau plateau;
 	private Model model;
 	public JLabel label;
-			
+
+
+    public View(Model model, int sizeH, int sizeL) {
+        this.model = model;
+        JFrame frame = new JFrame();
+        Container cp = frame.getContentPane();
+        frame.setTitle("PacMan");
+        frame.setSize((sizeH * SCALE) + 25 +300, (sizeL * SCALE) + 50);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.plateau = new plateau(model);
+        cp.add(this.plateau);
+
+
+        JPanel LP = new JPanel();
+        JLabel label = new JLabel();
+        label.setForeground(Color.WHITE);
+        label.setText("Score : "+this.model.getHero().getScore());
+        System.out.println(this.model.getHero().getScore());
+        LP.setPreferredSize(new Dimension(300,(sizeL*SCALE)+50));
+        LP.setBackground(Color.BLACK);
+        LP.add(label);
+        this.label = label;
+        cp.add(LP, BorderLayout.EAST);
+
+        frame.setVisible(true);
+        this.frame = frame;
+    }
+
+
+
 	public View(Model model, int size) {
 		this.model = model;
 		JFrame frame = new JFrame();
@@ -63,8 +92,8 @@ class plateau extends JPanel {
 
 	public void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
-		for (int i = 0; i < this.model.getSize(); i++) {
-			for (int j = 0; j < this.model.getSize(); j++) {
+		for (int i = 0; i < this.model.getSizeH(); i++) {
+			for (int j = 0; j < this.model.getSizeL(); j++) {
 				this.model.getMap()[i][j].paintCell(g2, i * this.SCALE, j * this.SCALE, this.SCALE);
 			}
 		}
