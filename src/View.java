@@ -26,7 +26,7 @@ public class View {
         JFrame frame = new JFrame();
         Container cp = frame.getContentPane();
         frame.setTitle("PacMan");
-        frame.setSize((sizeH * SCALE) + 25 +300, (sizeL * SCALE) + 50);
+        frame.setSize((sizeL * SCALE) + 25 +300, (sizeH * SCALE) + 50);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.plateau = new plateau(model);
         cp.add(this.plateau);
@@ -37,7 +37,7 @@ public class View {
         label.setForeground(Color.WHITE);
         label.setText("Score : "+this.model.getHero().getScore());
         System.out.println(this.model.getHero().getScore());
-        LP.setPreferredSize(new Dimension(300,(sizeL*SCALE)+50));
+        LP.setPreferredSize(new Dimension(300,(sizeH*SCALE)+50));
         LP.setBackground(Color.BLACK);
         LP.add(label);
         this.label = label;
@@ -92,8 +92,9 @@ class plateau extends JPanel {
 
 	public void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
-		for (int i = 0; i < this.model.getSizeH(); i++) {
-			for (int j = 0; j < this.model.getSizeL(); j++) {
+
+		for (int i = 0; i < this.model.getSizeL(); i++) {
+			for (int j = 0; j < this.model.getSizeH(); j++) {
 				this.model.getMap()[i][j].paintCell(g2, i * this.SCALE, j * this.SCALE, this.SCALE);
 			}
 		}
