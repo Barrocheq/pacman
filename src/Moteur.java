@@ -32,7 +32,10 @@ public class Moteur extends Thread {
 					}
 				}
 			}
-			
+			if(this.model.nbBonbon()==0){
+				System.out.println("GG");
+				System.exit(0);
+			}
 		}
 		
 	}

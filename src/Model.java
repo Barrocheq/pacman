@@ -228,14 +228,6 @@ public class Model {
 		return this.Lmonstre;
 	}
 	
-	public void heroMove(Direction dir){
-		this.hero.move(dir, this.map);
-		if(this.nbBonbon()==0){
-			System.out.println("GG");
-			System.exit(0);
-		}
-	}
-	
 	public Hero getHero(){
 		return this.hero;
 	}
