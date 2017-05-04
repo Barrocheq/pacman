@@ -134,9 +134,7 @@ public class Hero extends Thread{
 
 
 	public void paintHero(Graphics2D g2d, int scale) throws IOException {
-		//g2d.drawImage(image, this.cell.geti() * scale, this.cell.getj() * scale, scale, scale, null);
 
-        //CONTOUR
         if(!this.model.getState()){
             g2d.setPaint(Color.YELLOW);
         }else{
@@ -150,33 +148,13 @@ public class Hero extends Thread{
         //g2d.setStroke(new BasicStroke(2));
         g2d.drawArc(this.cell.geti() * scale, this.cell.getj() * scale,scale,scale,30,300);
 
-        //g2d.setColor(Color.BLUE);
-        //g2d.drawLine(this.cell.geti() * scale + scale/2, this.cell.getj() * scale+ scale/2, this.cell.geti() * scale + scale / 4, this.cell.getj() * scale + scale / 4);
 
-		/*g2d.setPaint(Color.BLACK);
-		g2d.setStroke(new BasicStroke(3));
-		g2d.drawOval(this.cell.geti() * scale, this.cell.getj() * scale, scale-3, scale-3);
-
-
-
-		// ROND
-
-		
-		g2d.fillOval(this.cell.geti() * scale, this.cell.getj() * scale, scale-3, scale-3);
-
-
-		*/
 
 		// OEUIL
 		g2d.setPaint(Color.BLACK);
 		g2d.fillOval((this.cell.geti() * scale)+(scale/2), (this.cell.getj() * scale+(scale/5)), scale/6, scale/6);
 
-    /*
-		// BOUCHE
-		g2d.setPaint(Color.WHITE);
-		int[] xPoints = {(this.cell.geti()*scale)+(scale/2),(this.cell.geti()+1)*scale,(this.cell.geti()+1)*scale};
-		int[] yPoints = {(this.cell.getj()*scale)+(scale/2)+(scale/10),(this.cell.getj()*scale)+(3*scale/4)+(scale/10),(this.cell.getj()*scale)+(scale/4)+(scale/10)};
-		g2d.fillPolygon(xPoints, yPoints, 3);*/
+
 	}
 	
 	public void run(){

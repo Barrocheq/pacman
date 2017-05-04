@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -86,8 +87,10 @@ public class Model {
                                 System.exit(0);
                             }
 
-                            this.map[j][i-1]= new Cell(1,j, i-1, 0);
-                            this.Lmonstre[indexMonster] = new Monstre(this.map[j][i-1],this, this.respawnMonster);
+
+                            this.map[i - 1][j]= new Cell(1, i - 1, j, 0);
+                            this.Lmonstre[indexMonster] = new Monstre(this.map[i - 1][j],this, this.respawnMonster,Color.GREEN);
+
                         }
                         else
                             System.err.println("Symbol non reconnu lors de l'initialisation du tableau : " + s);
@@ -137,10 +140,10 @@ public class Model {
 		this.hero = new Hero(this.map[1][1],this);
 		this.Lmonstre = new Monstre[4];
 
-        this.Lmonstre[0] = new Monstre(this.map[this.size-3][this.size-3],this, 2000);
-        this.Lmonstre[1] = new Monstre(this.map[this.size-4][this.size-4],this, 2000);
-        this.Lmonstre[2] = new Monstre(this.map[this.size-3][this.size-4],this, 2000);
-        this.Lmonstre[3] = new Monstre(this.map[this.size-4][this.size-3],this, 2000);
+        this.Lmonstre[0] = new Monstre(this.map[this.size-3][this.size-3],this, 2000,Color.BLUE);
+        this.Lmonstre[1] = new Monstre(this.map[this.size-4][this.size-4],this, 2000,Color.GREEN);
+        this.Lmonstre[2] = new Monstre(this.map[this.size-3][this.size-4],this, 2000,Color.ORANGE);
+        this.Lmonstre[3] = new Monstre(this.map[this.size-4][this.size-3],this, 2000,Color.PINK);
 
 //        this.Lmonstre[0] = new Monstre(this.map[this.size-2][this.size-2],this, 2000);
 //        this.Lmonstre[1] = new Monstre(this.map[this.size-2][this.size-2],this, 2000);
