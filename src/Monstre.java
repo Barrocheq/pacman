@@ -124,26 +124,39 @@ public class Monstre extends Thread{
 	public void paintMonstre(Graphics2D g2d, int scale) throws IOException {
 		if(this.vivant){
 			//g2d.drawImage(image, this.cell.geti() * scale, this.cell.getj() * scale, scale, scale, null);
-			
-			g2d.setPaint(this.color);
-			g2d.fillOval((this.cell.geti()*scale)+(scale/4), (this.cell.getj()*scale), scale/2, scale/2);
-			
-			g2d.fillOval((this.cell.geti()*scale)+(scale/4), (this.cell.getj()*scale)+(3*scale/4)-(scale/12), scale/6, scale/6);
-			g2d.fillOval((this.cell.geti()*scale)+(scale/4)+(scale/6), (this.cell.getj()*scale)+(3*scale/4)-(scale/12), scale/6, scale/6);
-			g2d.fillOval((this.cell.geti()*scale)+(scale/4)+(scale/3), (this.cell.getj()*scale)+(3*scale/4)-(scale/12), scale/6, scale/6);
-			
-			g2d.fillRect((this.cell.geti()*scale)+(scale/4), (this.cell.getj()*scale)+(scale/4), scale/2, scale/2);
-			
-			g2d.setPaint(Color.WHITE);
-			g2d.fillOval((this.cell.geti()*scale)+(scale/4), (this.cell.getj()*scale)+(scale/4), scale/6, scale/6);
-			g2d.fillOval((this.cell.geti()*scale)+(3*scale/4)-(scale/6), (this.cell.getj()*scale)+(scale/4), scale/6, scale/6);
-			
-
 			if(this.model.getState()){
+				g2d.setPaint(Color.BLUE);
+				g2d.fillOval((this.cell.geti()*scale)+(scale/4), (this.cell.getj()*scale), scale/2, scale/2);
+				
+				g2d.fillOval((this.cell.geti()*scale)+(scale/4), (this.cell.getj()*scale)+(3*scale/4)-(scale/12), scale/6, scale/6);
+				g2d.fillOval((this.cell.geti()*scale)+(scale/4)+(scale/6), (this.cell.getj()*scale)+(3*scale/4)-(scale/12), scale/6, scale/6);
+				g2d.fillOval((this.cell.geti()*scale)+(scale/4)+(scale/3), (this.cell.getj()*scale)+(3*scale/4)-(scale/12), scale/6, scale/6);
+				
+				g2d.fillRect((this.cell.geti()*scale)+(scale/4), (this.cell.getj()*scale)+(scale/4), scale/2, scale/2);
+				
+				g2d.setPaint(Color.WHITE);
+				g2d.fillOval((this.cell.geti()*scale)+(scale/4), (this.cell.getj()*scale)+(scale/4), scale/6, scale/6);
+				g2d.fillOval((this.cell.geti()*scale)+(3*scale/4)-(scale/6), (this.cell.getj()*scale)+(scale/4), scale/6, scale/6);
+				
+
 				g2d.setPaint(Color.BLACK);
 				g2d.setStroke(new BasicStroke(1));
 				g2d.drawLine((this.cell.geti()*scale)+(scale/2)-(scale/7), (this.cell.getj()*scale)+(scale/2), (this.cell.geti()*scale)+(scale/2)+(scale/7), (this.cell.getj()*scale)+(scale/2));
 			}else{
+				g2d.setPaint(this.color);
+				g2d.fillOval((this.cell.geti()*scale)+(scale/4), (this.cell.getj()*scale), scale/2, scale/2);
+				
+				g2d.fillOval((this.cell.geti()*scale)+(scale/4), (this.cell.getj()*scale)+(3*scale/4)-(scale/12), scale/6, scale/6);
+				g2d.fillOval((this.cell.geti()*scale)+(scale/4)+(scale/6), (this.cell.getj()*scale)+(3*scale/4)-(scale/12), scale/6, scale/6);
+				g2d.fillOval((this.cell.geti()*scale)+(scale/4)+(scale/3), (this.cell.getj()*scale)+(3*scale/4)-(scale/12), scale/6, scale/6);
+				
+				g2d.fillRect((this.cell.geti()*scale)+(scale/4), (this.cell.getj()*scale)+(scale/4), scale/2, scale/2);
+				
+				g2d.setPaint(Color.WHITE);
+				g2d.fillOval((this.cell.geti()*scale)+(scale/4), (this.cell.getj()*scale)+(scale/4), scale/6, scale/6);
+				g2d.fillOval((this.cell.geti()*scale)+(3*scale/4)-(scale/6), (this.cell.getj()*scale)+(scale/4), scale/6, scale/6);
+				
+
 				g2d.fillOval((this.cell.geti()*scale)+(scale/2)-(scale/12), (this.cell.getj()*scale)+(scale/2)-(scale/12), scale/6, scale/6);
 			}
 			

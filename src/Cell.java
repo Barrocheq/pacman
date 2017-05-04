@@ -19,15 +19,15 @@ public class Cell {
 		this.stats = stats;
 		this.bonbon=bonbon;
 		if(stats == 0){
-			this.color = Color.GRAY;
+			this.color = Color.BLUE;
 			this.bonbon = 0;
 		}else{
-			this.color = Color.WHITE;
+			this.color = Color.BLACK;
 			if(bonbon==2){
 				this.colorBonbon = Color.RED;
 				this.tailleBonbon = 10;
 			}else{
-				this.colorBonbon = Color.BLUE;
+				this.colorBonbon = Color.WHITE;
 				this.tailleBonbon = 6;
 			}
 			

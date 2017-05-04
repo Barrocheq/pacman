@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 public class View {
 
 	private JFrame frame;
-	private static final int SCALE = 20;
+	private static final int SCALE = 48;
 	private plateau plateau;
 	private Model model;
 	public JLabel label;
@@ -86,7 +86,7 @@ class plateau extends JPanel {
 	private Model model;
 	private boolean anim = true;
 	private int i = 0;
-	private static final int SCALE = 20;
+	private static final int SCALE = 48;
 
 	public plateau(Model model) {
 		this.model = model;
