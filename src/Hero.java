@@ -1,6 +1,7 @@
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Arc2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -78,30 +79,80 @@ public class Hero extends Thread{
 	public Cell getCell() {
 		return this.cell;
 	}
-	
 
-	public void paintHero(Graphics2D g2d, int scale)  {
-		//g2d.drawImage(image, this.cell.geti() * scale, this.cell.getj() * scale, scale, scale, null);
+    public void paintHeroAnim(Graphics2D g2d, int scale, int i) throws IOException {
 
-		if(!this.model.getState()){
-			g2d.setPaint(Color.YELLOW);
-		}else{
-			g2d.setPaint(Color.RED);
-		}
-		
-		g2d.fillOval(this.cell.geti() * scale, this.cell.getj() * scale, scale-3, scale-3);
-		
+        int rotate = 0;
+        int x = 0;
+        int y = 0;
+
+	    if(this.lastDir == Direction.NORTH) {
+            rotate = 90;
+            x = 0;
+            y = 0;
+        } else if(this.lastDir == Direction.SOUTH) {
+            rotate = 90;
+            x = 190;
+            y = -20;
+        } else if(this.lastDir == Direction.EAST) {
+            rotate = 0;
+            x = 0;
+            y = 0;
+        } else if(this.lastDir == Direction.WEST) {
+            rotate = 0;
+            x = 190;
+            y = -20;
+        } else {
+            rotate = 0;
+            x = 0;
+            y = 0;
+        }
+
+        g2d.rotate(Math.toDegrees(rotate), this.cell.geti() * scale + scale/2, this.cell.getj() * scale + scale/2);
+
+
+        if(!this.model.getState()){
+            g2d.setPaint(Color.YELLOW);
+        }else{
+            g2d.setPaint(Color.RED);
+        }
+
+
+        g2d.fillArc(this.cell.geti() * scale, this.cell.getj() * scale, scale, scale, 30 + x -i, 300 + y + 2 * i);
+        //g2d.fillArc(this.cell.geti() * scale, this.cell.getj() * scale, scale, scale, 30-i+2 * x, 300+2*i-y);
+
+        g2d.setColor(Color.black);
+        g2d.drawArc(this.cell.geti() * scale, this.cell.getj() * scale, scale, scale, 30-i + x, 300+2*i + y);
+
+
+        g2d.setPaint(Color.BLACK);
+        g2d.fillOval((this.cell.geti() * scale) + (scale / 2), (this.cell.getj() * scale + (scale / 5)), scale / 6, scale / 6);
+
+        g2d.rotate(Math.toDegrees(-rotate));
+
+    }
+
+
+	public void paintHero(Graphics2D g2d, int scale) throws IOException {
+
+        if(!this.model.getState()){
+            g2d.setPaint(Color.YELLOW);
+        }else{
+            g2d.setPaint(Color.RED);
+        }
+
+
+        g2d.fillArc(this.cell.geti() * scale, this.cell.getj() * scale,scale,scale, 30, 300);
+
+        g2d.setColor(Color.black);
+        //g2d.setStroke(new BasicStroke(2));
+        g2d.drawArc(this.cell.geti() * scale, this.cell.getj() * scale,scale,scale,30,300);
+
+
+
+		// OEUIL
 		g2d.setPaint(Color.BLACK);
-		g2d.setStroke(new BasicStroke(3));
-		g2d.drawOval(this.cell.geti() * scale, this.cell.getj() * scale, scale-3, scale-3);
-		
-		g2d.setPaint(Color.BLACK);
-		g2d.fillOval((this.cell.geti() * scale)+(scale/2), (this.cell.getj() * scale+(scale/5)), scale/4, scale/4);
-		g2d.setPaint(Color.WHITE);
-		int[] xPoints = {(this.cell.geti()*scale)+(scale/2),(this.cell.geti()+1)*scale,(this.cell.geti()+1)*scale};
-		int[] yPoints = {(this.cell.getj()*scale)+(scale/2)+(scale/10),(this.cell.getj()*scale)+(3*scale/4)+(scale/10),(this.cell.getj()*scale)+(scale/4)+(scale/10)};
-		g2d.fillPolygon(xPoints, yPoints, 3);
-		
+		g2d.fillOval((this.cell.geti() * scale)+(scale/2), (this.cell.getj() * scale+(scale/5)), scale/6, scale/6);
 
 	}
 	

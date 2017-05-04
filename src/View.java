@@ -84,6 +84,8 @@ public class View {
 class plateau extends JPanel {
 
 	private Model model;
+	private boolean anim = true;
+	private int i = 0;
 	private static final int SCALE = 48;
 
 	public plateau(Model model) {
@@ -102,7 +104,22 @@ class plateau extends JPanel {
 			}
 		}
 		try {
-			this.model.getHero().paintHero(g2, this.SCALE);
+			this.model.getHero().paintHeroAnim(g2, this.SCALE, i);
+
+			if(anim) {
+                i++;
+
+                if(i > 15)
+                    anim = false;
+            } else {
+			    i--;
+
+			    if(i < 0)
+			        anim = true;
+            }
+
+
+
 			for(Monstre m : this.model.getMonstre()){
 				m.paintMonstre(g2, this.SCALE);
 			}
