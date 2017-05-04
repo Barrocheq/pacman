@@ -22,6 +22,7 @@ public class Hero {
         }
 
 
+
 	}
 
     protected void loadImage() throws IOException {

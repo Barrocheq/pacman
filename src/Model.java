@@ -1,14 +1,88 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class Model {
 
 	private Cell[][] map;
-	private int size;
+	private int size; // pour les plateaux carré
+	private int sizeH;
+	private int sizeL;
+	private int speed;
+	private int respawnMonster;
+	private int timeToEat;
+	private int numberOfMonster;
 	private Hero hero;
 	private Monstre[] Lmonstre;
 
 	public Model() {
 		new Model(10);
 	}
+
+    public void setFromFile(String fileName) throws IOException {
+        try {
+            String line;
+            int i = 0, j = 0, indexMonster = -1;
+            BufferedReader file = new BufferedReader(new FileReader(fileName));
+            while ((line = file.readLine()) != null) {
+                if(i == 0) {
+                    String[] config = line.split(",");
+                    this.sizeL              = Integer.parseInt(config[0]);
+                    this.sizeH              = Integer.parseInt(config[1]);
+                    this.speed              = Integer.parseInt(config[2]);
+                    this.respawnMonster     = Integer.parseInt(config[3]);
+                    this.timeToEat          = Integer.parseInt(config[4]);
+                    this.numberOfMonster    = Integer.parseInt(config[5]);
+
+                    this.map = new Cell[this.sizeL][this.sizeH];
+                    this.Lmonstre = new Monstre[numberOfMonster];
+
+                } else {
+                    String[] symbol = line.split("");
+
+                    for(String s : symbol) {
+                        if(s == "#")
+                            this.map[i-1][j] = new Cell(0, i-1, j, 0);
+                        else if(s == ".")
+                            this.map[i-1][j] = new Cell(1, i-1, j, 1);
+                        else if(s == "o")
+                            this.map[i-1][j] = new Cell(1, i-1, j, 2);
+                        else if (Integer.parseInt(s) >= 0 && Integer.parseInt(s) <= 9) {
+                            indexMonster++;
+                            if(indexMonster == numberOfMonster) {
+                                System.err.println("Erreur Monstre : config et description");
+                                System.exit(0);
+                            }
+
+                            this.map[i - 1][j] = new Cell(1, i - 1, j, 0);
+                            this.Lmonstre[indexMonster] = new Monstre(this.map[i-1][j],this);
+                        }
+                        else if(s == "C") {
+                            this.map[i - 1][j] = new Cell(1, i - 1, j, 0);
+                            this.hero = new Hero(this.map[i-i][j]);
+                        }
+                        else
+                            System.err.println("Symbol non reconnu lors de l'initialisation du tableau : " + s);
+
+                    }
+
+                }
+
+
+
+                j = 0;
+                i++;
+            }
+            file.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("File Not Found");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
 	public Model(int size) {
 		this.size = size;
@@ -108,20 +182,6 @@ public class Model {
 
 
 
-		
-//		this.map[2][1] = new Cell(0,2,1);
-
-//		this.map[2][2] = new Cell(0,2,2);
-//		this.map[2][3] = new Cell(0,2,3);
-//		this.map[2][4] = new Cell(0,2,4);
-//		this.map[2][5] = new Cell(0,2,5);
-//		
-//		this.map[4][8] = new Cell(0,4,8);
-//		this.map[4][7] = new Cell(0,4,7);
-//		this.map[4][6] = new Cell(0,4,6);
-//		this.map[4][5] = new Cell(0,4,5);
-//		this.map[4][4] = new Cell(0,4,4);
-//		this.map[4][3] = new Cell(0,4,3);
 		
 	}
 	
