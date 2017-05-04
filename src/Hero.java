@@ -53,7 +53,7 @@ public class Hero {
 	}
 
 	
-	public void move(Direction dir,Cell[][] map){
+	public void move(Direction dir,Cell[][] map) {
 		Cell celltemp = map[this.cell.geti()+dir.dI()][this.cell.getj()+dir.dJ()];
 		if(celltemp.passable()){
 			this.cell = celltemp;
@@ -62,7 +62,7 @@ public class Hero {
 				this.Score++;
 			}else if(tmpbonbon==2){
 				this.Score = this.Score +10;
-				this.model.changeState();
+				this.model.mangeBonbonRouge();
 			}
 		}
 	}

@@ -94,6 +94,7 @@ public class Model {
 
 
 	public Model(int size) {
+		this.timeToEat = 5000;
 		this.State = false;
 		this.size = size;
 		this.map = new Cell[this.size][this.size];
@@ -213,8 +214,14 @@ public class Model {
 		return this.State;
 	}
 	
-	public void changeState(){
-		this.State = !this.State;
+	public void mangeBonbonRouge() {
+		this.State = true;
+		new bonbonrouge(timeToEat,this);
+	}
+	
+	public void finTime(){
+		System.out.println("Fin du temps pour manger");
+		this.State =false;
 	}
 	
 	public Monstre[] getMonstre(){
@@ -241,4 +248,27 @@ public class Model {
 		return this.size;
 	}
 
+}
+
+
+class bonbonrouge extends Thread{
+	
+	private int time;
+	private Model model;
+	
+	public bonbonrouge(int time,Model model){
+		this.time = time;
+		this.model = model;
+		this.start();
+	}
+	
+	public void run(){
+		try {
+			Thread.sleep(this.time);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.model.finTime();
+	}
 }
