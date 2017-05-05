@@ -20,6 +20,7 @@ public class Monstre extends Thread{
 	private Color color;
 	private int ScaleY;
 	private int ScaleX;
+	private boolean stop;
 	
 	
 	public Monstre(Cell cell,Model model,int repop, Color color) {
@@ -32,6 +33,7 @@ public class Monstre extends Thread{
 		this.cell = cell;
 		this.cellpop = cell;
 		this.vivant = true;
+		this.stop = false;
 
 	}
 
@@ -140,13 +142,20 @@ public class Monstre extends Thread{
 		}
 	}
 
-	@Override
+
+    public void stopMonstre() {
+        this.stop = true;
+    }
+
+
+    @Override
 	public void run() {
-		while(true){
+		while(!stop){
 			if(this.vivant){
 				Direction dir = this.randDir();
 				
 				for(int i = 0; i < View.SCALE; i++){
+                    if(stop) break;
 					this.ScaleX = dir.dJ()*i;
 					this.ScaleY = dir.dI()*i;
 					try {
@@ -158,7 +167,8 @@ public class Monstre extends Thread{
 				}
 				this.ScaleX = 0;
 				this.ScaleY = 0;
-				
+
+                if(stop) break;
 				this.move(dir);
 			} else{
 				try {

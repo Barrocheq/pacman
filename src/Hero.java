@@ -18,6 +18,7 @@ public class Hero extends Thread{
 	private Direction nextDir;
 	private int ScaleX;
 	private int ScaleY;
+	private boolean stop;
 
 	/**
 	 * Constructeur par defaut de la classe Hero
@@ -29,6 +30,7 @@ public class Hero extends Thread{
 		this.model = model;
 		this.ScaleX = 0;
 		this.ScaleY = 0;
+		this.stop = false;
 
 		try {
 		    this.loadImage();
@@ -207,18 +209,23 @@ public class Hero extends Thread{
 
 	}
 
+	public void stopHero() {
+		this.stop = true;
+	}
+
 
 	public void run(){
-		while(true){
+		while(!stop){
 			synchronized (this) {
 				if (this.nextDir != null && this.model.getMap()[this.cell.geti() + this.nextDir.dI()][this.cell.getj() + this.nextDir.dJ()].passable()) {
 					this.lastDir = this.nextDir;
 
 					for (int i = 0; i < View.SCALE; i++) {
+						if(stop) break;
 						this.ScaleX = this.lastDir.dJ() * i;
 						this.ScaleY = this.lastDir.dI() * i;
 						try {
-							Thread.sleep(5);
+							Thread.sleep(3);
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -228,16 +235,18 @@ public class Hero extends Thread{
 					this.ScaleX = 0;
 					this.ScaleY = 0;
 
+					if(stop) break;
 					this.move(this.lastDir);
 					this.nextDir = null;
 				} else if (this.lastDir != null && this.model.getMap()[this.cell.geti() + this.lastDir.dI()][this.cell.getj() + this.lastDir.dJ()].passable()) {
 
 
 					for (int i = 0; i < View.SCALE; i++) {
+						if(stop) break;
 						this.ScaleX = this.lastDir.dJ() * i;
 						this.ScaleY = this.lastDir.dI() * i;
 						try {
-							Thread.sleep(5);
+							Thread.sleep(3);
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -247,7 +256,7 @@ public class Hero extends Thread{
 					this.ScaleX = 0;
 					this.ScaleY = 0;
 
-
+					if(stop) break;
 					this.move(this.lastDir);
 				}
 			}

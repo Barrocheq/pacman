@@ -90,7 +90,7 @@ public class Model {
                             int g = (int)(Math.random() * 255);
                             int b = (int)(Math.random() * 255);
 
-                            this.map[i - 1][j]= new Cell(0, i - 1, j, 0);
+                            this.map[j][i - 1]= new Cell(0, j, i - 1, 0);
                             this.Lmonstre[indexMonster] = new Monstre(this.map[j][i - 1],this, this.respawnMonster, new Color(r, g, b));
 
                         }
@@ -117,6 +117,19 @@ public class Model {
 
     }
 
+
+    public Monstre[] getMonstre(){
+        return this.Lmonstre;
+    }
+    public Hero getHero(){
+        return this.hero;
+    }
+    public Cell[][] getMap() {
+        return this.map;
+    }
+    public int getSize() {
+        return this.size;
+    }
     public int getSizeH() { return this.sizeH ;}
     public int getSizeL() { return this.sizeL ;}
     public void startHero() { this.hero.start(); }
@@ -126,10 +139,10 @@ public class Model {
 	}
 
 	public void stop() {
-	    this.hero.stop();
+	    this.hero.stopHero();
 
         for (Monstre m : this.Lmonstre)
-            m.stop();
+            m.stopMonstre();
     }
 
 	
@@ -160,21 +173,7 @@ public class Model {
 		this.State =false;
 	}
 	
-	public Monstre[] getMonstre(){
-		return this.Lmonstre;
-	}
-	
-	public Hero getHero(){
-		return this.hero;
-	}
 
-	public Cell[][] getMap() {
-		return this.map;
-	}
-
-	public int getSize() {
-		return this.size;
-	}
 
     public void generateMaps() {
         this.timeToEat = 5000;

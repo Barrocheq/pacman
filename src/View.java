@@ -28,57 +28,30 @@ public class View {
      * @param sizeH taille hauteur du jeu
      * @param sizeL taille largeur du jeu
      */
-    public View(Model model, int sizeH, int sizeL) {
-        this.model = model;
-        JFrame frame = new JFrame();
-        cp = frame.getContentPane();
-        frame.setTitle("PacMan");
-        frame.setSize((sizeL * SCALE) + 25 +300, (sizeH * SCALE) + 50);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        //lauchGame(sizeH, sizeL);
-
-        frame.setVisible(true);
-        this.frame = frame;
-    }
 
 
 
 
     /**
      * Constructeur pour niveau de base
-     * @param model model du jeu
-     * @param size taille du niveau
      */
-	public View(Model model, int size) {
-		this.model = model;
-
-        JFrame frame = new JFrame();
+	public View() {
+        this.frame = new JFrame();
         cp = frame.getContentPane();
         frame.setTitle("PacMan");
-        frame.setSize((size * SCALE) + 25 +300, (size * SCALE) + 50);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+	public void init(Model model, int sizeH, int sizeL) {
+        this.model = model;
+
+        frame.setSize(((sizeL-1) * SCALE) + 30, ((sizeH+1) * SCALE) -8) ;
         this.plateau = new plateau(model); // Dessins du plateau
         cp.add(this.plateau);
 
-
-        // Dessins du component de droite
-        JPanel LP = new JPanel();
-        JLabel label = new JLabel();
-        label.setForeground(Color.WHITE);
-        label.setText("Score : "+this.model.getHero().getScore());
-        System.out.println(this.model.getHero().getScore());
-        LP.setPreferredSize(new Dimension(300,(size*SCALE)+50));
-        LP.setBackground(Color.BLACK);
-        LP.add(label);
-        this.label = label;
-        cp.add(LP, BorderLayout.EAST);
         frame.setVisible(true);
-
-
         this.frame = frame;
-
-	}
+    }
 
 	public JFrame getFrame() {
 		return this.frame;

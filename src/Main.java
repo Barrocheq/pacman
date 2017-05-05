@@ -5,16 +5,7 @@ public class Main {
      * @param args
      */
 	public static void main(String[] args) {
-		int tailleH, tailleL;
-		Model model = new Model();
-		model.init("lvl0.txt");
-
-		tailleH = model.getSizeH();
-		tailleL = model.getSizeL();
-
-        View view = new View(model, 21);
-        Controller controller = new Controller(model, view);
-        Moteur BrapBrap = new Moteur(view, model);
+        Moteur BrapBrap = new Moteur();
 		//View view = new View(model, tailleH, tailleL);
 
 	}

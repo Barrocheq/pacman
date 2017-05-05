@@ -5,17 +5,18 @@ public class Moteur extends Thread {
 	private JFrame frame;
 	private View view;
 	private Model model;
+	private Controller controller;
 
 
 	/**
 	 * Constructeur par defaut
-	 * @param view view du jeu
-	 * @param model model du jeu
 	 */
-	public Moteur(View view,Model model) {
-		this.frame = view.getFrame();
-		this.view = view;
-		this.model = model;
+	public Moteur() {
+		this.model = new Model();
+		this.view = new View();
+		this.controller = new Controller();
+
+		this.frame = null;
 
 		this.start(); // lancement du thread
 	}
@@ -35,11 +36,12 @@ public class Moteur extends Thread {
 			this.model.init("lvl"+i+".txt");
 			this.model.startHero();
 			this.model.startMonstre();
+			this.view.init(this.model, this.model.getSizeH(), this.model.getSizeL());
+			this.frame = view.getFrame();
+			this.controller.init(this.model, this.view);
 
 
 			while (parti) {
-
-
 				this.frame.repaint();
 
 
@@ -48,6 +50,7 @@ public class Moteur extends Thread {
 					this.model.stop();
 
 					parti = false;
+					break;
 				} else if (this.model.getState()) {
 					for (Monstre m : this.model.getMonstre()) {
 						if (m != null && this.model.getHero().getCell().equals(m.getCell())) {
@@ -65,7 +68,7 @@ public class Moteur extends Thread {
 				}
 
 
-				this.view.label.setText("Score : " + this.model.getHero().getScore());
+
 			}
 		}
 		
