@@ -33,35 +33,9 @@ public class Monstre extends Thread{
 		this.cellpop = cell;
 		this.vivant = true;
 
-		try {
-            this.loadImage();
-        } catch (IOException e) {
-            System.out.println("Erreur lors du chargement de l'image monster");
-            e.printStackTrace();
-        }
-
 		this.start();
 	}
 
-	protected void loadImage() throws IOException {
-        String os = System.getProperty("os.name").toLowerCase();
-
-        try {
-            if (os.contains("win")) {
-                image = ImageIO.read(new File("images\\"
-                        + "monstre.png"));
-            } else if (os.contains("nux") || os.contains("nix")) {
-                System.out.println("Linux");
-            } else {
-                image = ImageIO.read(new File("images/"
-                        + "monstre.png"));
-            }
-        } catch (IOException e) {
-            System.out.println("Erreur lors du chargement de l'image monster");
-            e.printStackTrace();
-        }
-    }
-	
 	public void move(Direction dir){
 		Cell celltemp = this.map[this.cell.geti()+dir.dI()][this.cell.getj()+dir.dJ()];
 		if(celltemp.passable()){
@@ -70,28 +44,30 @@ public class Monstre extends Thread{
 		}
 	}
 
-	public void changeCell(Cell cell) {
+	public void setCell(Cell cell) {
 		this.cell = cell;
 	}
-
 	public Cell getCell() {
 		return this.cell;
 	}
 	
-	public Direction[] movePossible(){
-		int i=0;
+	public Direction[] movePossible() {
+		int i = 0;
 		Direction[] tmp = new Direction[4];
+
 		for(Direction dir: Direction.values()){
+
 			if(this.lastMove != null && (this.lastMove.dI() == (dir.dI()*-1) && this.lastMove.dJ() == (dir.dJ()*-1))){
 				continue;
 			}
+
 			if(this.map[this.cell.geti()+dir.dI()][this.cell.getj()+dir.dJ()].passable()){
 				tmp[i]=dir;
 				i++;
 			}
 		}
 		
-		if(i==0){
+		if(i == 0){
 			for(Direction dir: Direction.values()){
 				if(this.map[this.cell.geti()+dir.dI()][this.cell.getj()+dir.dJ()].passable()){
 					tmp[i]=dir;
@@ -107,7 +83,6 @@ public class Monstre extends Thread{
 	}
 	
 	public Direction randDir(){
-	
 		Direction[] dirs = movePossible();
 		return dirs[(int) (dirs.length*Math.random())];
 		
@@ -120,7 +95,6 @@ public class Monstre extends Thread{
 	
 	public void repop(){
 		this.vivant = true;
-		
 	}
 	
 	
@@ -169,7 +143,6 @@ public class Monstre extends Thread{
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		while(true){
 			if(this.vivant){
 				Direction dir = this.randDir();
@@ -189,17 +162,10 @@ public class Monstre extends Thread{
 				this.ScaleY = 0;
 				
 				this.move(dir);
-				try {
-					Thread.sleep(1);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 			}else{
 				try {
 					Thread.sleep(this.repop);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				this.vivant = true;
