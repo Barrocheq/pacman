@@ -101,12 +101,6 @@ public class Hero extends Thread{
 	public Cell getCell() {
 		return this.cell;
 	}
-	public void setScaleX(int x){
-		this.ScaleX = x;
-	}
-	public void setScaleY(int y){
-		this.ScaleY = y;
-	}
 	public Direction getLastDir() { return this.lastDir; }
 	public Direction getNextDir() { return this.nextDir; }
 
