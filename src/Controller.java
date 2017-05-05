@@ -9,6 +9,12 @@ public class Controller implements KeyListener {
 	private JFrame frame;
 	private View view;
 
+
+    /**
+     * Constructeur par defaut
+     * @param model model du jeu
+     * @param view view du jeu
+     */
 	public Controller(Model model, View view) {
 		this.model = model;
 		this.frame = view.getFrame();
@@ -20,19 +26,24 @@ public class Controller implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
+
+    /**
+     * Fonction de capture de nos evenements
+     * @param e
+     */
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 		if (e.getKeyChar() == 'z') {
 			this.model.getHero().nextDir(Direction.NORTH);
 		}
@@ -48,6 +59,6 @@ public class Controller implements KeyListener {
 		if (e.getKeyChar() == 'q') {
 			this.model.getHero().nextDir(Direction.WEST);
 		}
-		
+
 	}
 }

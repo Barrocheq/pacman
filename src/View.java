@@ -5,28 +5,41 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 
 public class View {
 
 	private JFrame frame;
-	public static final int SCALE = 40;
+	public static final int SCALE = 30;
 	private plateau plateau;
 	private Model model;
 	public JLabel label;
+	private Container cp;
 
 
     public View(Model model, int sizeH, int sizeL) {
         this.model = model;
         JFrame frame = new JFrame();
-        Container cp = frame.getContentPane();
+        cp = frame.getContentPane();
         frame.setTitle("PacMan");
         frame.setSize((sizeL * SCALE) + 25 +300, (sizeH * SCALE) + 50);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        //lauchGame(sizeH, sizeL);
+
+        frame.setVisible(true);
+        this.frame = frame;
+    }
+
+    public void lauchGame(JFrame frame, int sizeH, int sizeL) {
+        cp = frame.getContentPane();
+        frame.setTitle("PacMan");
+        frame.setSize((sizeH * SCALE) + 25 +300, (sizeL * SCALE) + 50);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.plateau = new plateau(model);
         cp.add(this.plateau);
@@ -42,37 +55,45 @@ public class View {
         LP.add(label);
         this.label = label;
         cp.add(LP, BorderLayout.EAST);
-
         frame.setVisible(true);
+
+
         this.frame = frame;
+        Main.start(model, this);
     }
 
 
 
 	public View(Model model, int size) {
 		this.model = model;
-		JFrame frame = new JFrame();
-		Container cp = frame.getContentPane();
-		frame.setTitle("PacMan");
-		frame.setSize((size * SCALE) + 25 +300, (size * SCALE) + 50);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.plateau = new plateau(model);
-		cp.add(this.plateau);
-		
-		
-		JPanel LP = new JPanel();
-		JLabel label = new JLabel();
-		label.setForeground(Color.WHITE);
-		label.setText("Score : "+this.model.getHero().getScore());
-		System.out.println(this.model.getHero().getScore());
-		LP.setPreferredSize(new Dimension(300,(size*SCALE)+50));
-		LP.setBackground(Color.BLACK);
-		LP.add(label);
-		this.label = label;
-		cp.add(LP, BorderLayout.EAST);
-		
-		frame.setVisible(true);
-		this.frame = frame;
+
+        JFrame frame = new JFrame();
+
+
+        JFrame menu = new JFrame();
+        cp = menu.getContentPane();
+        menu.setTitle("Menu");
+        menu.setSize((size * SCALE) + 25 +300, (size * SCALE) + 50);
+        menu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        cp.setLayout(new BorderLayout());
+
+        JButton b = new JButton("test");
+
+
+        b.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                lauchGame(frame, size, size);
+                menu.setVisible(false);
+            }
+        });
+
+        b.setPreferredSize(new Dimension(100, 100));
+
+        cp.add(b, BorderLayout.CENTER);
+        menu.setVisible(true);
+        this.frame = frame;
+
 	}
 
 	public JFrame getFrame() {
@@ -106,7 +127,6 @@ class plateau extends JPanel {
 		try {
 
 			if(this.model.getHero().nextIsPassable()) {
-
                 this.model.getHero().paintHeroAnim(g2, this.SCALE, i);
                 if (anim) {
                     i++;

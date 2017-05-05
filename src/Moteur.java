@@ -5,40 +5,51 @@ public class Moteur extends Thread {
 	private JFrame frame;
 	private View view;
 	private Model model;
-	
-	public Moteur(View view,Model model){
+
+	/**
+	 * Constructeur par defaut
+	 * @param view view du jeu
+	 * @param model model du jeu
+	 */
+	public Moteur(View view,Model model) {
 		this.frame = view.getFrame();
 		this.view = view;
 		this.model = model;
 
-		this.start();
-		
+		this.start(); // lancement du thread
 	}
-	
-	
-	public void run(){
-		while(true){
+
+	/**
+	 * Fonction de lancement de notre moteur graphique
+	 */
+	public void run() {
+		while(true) {
 			this.frame.repaint();
-			if(this.model.getState()){
-				for(Monstre m : this.model.getMonstre()){
-					if(m!=null && this.model.getHero().getCell().equals(m.getCell())){
+
+
+			if(this.model.nbBonbon() == 0 ){
+				System.out.println("GG");
+				System.exit(0);
+			}
+			 else if(this.model.getState()) {
+				for(Monstre m : this.model.getMonstre()) {
+					if(m!=null && this.model.getHero().getCell().equals(m.getCell())) {
 						m.meur();
 						this.model.getHero().incScore(20);
 					}
 				}
-			}else{
-				for(Monstre m : this.model.getMonstre()){
-					if(this.model.getHero().getCell().equals(m.getCell())){
+			}
+			else {
+				for(Monstre m : this.model.getMonstre()) {
+					if(this.model.getHero().getCell().equals(m.getCell())) {
 						System.out.println("Perdu");
 						System.exit(0);
 					}
 				}
 			}
-			if(this.model.nbBonbon()==0){
-				System.out.println("GG");
-				System.exit(0);
-			}
-			this.view.label.setText("Score : "+this.model.getHero().getScore());
+
+
+			this.view.label.setText("Score : " + this.model.getHero().getScore());
 		}
 		
 		

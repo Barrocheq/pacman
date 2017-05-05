@@ -20,6 +20,11 @@ public class Hero extends Thread{
 	private int ScaleX;
 	private int ScaleY;
 
+	/**
+	 * Constructeur par defaut de la classe Hero
+	 * @param cell case depart du hero
+	 * @param model model du jeu
+	 */
 	public Hero(Cell cell, Model model) {
 		this.cell = cell;
 		this.model = model;
@@ -33,10 +38,16 @@ public class Hero extends Thread{
             e.printStackTrace();
         }
 
+        // Lancement du thread
 		this.start();
 
 	}
 
+	/**
+	 * Fonction de chargement de l'image qui representera le hero lors de la personnalisation du jeu
+	 * @throws IOException exception pour l'image
+	 * @os gestion du chemin en fonction des OS
+	 */
     protected void loadImage() throws IOException {
         String os = System.getProperty("os.name").toLowerCase();
 
@@ -53,6 +64,7 @@ public class Hero extends Thread{
             e.printStackTrace();
         }
     }
+
 	
 	public int getScore(){
 		return this.Score;
@@ -62,50 +74,67 @@ public class Hero extends Thread{
 		this.Score = this.Score +x;
 	}
 
-	
+
+	/**
+	 * Fonction de mouvement du Hero
+	 * @param dir direction du mouvement
+	 */
 	public void move(Direction dir) {
 		Cell celltemp = this.model.getMap()[this.cell.geti()+dir.dI()][this.cell.getj()+dir.dJ()];
+
 		if(celltemp.passable()){
 			this.cell = celltemp;
 			int tmpbonbon = this.cell.mangeBonbon();
-			if(tmpbonbon==1){
+
+			if(tmpbonbon == 1) // bonbon classique
 				this.Score++;
-			}else if(tmpbonbon==2){
-				this.Score = this.Score +10;
+			else if(tmpbonbon == 2) { // bonbon magique
+				this.Score += 10;
 				this.model.mangeBonbonRouge();
 			}
 		}
 	}
-	
+
+
 	public void nextDir(Direction dir){
 		this.nextDir = dir;
 	}
-
 	public Cell getCell() {
 		return this.cell;
 	}
-	
 	public void setScaleX(int x){
 		this.ScaleX = x;
 	}
-
 	public void setScaleY(int y){
 		this.ScaleY = y;
 	}
-
 	public Direction getLastDir() { return this.lastDir; }
 	public Direction getNextDir() { return this.nextDir; }
+
+	/**
+	 * Fonction qui regarde si la case suivante est passable
+	 * @return true si elle l'est
+	 */
 	public boolean nextIsPassable() {
-		if(this.lastDir == null) return false;
+		if(this.lastDir == null)
+			return false;
 		else if (this.model.getMap()[this.cell.geti()+lastDir.dI()][this.cell.getj()+lastDir.dJ()].passable())
 			return true;
-		else return false;
+		else
+			return false;
 	}
-	
+
+
+	/**
+	 * Fonction qui dessine le hero en l'animant (Bouche qui bouge)
+	 * @param g2d dessins
+	 * @param scale rapport de dessins (en fonction de la taille de la fênetre)
+	 * @param i range d'animation
+	 */
     public void paintHeroAnim(Graphics2D g2d, int scale, int i) throws IOException {
 
-	    int x = 0;
-	    int y = 0;
+	    int x = 0; // angle de depart
+	    int y = 0; // position de l'oeil
 
 	    if(this.lastDir == Direction.NORTH) {
             x = 120;
@@ -125,9 +154,9 @@ public class Hero extends Thread{
         }
 
         if(!this.model.getState()){
-            g2d.setPaint(Color.YELLOW);
+            g2d.setPaint(Color.YELLOW); // Jaune si pas de super bonbon
         }else{
-            g2d.setPaint(Color.RED);
+            g2d.setPaint(Color.RED); // Rouge si super bonbon
         }
 
         g2d.fillArc((this.cell.geti() * scale)+this.ScaleY, (this.cell.getj() * scale)+this.ScaleX, scale, scale, x - i, 300 + 2 * i);
@@ -141,6 +170,11 @@ public class Hero extends Thread{
     }
 
 
+	/**
+	 * Fonction de dessins du hero non animé
+	 * @param g2d dessins
+	 * @param scale rapport de dessins (en fonction de la taille de la fênetre)
+	 */
 	public void paintHero(Graphics2D g2d, int scale) throws IOException {
 
 		int x = 0;
@@ -178,7 +212,8 @@ public class Hero extends Thread{
 		g2d.fillOval(((this.cell.geti() * scale) + (scale / y))+this.ScaleY, (this.cell.getj() * scale + (scale / 5))+this.ScaleX, scale / 6, scale / 6);
 
 	}
-	
+
+
 	public void run(){
 		while(true){
 			if(this.nextDir != null && this.model.getMap()[this.cell.geti()+this.nextDir.dI()][this.cell.getj()+this.nextDir.dJ()].passable()){
@@ -239,7 +274,7 @@ class HeroMove extends Thread{
 			this.hero.setScaleX(this.move.dJ()*i);
 			this.hero.setScaleY(this.move.dI()*i);
 			try {
-				Thread.sleep(5);
+				Thread.sleep(2);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
