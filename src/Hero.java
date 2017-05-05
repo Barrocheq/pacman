@@ -16,7 +16,6 @@ public class Hero extends Thread{
 	private Model model;
 	private Direction lastDir;
 	private Direction nextDir;
-	private Direction move;
 	private int ScaleX;
 	private int ScaleY;
 
@@ -217,31 +216,42 @@ public class Hero extends Thread{
 		while(true){
 			if(this.nextDir != null && this.model.getMap()[this.cell.geti()+this.nextDir.dI()][this.cell.getj()+this.nextDir.dJ()].passable()){
 					this.lastDir = this.nextDir;
-					this.move = this.lastDir;
 					
-					HeroMove heromove = new HeroMove(this,this.move);
-					try {
-						heromove.join();
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					for(int i=0;i<View.SCALE;i++){
+						this.ScaleX = this.lastDir.dJ()*i;
+						this.ScaleY = this.lastDir.dI()*i;
+						try {
+							Thread.sleep(5);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
 					}
-					this.move(this.move);
+					this.ScaleX = 0;
+					this.ScaleY = 0;
+					
+					this.move(this.lastDir);
 					this.nextDir = null;
-			}else if(this.lastDir != null){
-				Cell celltemplast = this.model.getMap()[this.cell.geti()+this.lastDir.dI()][this.cell.getj()+this.lastDir.dJ()];
-				if(celltemplast.passable()){
-					//this.move(this.lastDir);
-					this.move = this.lastDir;
-					HeroMove heromove = new HeroMove(this,this.move);
+			}else if(this.lastDir != null && this.model.getMap()[this.cell.geti()+this.lastDir.dI()][this.cell.getj()+this.lastDir.dJ()].passable()){
+				
+				
+				for(int i=0;i<View.SCALE;i++){
+					this.ScaleX = this.lastDir.dJ()*i;
+					this.ScaleY = this.lastDir.dI()*i;
 					try {
-						heromove.join();
+						Thread.sleep(5);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					this.move(this.move);
+
 				}
+				this.ScaleX = 0;
+				this.ScaleY = 0;
+				
+				
+				this.move(this.lastDir);
 			}
 			try {
 				Thread.sleep(1);
@@ -251,36 +261,5 @@ public class Hero extends Thread{
 			}
 			
 		}
-	}
-}
-
-class HeroMove extends Thread{
-	
-	private Hero hero;
-	private int scale;
-	private Direction move;
-	
-	public HeroMove(Hero hero,Direction move) {
-		this.hero = hero;
-		this.scale = View.SCALE;
-		this.move = move;
-		this.start();
-	}
-
-	public void run(){
-		
-		for(int i=0;i<this.scale;i++){
-			this.hero.setScaleX(this.move.dJ()*i);
-			this.hero.setScaleY(this.move.dI()*i);
-			try {
-				Thread.sleep(2);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		}
-		this.hero.setScaleX(0);
-		this.hero.setScaleY(0);
 	}
 }

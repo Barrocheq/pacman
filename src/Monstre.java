@@ -173,13 +173,21 @@ public class Monstre extends Thread{
 		while(true){
 			if(this.vivant){
 				Direction dir = this.randDir();
-				MonstreMove monstremove = new MonstreMove(this,dir);
-				try {
-					monstremove.join();
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				
+				for(int i=0;i<View.SCALE;i++){
+					this.ScaleX = dir.dJ()*i;
+					this.ScaleY = dir.dI()*i;
+					try {
+						Thread.sleep(10);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
 				}
+				this.ScaleX = 0;
+				this.ScaleY = 0;
+				
 				this.move(dir);
 				try {
 					Thread.sleep(1);
@@ -202,45 +210,4 @@ public class Monstre extends Thread{
 		
 	}
 
-	public void setScaleY(int i) {
-		this.ScaleY = i;
-		
-	}
-
-	public void setScaleX(int i) {
-		this.ScaleX = i;
-		
-	}
-}
-
-
-class MonstreMove extends Thread{
-	
-	private Monstre monstre;
-	private int scale;
-	private Direction move;
-	
-	public MonstreMove(Monstre monstre,Direction move) {
-		this.monstre = monstre;
-		this.scale = View.SCALE;
-		this.move = move;
-		this.start();
-	}
-
-	public void run(){
-		
-		for(int i=0;i<this.scale;i++){
-			this.monstre.setScaleX(this.move.dJ()*i);
-			this.monstre.setScaleY(this.move.dI()*i);
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		}
-		this.monstre.setScaleX(0);
-		this.monstre.setScaleY(0);
-	}
 }
