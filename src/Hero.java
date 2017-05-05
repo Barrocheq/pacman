@@ -92,6 +92,15 @@ public class Hero extends Thread{
 	public void setScaleY(int y){
 		this.ScaleY = y;
 	}
+
+	public Direction getLastDir() { return this.lastDir; }
+	public Direction getNextDir() { return this.nextDir; }
+	public boolean nextIsPassable() {
+		if(this.lastDir == null) return false;
+		else if (this.model.getMap()[this.cell.geti()+lastDir.dI()][this.cell.getj()+lastDir.dJ()].passable())
+			return true;
+		else return false;
+	}
 	
     public void paintHeroAnim(Graphics2D g2d, int scale, int i) throws IOException {
 
@@ -134,24 +143,39 @@ public class Hero extends Thread{
 
 	public void paintHero(Graphics2D g2d, int scale) throws IOException {
 
-        if(!this.model.getState()){
-            g2d.setPaint(Color.YELLOW);
-        }else{
-            g2d.setPaint(Color.RED);
-        }
+		int x = 0;
+		int y = 0;
 
+		if(this.lastDir == Direction.NORTH) {
+			x = 120;
+			y = 4;
+		} else if(this.lastDir == Direction.SOUTH) {
+			x = 300;
+			y = 4;
+		} else if(this.lastDir == Direction.EAST) {
+			x = 30;
+			y = 2;
+		} else if(this.lastDir == Direction.WEST) {
+			x = 210;
+			y = 2;
+		} else {
+			x = 30;
+			y = 2;
+		}
 
-        g2d.fillArc(this.cell.geti() * scale, this.cell.getj() * scale,scale,scale, 30, 300);
+		if(!this.model.getState()){
+			g2d.setPaint(Color.YELLOW);
+		}else{
+			g2d.setPaint(Color.RED);
+		}
 
-        g2d.setColor(Color.black);
-        //g2d.setStroke(new BasicStroke(2));
-        g2d.drawArc(this.cell.geti() * scale, this.cell.getj() * scale,scale,scale,30,300);
+		g2d.fillArc((this.cell.geti() * scale)+this.ScaleY, (this.cell.getj() * scale)+this.ScaleX, scale, scale, x, 300);
 
+		g2d.setColor(Color.black);
+		g2d.drawArc((this.cell.geti() * scale)+this.ScaleY, (this.cell.getj() * scale)+this.ScaleX, scale, scale, x, 300);
 
-
-		// OEUIL
 		g2d.setPaint(Color.BLACK);
-		g2d.fillOval((this.cell.geti() * scale)+(scale/2), (this.cell.getj() * scale+(scale/5)), scale/6, scale/6);
+		g2d.fillOval(((this.cell.geti() * scale) + (scale / y))+this.ScaleY, (this.cell.getj() * scale + (scale / 5))+this.ScaleX, scale / 6, scale / 6);
 
 	}
 	
@@ -224,7 +248,7 @@ class HeroMove extends Thread{
 	
 	public HeroMove(Hero hero,Direction move) {
 		this.hero = hero;
-		this.scale = 48;
+		this.scale = View.SCALE;
 		this.move = move;
 		this.start();
 	}

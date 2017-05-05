@@ -222,7 +222,7 @@ class MonstreMove extends Thread{
 	
 	public MonstreMove(Monstre monstre,Direction move) {
 		this.monstre = monstre;
-		this.scale = 48;
+		this.scale = View.SCALE;
 		this.move = move;
 		this.start();
 	}

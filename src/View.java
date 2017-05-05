@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 public class View {
 
 	private JFrame frame;
-	private static final int SCALE = 48;
+	public static final int SCALE = 40;
 	private plateau plateau;
 	private Model model;
 	public JLabel label;
@@ -86,7 +86,7 @@ class plateau extends JPanel {
 	private Model model;
 	private boolean anim = true;
 	private int i = 0;
-	private static final int SCALE = 48;
+	private int SCALE = View.SCALE;
 
 	public plateau(Model model) {
 		this.model = model;
@@ -104,20 +104,24 @@ class plateau extends JPanel {
 			}
 		}
 		try {
-			this.model.getHero().paintHeroAnim(g2, this.SCALE, i);
 
-			if(anim) {
-                i++;
+			if(this.model.getHero().nextIsPassable()) {
 
-                if(i > 15)
-                    anim = false;
+                this.model.getHero().paintHeroAnim(g2, this.SCALE, i);
+                if (anim) {
+                    i++;
+
+                    if (i > 15)
+                        anim = false;
+                } else {
+                    i--;
+
+                    if (i < 0)
+                        anim = true;
+                }
             } else {
-			    i--;
-
-			    if(i < 0)
-			        anim = true;
+                this.model.getHero().paintHero(g2, this.SCALE);
             }
-
 
 
 			for(Monstre m : this.model.getMonstre()){
