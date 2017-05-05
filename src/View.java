@@ -22,6 +22,12 @@ public class View {
 	private Container cp;
 
 
+    /**
+     * Constructeur pour niveau generer a partir d'un fichier (peut etre égale au constructeur d'apres)
+     * @param model model du jeu
+     * @param sizeH taille hauteur du jeu
+     * @param sizeL taille largeur du jeu
+     */
     public View(Model model, int sizeH, int sizeL) {
         this.model = model;
         JFrame frame = new JFrame();
@@ -36,15 +42,22 @@ public class View {
         this.frame = frame;
     }
 
+    /**
+     * Fonction qui lance la fenetre de jeu
+     * @param frame fenetre de jeu
+     * @param sizeH taille hauteur
+     * @param sizeL taille largeur
+     */
     public void lauchGame(JFrame frame, int sizeH, int sizeL) {
         cp = frame.getContentPane();
         frame.setTitle("PacMan");
         frame.setSize((sizeH * SCALE) + 25 +300, (sizeL * SCALE) + 50);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.plateau = new plateau(model);
+        this.plateau = new plateau(model); // Dessins du plateau
         cp.add(this.plateau);
 
 
+        // Dessins du component de droite
         JPanel LP = new JPanel();
         JLabel label = new JLabel();
         label.setForeground(Color.WHITE);
@@ -59,11 +72,15 @@ public class View {
 
 
         this.frame = frame;
-        Main.start(model, this);
+        Main.start(model, this); // Lancement du moteur du jeu
     }
 
 
-
+    /**
+     * Constructeur pour niveau de base
+     * @param model model du jeu
+     * @param size taille du niveau
+     */
 	public View(Model model, int size) {
 		this.model = model;
 
@@ -102,6 +119,7 @@ public class View {
 
 }
 
+
 class plateau extends JPanel {
 
 	private Model model;
@@ -109,12 +127,22 @@ class plateau extends JPanel {
 	private int i = 0;
 	private int SCALE = View.SCALE;
 
+    /**
+     * Constructeur par defaut
+     * @param model
+     */
 	public plateau(Model model) {
 		this.model = model;
 	}
 
+    /**
+     * Fonction de dessins du plateau
+     * @param g dessins
+     */
 	public void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g.create();
+
+		// Anti-aliasing
         RenderingHints hints = new RenderingHints(
                 RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setRenderingHints(hints);
@@ -126,6 +154,7 @@ class plateau extends JPanel {
 		}
 		try {
 
+		    // Animation Hero
 			if(this.model.getHero().nextIsPassable()) {
                 this.model.getHero().paintHeroAnim(g2, this.SCALE, i);
                 if (anim) {
@@ -143,12 +172,11 @@ class plateau extends JPanel {
                 this.model.getHero().paintHero(g2, this.SCALE);
             }
 
-
+            // Dessins des monstres
 			for(Monstre m : this.model.getMonstre()){
 				m.paintMonstre(g2, this.SCALE);
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
