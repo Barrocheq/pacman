@@ -44,9 +44,8 @@ public class Hero extends Thread{
 	}
 
 	/**
-	 * Fonction de chargement de l'image qui representera le hero lors de la personnalisation du jeu
+	 * Fonction de chargement de l'image qui representera le hero lors de la personnalisation du jeu (os : detection OS)
 	 * @throws IOException exception pour l'image
-	 * @os gestion du chemin en fonction des OS
 	 */
     protected void loadImage() throws IOException {
         String os = System.getProperty("os.name").toLowerCase();
