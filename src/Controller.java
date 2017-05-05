@@ -12,16 +12,18 @@ public class Controller implements KeyListener {
 
     /**
      * Constructeur par defaut
-     * @param model model du jeu
-     * @param view view du jeu
      */
-	public Controller(Model model, View view) {
-		this.model = model;
-		this.frame = view.getFrame();
-		this.view = view;
-		this.frame.addKeyListener(this);
-		this.frame.setFocusable(true);
+	public Controller() {
+
 	}
+
+	public void init(Model model, View view) {
+        this.model = model;
+        this.frame = view.getFrame();
+        this.view = view;
+        this.frame.addKeyListener(this);
+        this.frame.setFocusable(true);
+    }
 
 	@Override
 	public void keyPressed(KeyEvent e) {

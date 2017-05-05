@@ -28,90 +28,30 @@ public class View {
      * @param sizeH taille hauteur du jeu
      * @param sizeL taille largeur du jeu
      */
-    public View(Model model, int sizeH, int sizeL) {
-        this.model = model;
-        JFrame frame = new JFrame();
-        cp = frame.getContentPane();
-        frame.setTitle("PacMan");
-        frame.setSize((sizeL * SCALE) + 25 +300, (sizeH * SCALE) + 50);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        //lauchGame(sizeH, sizeL);
-
-        frame.setVisible(true);
-        this.frame = frame;
-    }
-
-    /**
-     * Fonction qui lance la fenetre de jeu
-     * @param frame fenetre de jeu
-     * @param sizeH taille hauteur
-     * @param sizeL taille largeur
-     */
-    public void lauchGame(JFrame frame, int sizeH, int sizeL) {
-        cp = frame.getContentPane();
-        frame.setTitle("PacMan");
-        frame.setSize((sizeH * SCALE) + 25 +300, (sizeL * SCALE) + 50);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.plateau = new plateau(model); // Dessins du plateau
-        cp.add(this.plateau);
 
 
-        // Dessins du component de droite
-        JPanel LP = new JPanel();
-        JLabel label = new JLabel();
-        label.setForeground(Color.WHITE);
-        label.setText("Score : "+this.model.getHero().getScore());
-        System.out.println(this.model.getHero().getScore());
-        LP.setPreferredSize(new Dimension(300,(sizeH*SCALE)+50));
-        LP.setBackground(Color.BLACK);
-        LP.add(label);
-        this.label = label;
-        cp.add(LP, BorderLayout.EAST);
-        frame.setVisible(true);
-
-
-        this.frame = frame;
-        Main.start(model, this); // Lancement du moteur du jeu
-    }
 
 
     /**
      * Constructeur pour niveau de base
-     * @param model model du jeu
-     * @param size taille du niveau
      */
-	public View(Model model, int size) {
-		this.model = model;
+	public View() {
+        this.frame = new JFrame();
+        cp = frame.getContentPane();
+        frame.setTitle("PacMan");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
 
-        JFrame frame = new JFrame();
+	public void init(Model model, int sizeH, int sizeL) {
+        this.model = model;
 
+        frame.setSize(((sizeL-1) * SCALE) + 30, ((sizeH+1) * SCALE) -8) ;
+        this.plateau = new plateau(model); // Dessins du plateau
+        cp.add(this.plateau);
 
-        JFrame menu = new JFrame();
-        cp = menu.getContentPane();
-        menu.setTitle("Menu");
-        menu.setSize((size * SCALE) + 25 +300, (size * SCALE) + 50);
-        menu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        cp.setLayout(new BorderLayout());
-
-        JButton b = new JButton("test");
-
-
-        b.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                lauchGame(frame, size, size);
-                menu.setVisible(false);
-            }
-        });
-
-        b.setPreferredSize(new Dimension(100, 100));
-
-        cp.add(b, BorderLayout.CENTER);
-        menu.setVisible(true);
+        frame.setVisible(true);
         this.frame = frame;
-
-	}
+    }
 
 	public JFrame getFrame() {
 		return this.frame;
