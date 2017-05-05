@@ -10,6 +10,8 @@ public class Moteur extends Thread {
 		this.frame = view.getFrame();
 		this.view = view;
 		this.model = model;
+
+		this.start();
 		
 	}
 	

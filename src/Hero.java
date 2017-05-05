@@ -181,11 +181,8 @@ public class Hero extends Thread{
 	
 	public void run(){
 		while(true){
-			if(this.nextDir != null){
-				Cell celltempnext = this.model.getMap()[this.cell.geti()+this.nextDir.dI()][this.cell.getj()+this.nextDir.dJ()];
-				if(celltempnext.passable()){
+			if(this.nextDir != null && this.model.getMap()[this.cell.geti()+this.nextDir.dI()][this.cell.getj()+this.nextDir.dJ()].passable()){
 					this.lastDir = this.nextDir;
-					//this.move(this.lastDir);
 					this.move = this.lastDir;
 					
 					HeroMove heromove = new HeroMove(this,this.move);
@@ -197,23 +194,6 @@ public class Hero extends Thread{
 					}
 					this.move(this.move);
 					this.nextDir = null;
-				}else{
-					if(this.lastDir != null){
-						Cell celltemplast = this.model.getMap()[this.cell.geti()+this.lastDir.dI()][this.cell.getj()+this.lastDir.dJ()];
-						if(celltemplast.passable()){
-							//this.move(this.lastDir);
-							this.move = this.lastDir;
-							HeroMove heromove = new HeroMove(this,this.move);
-							try {
-								heromove.join();
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-							this.move(this.move);
-						}
-					}
-				}
 			}else if(this.lastDir != null){
 				Cell celltemplast = this.model.getMap()[this.cell.geti()+this.lastDir.dI()][this.cell.getj()+this.lastDir.dJ()];
 				if(celltemplast.passable()){

@@ -8,9 +8,13 @@ public class Main {
 		tailleL = model.getSizeL();
 
         View view = new View(model, 21);
+        Controller controller = new Controller(model, view);
 		//View view = new View(model, tailleH, tailleL);
-		Controller controller = new Controller(model, view);
-		Moteur moteur = new Moteur(view, model);
-		moteur.start();
+
 	}
+
+	public static void start(Model model, View view) {
+
+        Moteur moteur = new Moteur(view, model);
+    }
 }
