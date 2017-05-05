@@ -6,24 +6,16 @@ public class Main {
      */
 	public static void main(String[] args) {
 		int tailleH, tailleL;
-		Model model = new Model(21);
+		Model model = new Model();
+		model.init("lvl0.txt");
 
 		tailleH = model.getSizeH();
 		tailleL = model.getSizeL();
 
         View view = new View(model, 21);
         Controller controller = new Controller(model, view);
+        Moteur BrapBrap = new Moteur(view, model);
 		//View view = new View(model, tailleH, tailleL);
 
 	}
-
-    /**
-     * Fonction de lancement du moteur graphique
-     * @param model model du jeu
-     * @param view view du jeu
-     */
-	public static void start(Model model, View view) {
-
-        Moteur moteur = new Moteur(view, model);
-    }
 }

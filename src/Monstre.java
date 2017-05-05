@@ -33,7 +33,6 @@ public class Monstre extends Thread{
 		this.cellpop = cell;
 		this.vivant = true;
 
-		this.start();
 	}
 
 	public void move(Direction dir){
@@ -147,13 +146,12 @@ public class Monstre extends Thread{
 			if(this.vivant){
 				Direction dir = this.randDir();
 				
-				for(int i=0;i<View.SCALE;i++){
+				for(int i = 0; i < View.SCALE; i++){
 					this.ScaleX = dir.dJ()*i;
 					this.ScaleY = dir.dI()*i;
 					try {
 						Thread.sleep(10);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 
@@ -162,7 +160,7 @@ public class Monstre extends Thread{
 				this.ScaleY = 0;
 				
 				this.move(dir);
-			}else{
+			} else{
 				try {
 					Thread.sleep(this.repop);
 				} catch (InterruptedException e) {

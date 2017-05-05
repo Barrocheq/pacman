@@ -6,6 +6,7 @@ public class Moteur extends Thread {
 	private View view;
 	private Model model;
 
+
 	/**
 	 * Constructeur par defaut
 	 * @param view view du jeu
@@ -23,33 +24,49 @@ public class Moteur extends Thread {
 	 * Fonction de lancement de notre moteur graphique
 	 */
 	public void run() {
+
+		boolean parti = true;
+		int i = -1;
+
 		while(true) {
-			this.frame.repaint();
+
+			parti = true;
+			i++;
+			this.model.init("lvl"+i+".txt");
+			this.model.startHero();
+			this.model.startMonstre();
 
 
-			if(this.model.nbBonbon() == 0 ){
-				System.out.println("GG");
-				System.exit(0);
-			}
-			 else if(this.model.getState()) {
-				for(Monstre m : this.model.getMonstre()) {
-					if(m!=null && this.model.getHero().getCell().equals(m.getCell())) {
-						m.meur();
-						this.model.getHero().incScore(20);
+			while (parti) {
+
+
+				this.frame.repaint();
+
+
+				if (this.model.nbBonbon() == 0) {
+
+					this.model.stop();
+
+					parti = false;
+				} else if (this.model.getState()) {
+					for (Monstre m : this.model.getMonstre()) {
+						if (m != null && this.model.getHero().getCell().equals(m.getCell())) {
+							m.meur();
+							this.model.getHero().incScore(20);
+						}
+					}
+				} else {
+					for (Monstre m : this.model.getMonstre()) {
+						if (this.model.getHero().getCell().equals(m.getCell())) {
+							System.out.println("Perdu");
+							System.exit(0);
+						}
 					}
 				}
-			}
-			else {
-				for(Monstre m : this.model.getMonstre()) {
-					if(this.model.getHero().getCell().equals(m.getCell())) {
-						System.out.println("Perdu");
-						System.exit(0);
-					}
-				}
-			}
 
 
-			this.view.label.setText("Score : " + this.model.getHero().getScore());
+				this.view.label.setText("Score : " + this.model.getHero().getScore());
+			}
 		}
 		
 		

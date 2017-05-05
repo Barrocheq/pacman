@@ -36,10 +36,6 @@ public class Hero extends Thread{
             System.out.println("Erreur lors du chargement de l'image Hero");
             e.printStackTrace();
         }
-
-        // Lancement du thread
-		this.start();
-
 	}
 
 	/**
@@ -214,12 +210,13 @@ public class Hero extends Thread{
 
 	public void run(){
 		while(true){
-			if(this.nextDir != null && this.model.getMap()[this.cell.geti()+this.nextDir.dI()][this.cell.getj()+this.nextDir.dJ()].passable()){
+			synchronized (this) {
+				if (this.nextDir != null && this.model.getMap()[this.cell.geti() + this.nextDir.dI()][this.cell.getj() + this.nextDir.dJ()].passable()) {
 					this.lastDir = this.nextDir;
-					
-					for(int i=0;i<View.SCALE;i++){
-						this.ScaleX = this.lastDir.dJ()*i;
-						this.ScaleY = this.lastDir.dI()*i;
+
+					for (int i = 0; i < View.SCALE; i++) {
+						this.ScaleX = this.lastDir.dJ() * i;
+						this.ScaleY = this.lastDir.dI() * i;
 						try {
 							Thread.sleep(5);
 						} catch (InterruptedException e) {
@@ -230,36 +227,30 @@ public class Hero extends Thread{
 					}
 					this.ScaleX = 0;
 					this.ScaleY = 0;
-					
+
 					this.move(this.lastDir);
 					this.nextDir = null;
-			}else if(this.lastDir != null && this.model.getMap()[this.cell.geti()+this.lastDir.dI()][this.cell.getj()+this.lastDir.dJ()].passable()){
-				
-				
-				for(int i=0;i<View.SCALE;i++){
-					this.ScaleX = this.lastDir.dJ()*i;
-					this.ScaleY = this.lastDir.dI()*i;
-					try {
-						Thread.sleep(5);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+				} else if (this.lastDir != null && this.model.getMap()[this.cell.geti() + this.lastDir.dI()][this.cell.getj() + this.lastDir.dJ()].passable()) {
 
+
+					for (int i = 0; i < View.SCALE; i++) {
+						this.ScaleX = this.lastDir.dJ() * i;
+						this.ScaleY = this.lastDir.dI() * i;
+						try {
+							Thread.sleep(5);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+					}
+					this.ScaleX = 0;
+					this.ScaleY = 0;
+
+
+					this.move(this.lastDir);
 				}
-				this.ScaleX = 0;
-				this.ScaleY = 0;
-				
-				
-				this.move(this.lastDir);
 			}
-			try {
-				Thread.sleep(1);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
 		}
 	}
 }
