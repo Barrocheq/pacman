@@ -48,8 +48,6 @@ public class Controller implements KeyListener {
 		if (e.getKeyChar() == 'q') {
 			this.model.getHero().nextDir(Direction.WEST);
 		}
-		this.view.label.setText("Score : "+this.model.getHero().getScore());
-		this.frame.repaint();
 		
 	}
 }

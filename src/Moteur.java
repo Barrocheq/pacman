@@ -36,7 +36,9 @@ public class Moteur extends Thread {
 				System.out.println("GG");
 				System.exit(0);
 			}
+			this.view.label.setText("Score : "+this.model.getHero().getScore());
 		}
+		
 		
 	}
 }

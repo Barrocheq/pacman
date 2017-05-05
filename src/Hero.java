@@ -16,10 +16,15 @@ public class Hero extends Thread{
 	private Model model;
 	private Direction lastDir;
 	private Direction nextDir;
+	private Direction move;
+	private int ScaleX;
+	private int ScaleY;
 
 	public Hero(Cell cell, Model model) {
 		this.cell = cell;
 		this.model = model;
+		this.ScaleX = 0;
+		this.ScaleY = 0;
 
 		try {
 		    this.loadImage();
@@ -79,7 +84,15 @@ public class Hero extends Thread{
 	public Cell getCell() {
 		return this.cell;
 	}
+	
+	public void setScaleX(int x){
+		this.ScaleX = x;
+	}
 
+	public void setScaleY(int y){
+		this.ScaleY = y;
+	}
+	
     public void paintHeroAnim(Graphics2D g2d, int scale, int i) throws IOException {
 
 	    int x = 0;
@@ -108,13 +121,13 @@ public class Hero extends Thread{
             g2d.setPaint(Color.RED);
         }
 
-        g2d.fillArc(this.cell.geti() * scale, this.cell.getj() * scale, scale, scale, x - i, 300 + 2 * i);
+        g2d.fillArc((this.cell.geti() * scale)+this.ScaleY, (this.cell.getj() * scale)+this.ScaleX, scale, scale, x - i, 300 + 2 * i);
 
         g2d.setColor(Color.black);
-        g2d.drawArc(this.cell.geti() * scale, this.cell.getj() * scale, scale, scale, x - i, 300 + 2 * i);
+        g2d.drawArc((this.cell.geti() * scale)+this.ScaleY, (this.cell.getj() * scale)+this.ScaleX, scale, scale, x - i, 300 + 2 * i);
 
         g2d.setPaint(Color.BLACK);
-        g2d.fillOval((this.cell.geti() * scale) + (scale / y), (this.cell.getj() * scale + (scale / 5)), scale / 6, scale / 6);
+        g2d.fillOval(((this.cell.geti() * scale) + (scale / y))+this.ScaleY, (this.cell.getj() * scale + (scale / 5))+this.ScaleX, scale / 6, scale / 6);
 
     }
 
@@ -144,61 +157,92 @@ public class Hero extends Thread{
 	
 	public void run(){
 		while(true){
-			
 			if(this.nextDir != null){
 				Cell celltempnext = this.model.getMap()[this.cell.geti()+this.nextDir.dI()][this.cell.getj()+this.nextDir.dJ()];
 				if(celltempnext.passable()){
 					this.lastDir = this.nextDir;
-					this.move(this.lastDir);
+					//this.move(this.lastDir);
+					this.move = this.lastDir;
+					
+					HeroMove heromove = new HeroMove(this,this.move);
+					try {
+						heromove.join();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					this.move(this.move);
 					this.nextDir = null;
 				}else{
 					if(this.lastDir != null){
 						Cell celltemplast = this.model.getMap()[this.cell.geti()+this.lastDir.dI()][this.cell.getj()+this.lastDir.dJ()];
 						if(celltemplast.passable()){
-							this.move(this.lastDir);
+							//this.move(this.lastDir);
+							this.move = this.lastDir;
+							HeroMove heromove = new HeroMove(this,this.move);
+							try {
+								heromove.join();
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							this.move(this.move);
 						}
 					}
 				}
 			}else if(this.lastDir != null){
 				Cell celltemplast = this.model.getMap()[this.cell.geti()+this.lastDir.dI()][this.cell.getj()+this.lastDir.dJ()];
 				if(celltemplast.passable()){
-					this.move(this.lastDir);
+					//this.move(this.lastDir);
+					this.move = this.lastDir;
+					HeroMove heromove = new HeroMove(this,this.move);
+					try {
+						heromove.join();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					this.move(this.move);
 				}
 			}
 			try {
-				Thread.sleep(250);
+				Thread.sleep(1);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 		}
 	}
 }
 
 class HeroMove extends Thread{
 	
-	private Graphics2D g2d;
+	private Hero hero;
 	private int scale;
-	private Cell cell;
-	private Model model;
+	private Direction move;
 	
-	
-	public HeroMove(Graphics2D g2d, int scale, Cell cell, Model model) {
-		this.g2d = g2d;
-		this.scale = scale;
-		this.cell = cell;
-		this.model = model;
+	public HeroMove(Hero hero,Direction move) {
+		this.hero = hero;
+		this.scale = 48;
+		this.move = move;
+		this.start();
 	}
 
 	public void run(){
 		
-		int temp = this.scale;
-		for(int i=0;i<temp;i++){
-			
-
-			
-			this.scale++;
+		for(int i=0;i<this.scale;i++){
+			this.hero.setScaleX(this.move.dJ()*i);
+			this.hero.setScaleY(this.move.dI()*i);
+			try {
+				Thread.sleep(5);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 		}
+		this.hero.setScaleX(0);
+		this.hero.setScaleY(0);
 	}
 }

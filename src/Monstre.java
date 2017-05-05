@@ -18,9 +18,13 @@ public class Monstre extends Thread{
 	private boolean vivant;
 	private int repop;
 	private Color color;
+	private int ScaleY;
+	private int ScaleX;
 	
 	
 	public Monstre(Cell cell,Model model,int repop, Color color) {
+		this.ScaleX = 0;
+		this.ScaleY = 0;
 		this.color = color;
 		this.repop = repop;
 		this.model = model;
@@ -126,38 +130,37 @@ public class Monstre extends Thread{
 			//g2d.drawImage(image, this.cell.geti() * scale, this.cell.getj() * scale, scale, scale, null);
 			if(this.model.getState()){
 				g2d.setPaint(Color.BLUE);
-				g2d.fillOval((this.cell.geti()*scale)+(scale/4), (this.cell.getj()*scale), scale/2, scale/2);
+				g2d.fillOval((this.cell.geti()*scale)+(scale/4)+this.ScaleY, (this.cell.getj()*scale)+this.ScaleX, scale/2, scale/2);
 				
-				g2d.fillOval((this.cell.geti()*scale)+(scale/4), (this.cell.getj()*scale)+(3*scale/4)-(scale/12), scale/6, scale/6);
-				g2d.fillOval((this.cell.geti()*scale)+(scale/4)+(scale/6), (this.cell.getj()*scale)+(3*scale/4)-(scale/12), scale/6, scale/6);
-				g2d.fillOval((this.cell.geti()*scale)+(scale/4)+(scale/3), (this.cell.getj()*scale)+(3*scale/4)-(scale/12), scale/6, scale/6);
+				g2d.fillOval((this.cell.geti()*scale)+(scale/4)+this.ScaleY, (this.cell.getj()*scale)+(3*scale/4)-(scale/12)+this.ScaleX, scale/6, scale/6);
+				g2d.fillOval((this.cell.geti()*scale)+(scale/4)+(scale/6)+this.ScaleY, (this.cell.getj()*scale)+(3*scale/4)-(scale/12)+this.ScaleX, scale/6, scale/6);
+				g2d.fillOval((this.cell.geti()*scale)+(scale/4)+(scale/3)+this.ScaleY, (this.cell.getj()*scale)+(3*scale/4)-(scale/12)+this.ScaleX, scale/6, scale/6);
 				
-				g2d.fillRect((this.cell.geti()*scale)+(scale/4), (this.cell.getj()*scale)+(scale/4), scale/2, scale/2);
+				g2d.fillRect((this.cell.geti()*scale)+(scale/4)+this.ScaleY, (this.cell.getj()*scale)+(scale/4)+this.ScaleX, scale/2, scale/2);
 				
 				g2d.setPaint(Color.WHITE);
-				g2d.fillOval((this.cell.geti()*scale)+(scale/4), (this.cell.getj()*scale)+(scale/4), scale/6, scale/6);
-				g2d.fillOval((this.cell.geti()*scale)+(3*scale/4)-(scale/6), (this.cell.getj()*scale)+(scale/4), scale/6, scale/6);
+				g2d.fillOval((this.cell.geti()*scale)+(scale/4)+this.ScaleY, (this.cell.getj()*scale)+(scale/4)+this.ScaleX, scale/6, scale/6);
+				g2d.fillOval((this.cell.geti()*scale)+(3*scale/4)-(scale/6)+this.ScaleY, (this.cell.getj()*scale)+(scale/4)+this.ScaleX, scale/6, scale/6);
 				
 
-				g2d.setPaint(Color.BLACK);
 				g2d.setStroke(new BasicStroke(1));
-				g2d.drawLine((this.cell.geti()*scale)+(scale/2)-(scale/7), (this.cell.getj()*scale)+(scale/2), (this.cell.geti()*scale)+(scale/2)+(scale/7), (this.cell.getj()*scale)+(scale/2));
+				g2d.drawLine((this.cell.geti()*scale)+(scale/2)-(scale/7)+this.ScaleY, (this.cell.getj()*scale)+(scale/2)+this.ScaleX, (this.cell.geti()*scale)+(scale/2)+(scale/7)+this.ScaleY, (this.cell.getj()*scale)+(scale/2)+this.ScaleX);
 			}else{
 				g2d.setPaint(this.color);
-				g2d.fillOval((this.cell.geti()*scale)+(scale/4), (this.cell.getj()*scale), scale/2, scale/2);
+				g2d.fillOval((this.cell.geti()*scale)+(scale/4)+this.ScaleY, (this.cell.getj()*scale)+this.ScaleX, scale/2, scale/2);
 				
-				g2d.fillOval((this.cell.geti()*scale)+(scale/4), (this.cell.getj()*scale)+(3*scale/4)-(scale/12), scale/6, scale/6);
-				g2d.fillOval((this.cell.geti()*scale)+(scale/4)+(scale/6), (this.cell.getj()*scale)+(3*scale/4)-(scale/12), scale/6, scale/6);
-				g2d.fillOval((this.cell.geti()*scale)+(scale/4)+(scale/3), (this.cell.getj()*scale)+(3*scale/4)-(scale/12), scale/6, scale/6);
+				g2d.fillOval((this.cell.geti()*scale)+(scale/4)+this.ScaleY, (this.cell.getj()*scale)+(3*scale/4)-(scale/12)+this.ScaleX, scale/6, scale/6);
+				g2d.fillOval((this.cell.geti()*scale)+(scale/4)+(scale/6)+this.ScaleY, (this.cell.getj()*scale)+(3*scale/4)-(scale/12)+this.ScaleX, scale/6, scale/6);
+				g2d.fillOval((this.cell.geti()*scale)+(scale/4)+(scale/3)+this.ScaleY, (this.cell.getj()*scale)+(3*scale/4)-(scale/12)+this.ScaleX, scale/6, scale/6);
 				
-				g2d.fillRect((this.cell.geti()*scale)+(scale/4), (this.cell.getj()*scale)+(scale/4), scale/2, scale/2);
+				g2d.fillRect((this.cell.geti()*scale)+(scale/4)+this.ScaleY, (this.cell.getj()*scale)+(scale/4)+this.ScaleX, scale/2, scale/2);
 				
 				g2d.setPaint(Color.WHITE);
-				g2d.fillOval((this.cell.geti()*scale)+(scale/4), (this.cell.getj()*scale)+(scale/4), scale/6, scale/6);
-				g2d.fillOval((this.cell.geti()*scale)+(3*scale/4)-(scale/6), (this.cell.getj()*scale)+(scale/4), scale/6, scale/6);
+				g2d.fillOval((this.cell.geti()*scale)+(scale/4)+this.ScaleY, (this.cell.getj()*scale)+(scale/4)+this.ScaleX, scale/6, scale/6);
+				g2d.fillOval((this.cell.geti()*scale)+(3*scale/4)-(scale/6)+this.ScaleY, (this.cell.getj()*scale)+(scale/4)+this.ScaleX, scale/6, scale/6);
 				
 
-				g2d.fillOval((this.cell.geti()*scale)+(scale/2)-(scale/12), (this.cell.getj()*scale)+(scale/2)-(scale/12), scale/6, scale/6);
+				g2d.fillOval((this.cell.geti()*scale)+(scale/2)-(scale/12)+this.ScaleY, (this.cell.getj()*scale)+(scale/2)-(scale/12)+this.ScaleX, scale/6, scale/6);
 			}
 			
 
@@ -169,9 +172,17 @@ public class Monstre extends Thread{
 		// TODO Auto-generated method stub
 		while(true){
 			if(this.vivant){
-				this.move(this.randDir());
+				Direction dir = this.randDir();
+				MonstreMove monstremove = new MonstreMove(this,dir);
 				try {
-					Thread.sleep(500);
+					monstremove.join();
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				this.move(dir);
+				try {
+					Thread.sleep(1);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -189,5 +200,47 @@ public class Monstre extends Thread{
 		}
 
 		
+	}
+
+	public void setScaleY(int i) {
+		this.ScaleY = i;
+		
+	}
+
+	public void setScaleX(int i) {
+		this.ScaleX = i;
+		
+	}
+}
+
+
+class MonstreMove extends Thread{
+	
+	private Monstre monstre;
+	private int scale;
+	private Direction move;
+	
+	public MonstreMove(Monstre monstre,Direction move) {
+		this.monstre = monstre;
+		this.scale = 48;
+		this.move = move;
+		this.start();
+	}
+
+	public void run(){
+		
+		for(int i=0;i<this.scale;i++){
+			this.monstre.setScaleX(this.move.dJ()*i);
+			this.monstre.setScaleY(this.move.dI()*i);
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		this.monstre.setScaleX(0);
+		this.monstre.setScaleY(0);
 	}
 }
