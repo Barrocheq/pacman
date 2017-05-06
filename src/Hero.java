@@ -1,8 +1,6 @@
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.geom.Arc2D;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -12,7 +10,6 @@ public class Hero extends Thread{
 
 	private Cell cell;
 	private int Score;
-	private BufferedImage image;
 	private Model model;
 	private Direction lastDir;
 	private Direction nextDir;
@@ -31,36 +28,7 @@ public class Hero extends Thread{
 		this.ScaleX = 0;
 		this.ScaleY = 0;
 		this.stop = false;
-
-		try {
-		    this.loadImage();
-        } catch (IOException e) {
-            System.out.println("Erreur lors du chargement de l'image Hero");
-            e.printStackTrace();
-        }
 	}
-
-	/**
-	 * Fonction de chargement de l'image qui representera le hero lors de la personnalisation du jeu (os : detection OS)
-	 * @throws IOException exception pour l'image
-	 */
-    protected void loadImage() throws IOException {
-        String os = System.getProperty("os.name").toLowerCase();
-
-        try {
-            if (os.contains("win")) {
-                image = ImageIO.read(new File("images\\pacman.png"));
-            } else if (os.contains("nux") || os.contains("nix")) {
-                System.out.println("Linux");
-            } else {
-                image = ImageIO.read(new File("images/pacman.png"));
-            }
-        } catch (IOException e) {
-            System.out.println("Erreur lors du chargement de l'image Hero");
-            e.printStackTrace();
-        }
-    }
-
 	
 	public int getScore(){
 		return this.Score;

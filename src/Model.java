@@ -16,12 +16,12 @@ public class Model {
 	private int numberOfMonster;
 	private Hero hero;
 	private Monstre[] Lmonstre;
-	private boolean State;
-    
+	private boolean state;
+
 
 	public void init(String f) {
 
-	    this.State = false;
+	    this.state = false;
 
         try {
             this.setFromFile(f);
@@ -33,7 +33,7 @@ public class Model {
 
     public void setFromFile(String fileName) throws IOException {
 
-        System.out.println(fileName);
+        //System.out.println(fileName);
 
         try {
             String line;
@@ -126,6 +126,7 @@ public class Model {
     public Cell[][] getMap() {
         return this.map;
     }
+    public void setState(boolean state) { this.state = state; }
     public int getSize() {
         return this.size;
     }
@@ -159,24 +160,25 @@ public class Model {
 	
 	
 	public boolean getState(){
-		return this.State;
+		return this.state;
 	}
-	
-	public void mangeBonbonRouge() {
-		this.State = true;
-		new bonbonrouge(timeToEat,this);
+
+
+
+    public void mangeBonbonRouge() {
+            new BonbonMagique(3000, this);
 	}
 	
 	public void finTime(){
-		System.out.println("Fin du temps pour manger");
-		this.State =false;
+		//System.out.println("Fin du temps pour manger");
+		this.state = false;
 	}
 	
 
 
     public void generateMaps() {
         this.timeToEat = 5000;
-        this.State = false;
+        this.state = false;
         this.size = 20;
         this.sizeL = size;
         this.sizeH = size;
@@ -193,26 +195,4 @@ public class Model {
         }
     }
 
-}
-
-
-class bonbonrouge extends Thread{
-	
-	private int time;
-	private Model model;
-	
-	public bonbonrouge(int time,Model model){
-		this.time = time;
-		this.model = model;
-		this.start();
-	}
-	
-	public void run(){
-		try {
-			Thread.sleep(this.time);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		this.model.finTime();
-	}
 }
