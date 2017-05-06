@@ -17,12 +17,11 @@ public class Model {
 	private Hero hero;
 	private Monstre[] Lmonstre;
 	private boolean State;
-
-	public Model() {
-        this.State = false;
-    }
+    
 
 	public void init(String f) {
+
+	    this.State = false;
 
         try {
             this.setFromFile(f);
