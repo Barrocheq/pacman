@@ -6,7 +6,8 @@ public class Main {
      */
 	public static void main(String[] args) {
         Moteur BrapBrap = new Moteur();
-		//View view = new View(model, tailleH, tailleL);
+
+        //DragnDrop drop = new DragnDrop();
 
 	}
 }
