@@ -15,7 +15,7 @@ import javax.swing.*;
 public class View {
 
 	private JFrame frame;
-	public static final int SCALE = 30;
+	public static final int SCALE = 48;
 	private plateau plateau;
 	private Model model;
 	public JLabel label;
@@ -45,7 +45,7 @@ public class View {
 	public void init(Model model, int sizeH, int sizeL) {
         this.model = model;
 
-        frame.setSize(((sizeL-1) * SCALE) + 30, ((sizeH+1) * SCALE) -8) ;
+        frame.setSize(((sizeL+1) * SCALE), ((sizeH+2) * SCALE)) ;
         this.plateau = new plateau(model); // Dessins du plateau
         cp.add(this.plateau);
 

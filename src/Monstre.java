@@ -21,9 +21,10 @@ public class Monstre extends Thread{
 	private int ScaleY;
 	private int ScaleX;
 	private boolean stop;
+	private int speed;
 	
 	
-	public Monstre(Cell cell,Model model,int repop, Color color) {
+	public Monstre(Cell cell,Model model,int repop, Color color, int speed) {
 		this.ScaleX = 0;
 		this.ScaleY = 0;
 		this.color = color;
@@ -34,6 +35,7 @@ public class Monstre extends Thread{
 		this.cellpop = cell;
 		this.vivant = true;
 		this.stop = false;
+		this.speed = speed;
 
 	}
 
@@ -159,7 +161,7 @@ public class Monstre extends Thread{
 					this.ScaleX = dir.dJ()*i;
 					this.ScaleY = dir.dI()*i;
 					try {
-						Thread.sleep(10);
+						Thread.sleep(100/speed);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}

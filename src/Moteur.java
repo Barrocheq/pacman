@@ -38,11 +38,12 @@ public class Moteur extends Thread {
 			parti = true;
 			i++;
 			this.model.init("lvl" + i + ".txt");
-			this.model.startHero();
-			this.model.startMonstre();
 			this.view.init(this.model, this.model.getSizeH(), this.model.getSizeL());
+			this.model.startMonstre();
+			this.model.startHero();
 			this.frame = view.getFrame();
 			this.controller.init(this.model, this.view);
+			
 
 			while (parti) {
 				this.frame.repaint();
@@ -50,6 +51,12 @@ public class Moteur extends Thread {
 				if (this.model.nbBonbon() == 0) {
 
 					this.model.stop();
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 
 					parti = false;
 					break;

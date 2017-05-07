@@ -19,11 +19,12 @@ public class Model {
 	private boolean State;
 
 	public Model() {
-        this.State = false;
+        
     }
 
 	public void init(String f) {
-
+		
+		this.State = false;
         try {
             this.setFromFile(f);
         } catch (IOException e) {
@@ -91,7 +92,7 @@ public class Model {
                             int b = (int)(Math.random() * 255);
 
                             this.map[j][i - 1]= new Cell(0, j, i - 1, 0);
-                            this.Lmonstre[indexMonster] = new Monstre(this.map[j][i - 1],this, this.respawnMonster, new Color(r, g, b));
+                            this.Lmonstre[indexMonster] = new Monstre(this.map[j][i - 1],this, this.respawnMonster, new Color(r, g, b),this.speed);
 
                         }
                         else
@@ -214,6 +215,7 @@ class bonbonrouge extends Thread{
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		
 		this.model.finTime();
 	}
 }
