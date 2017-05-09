@@ -34,6 +34,7 @@ public class Moteur extends Thread {
 		boolean parti = true;
 		int i = -1;
 		int taille = 5;
+		int vie = 0;
 
 
 
@@ -42,7 +43,7 @@ public class Moteur extends Thread {
 
 		while (true) {
 			this.view.menu();
-			while(this.view.getWait()) {
+			while(this.view.getWait() && vie == 0) {
 				try {
 					System.out.println("wait");
 					Thread.sleep(100);
@@ -91,15 +92,12 @@ public class Moteur extends Thread {
 						if (this.model.getHero().getCell().equals(m.getCell())) {
 							this.model.stop();
 							this.view.setWait(true);
-							this.view.perdu();
+							vie++;
+							this.view.perdu(vie);
 							taille -=2;
 							i--;
-							try {
-								Thread.sleep(4000);
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
+
+							if(vie == 3) vie = 0;
 
 							break parti;
 						}

@@ -44,7 +44,7 @@ public class View {
 		label = new JLabel();
 		//label.setForeground(Color.WHITE);
 		label.setText(String.format("<html><font color='rgb(%s, %s, %s)'>PERDU</font></html>", (int)(Math.random() * 255), (int)(Math.random() * 255), (int)(Math.random() * 255)));
-		label.setFont(new Font("Courier", Font.BOLD, this.SCALE));
+		label.setFont(new Font("Courier", Font.BOLD, this.SCALE-10));
 		glass.add(label);
     }
 
@@ -100,9 +100,9 @@ public class View {
 		return this.frame;
 	}
 	
-	public void perdu() {
+	public void perdu(int vie) {
 		for(int i = 0; i < 5; i++) {
-			this.label.setText(String.format("<html><font color='rgb(%s, %s, %s)'>PERDU</font></html>", (int) (Math.random() * 255), (int) (Math.random() * 255), (int) (Math.random() * 255)));
+			this.label.setText(String.format("<html><font color='rgb(%s, %s, %s)'>PERDU, VIE RESTANTES: %s</font></html>", (int) (Math.random() * 255), (int) (Math.random() * 255), (int) (Math.random() * 255), 3-vie));
 			this.glass.setVisible(true);
 			glass.repaint();
 
