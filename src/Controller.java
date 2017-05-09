@@ -18,12 +18,19 @@ public class Controller implements KeyListener {
 	}
 
 	public void init(Model model, View view) {
+
+		System.out.println("Controller started");
+
         this.model = model;
         this.frame = view.getFrame();
         this.view = view;
         this.frame.addKeyListener(this);
         this.frame.setFocusable(true);
-    }
+
+
+
+
+	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {

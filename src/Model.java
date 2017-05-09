@@ -185,7 +185,6 @@ public class Model {
 	}
 
 	public void stop() {
-		View.jeu = false;
 	    this.hero.stopHero();
 
 	    if(this.mangeBonbon != null)

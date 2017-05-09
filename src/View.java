@@ -13,83 +13,106 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.text.AbstractDocument;
 
 
 public class View {
 
 	private JFrame frame;
-	private JFrame framemenu;
 	public static final int SCALE = 48;
 	private plateau plateau;
 	private Model model;
 	public JLabel label;
 	private Container cp;
 	private JPanel glass;
-	public static boolean jeu = false;
+	private boolean wait;
+	private JPanel cards;
 
 
     /**
      * Constructeur pour niveau de base
      */
 	public View() {
-		View.jeu = false;
+		wait = true;
+
         this.frame = new JFrame();
         cp = frame.getContentPane();
         frame.setTitle("PacMan");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		final JPanel glass = (JPanel) this.frame.getGlassPane();
-		JLabel label = new JLabel();
-		label.setForeground(Color.WHITE);
-		label.setText("PERDU");
+
+		this.glass = (JPanel) this.frame.getGlassPane();
+		label = new JLabel();
+		//label.setForeground(Color.WHITE);
+		label.setText(String.format("<html><font color='rgb(%s, %s, %s)'>PERDU</font></html>", (int)(Math.random() * 255), (int)(Math.random() * 255), (int)(Math.random() * 255)));
 		label.setFont(new Font("Courier", Font.BOLD, this.SCALE));
 		glass.add(label);
-		this.glass = glass;
     }
-	
-	public void startPage(){
-		if(this.frame != null && this.frame.isVisible()){this.frame.setVisible(false);}
-		JFrame framemenu = new JFrame();
-        framemenu.setTitle("PacMan");
-        framemenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		framemenu.setLayout(new FlowLayout());
-		JButton button = new JButton("Jouer");
-		button.addActionListener(new ActionListener(){
 
+
+	public void setWait(boolean wait) {
+		this.wait = wait;
+	}
+
+	public void menu() {
+		this.glass.setVisible(false);
+
+		this.frame.setSize(400, 400);
+
+		cp.removeAll();
+
+		JButton but = new JButton("Jouer");
+		cp.add(but);
+
+		but.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				View.jeu = true;
-				
+			public void actionPerformed(ActionEvent e) {
+				wait = false;
 			}
-			
 		});
-		framemenu.getContentPane().add(button);
-		framemenu.setSize(500,500);
-		framemenu.setVisible(true);
-		this.framemenu = framemenu;
 
+
+		cp.revalidate();
+		cp.repaint();
+		this.frame.setVisible(true);
+	}
+
+	public boolean getWait() {
+		if(this.wait) return true;
+		else return false;
 	}
 
 	public void init(Model model, int sizeH, int sizeL) {
-		this.glass.setVisible(false);
-		this.framemenu.setVisible(false);
-        this.model = model;
 
-        frame.setSize(((sizeL+1) * SCALE), ((sizeH+2) * SCALE)) ;
-        this.plateau = new plateau(model); // Dessins du plateau
+		this.model = model;
+        cp.removeAll();
+
+		this.frame.setSize(((sizeL+1) * SCALE), ((sizeH+2) * SCALE)) ;
+        this.plateau = new plateau(this.model); // Dessins du plateau
         cp.add(this.plateau);
 
-        frame.setVisible(true);
-        this.frame = frame;
+        cp.revalidate();
+        cp.repaint();
+
+		this.frame.setVisible(true);
     }
 
 	public JFrame getFrame() {
 		return this.frame;
 	}
 	
-	public void perdu(){
+	public void perdu() {
+		for(int i = 0; i < 5; i++) {
+			this.label.setText(String.format("<html><font color='rgb(%s, %s, %s)'>PERDU</font></html>", (int) (Math.random() * 255), (int) (Math.random() * 255), (int) (Math.random() * 255)));
+			this.glass.setVisible(true);
+			glass.repaint();
 
-		this.glass.setVisible(true);
-		glass.repaint();
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+
+		}
 	}
 
 }

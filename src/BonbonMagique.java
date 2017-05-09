@@ -30,13 +30,12 @@ public class BonbonMagique extends Thread {
             while(time > 0) {
                 System.out.println(time);
 
-                if(time > 4000) {
+                if(time > 4000)
                     this.model.getHero().setColor(Color.red);
-                }
-                else if(time < 4000) {
-                    System.out.println("C " + this.model.getHero().getColor() + " , t : " + time);
+
+                else if(time < 4000)
                     this.model.getHero().blink();
-                }
+
 
                 try {
                     Thread.sleep(500);
