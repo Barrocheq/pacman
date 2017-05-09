@@ -15,7 +15,7 @@ import javax.swing.*;
 public class View {
 
 	private JFrame frame;
-	public static final int SCALE = 48;
+	public static final int SCALE = 30;
 	private plateau plateau;
 	private Model model;
 	public JLabel label;

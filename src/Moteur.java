@@ -38,9 +38,9 @@ public class Moteur extends Thread {
 
 			parti = true;
 			i++;
-			//this.model.init("lvl" + i + ".txt");
+			this.model.init("lvl" + i + ".txt");
 			taille += 2;
-			this.model.init(taille);
+			//this.model.init(taille);
 			this.model.startHero();
 			this.model.startMonstre();
 			this.view.init(this.model, this.model.getSizeH(), this.model.getSizeL());
