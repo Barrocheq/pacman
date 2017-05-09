@@ -79,7 +79,7 @@ public class Moteur extends Thread {
 							glass.setVisible(true);
 							System.out.println("Perdu");
 							glass.repaint();
-							// System.exit(0);
+							this.model.stop();
 							try {
 								Thread.sleep(1000000);
 							} catch (InterruptedException e) {
