@@ -30,6 +30,22 @@ public class Model {
         }
     }
 
+    public void init(int size) {
+	    RandomLvl lvl = new RandomLvl();
+	    lvl.init(size);
+//        this.map = new Cell[size][size];
+	    this.map = lvl.getMap();
+
+        this.hero = new Hero(this.map[1][1], this);
+        this.map[1][1] = new Cell(1, 1, 1, 0);
+        this.Lmonstre = new Monstre[1];
+        this.Lmonstre[0] = new Monstre(this.map[size-2][size-2],this, this.respawnMonster, Color.CYAN);
+
+        this.sizeL = size;
+        this.sizeH = size;
+
+    }
+
 
     public void setFromFile(String fileName) throws IOException {
 
@@ -166,11 +182,10 @@ public class Model {
 
 
     public void mangeBonbonRouge() {
-            new BonbonMagique(3000, this);
+        new BonbonMagique(this.timeToEat, this);
 	}
 	
 	public void finTime(){
-		//System.out.println("Fin du temps pour manger");
 		this.state = false;
 	}
 	

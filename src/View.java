@@ -23,16 +23,6 @@ public class View {
 
 
     /**
-     * Constructeur pour niveau generer a partir d'un fichier (peut etre égale au constructeur d'apres)
-     * @param model model du jeu
-     * @param sizeH taille hauteur du jeu
-     * @param sizeL taille largeur du jeu
-     */
-
-
-
-
-    /**
      * Constructeur pour niveau de base
      */
 	public View() {

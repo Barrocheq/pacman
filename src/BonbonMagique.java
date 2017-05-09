@@ -1,3 +1,9 @@
+/* TODO
+clignotement a partir de 30% du temps de base
+ */
+
+import java.awt.*;
+
 public class BonbonMagique extends Thread {
     private int time;
     private Model model;
@@ -10,20 +16,26 @@ public class BonbonMagique extends Thread {
 
     public void run(){
         synchronized (this.model) {
-
-            System.out.println("Start Thread : " + this.getId());
-
             this.model.setState(true);
+            this.model.getHero().setColor(Color.red);
 
             try {
-                Thread.sleep(this.time);
+                Thread.sleep(this.time - 3000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
-            this.model.finTime();
+            this.model.getHero().blink(3000);
 
-            System.out.println("End Thread : " + this.getId());
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            this.model.getHero().stopBlink();
+            this.model.getHero().setColor(Color.yellow);
+            this.model.finTime();
         }
     }
 }
