@@ -9,10 +9,10 @@ import javax.imageio.ImageIO;
 
 public class Monstre extends Thread{
 
-	private Cell cell;
+	protected Cell cell;
 	private Cell cellpop;
-	private Cell[][] map;
-	private Model model;
+	protected Cell[][] map;
+	protected Model model;
 	private Direction lastMove;
 	private BufferedImage image;
 	private boolean vivant;
@@ -21,9 +21,25 @@ public class Monstre extends Thread{
 	private int ScaleY;
 	private int ScaleX;
 	private boolean stop;
+	private int speed;
 	
 	
-	public Monstre(Cell cell,Model model,int repop, Color color) {
+	public Monstre(Cell cell,Model model,int repop, int speed) {
+		this.ScaleX = 0;
+		this.ScaleY = 0;
+		this.color = Color.GREEN;
+		this.repop = repop;
+		this.model = model;
+		this.map = model.getMap();
+		this.cell = cell;
+		this.cellpop = cell;
+		this.vivant = true;
+		this.stop = false;
+		this.speed = speed;
+
+	}
+	
+	protected Monstre(Cell cell,Model model,int repop,Color color, int speed) {
 		this.ScaleX = 0;
 		this.ScaleY = 0;
 		this.color = color;
@@ -34,6 +50,7 @@ public class Monstre extends Thread{
 		this.cellpop = cell;
 		this.vivant = true;
 		this.stop = false;
+		this.speed = speed;
 
 	}
 
@@ -83,7 +100,7 @@ public class Monstre extends Thread{
 		return res;
 	}
 	
-	public Direction randDir(){
+	public Direction Dir(){
 		Direction[] dirs = movePossible();
 		return dirs[(int) (dirs.length*Math.random())];
 		
@@ -152,14 +169,14 @@ public class Monstre extends Thread{
 	public void run() {
 		while(!stop){
 			if(this.vivant){
-				Direction dir = this.randDir();
+				Direction dir = this.Dir();
 				
 				for(int i = 0; i < View.SCALE; i++){
                     if(stop) break;
 					this.ScaleX = dir.dJ()*i;
 					this.ScaleY = dir.dI()*i;
 					try {
-						Thread.sleep(10);
+						Thread.sleep(100/speed);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}

@@ -18,6 +18,10 @@ public class Model {
 	private Monstre[] Lmonstre;
 	private boolean state;
 
+	public Model() {
+        
+    }
+
 
 	public void init(String f) {
 
@@ -39,7 +43,7 @@ public class Model {
         this.hero = new Hero(this.map[1][1], this);
         this.map[1][1] = new Cell(1, 1, 1, 0);
         this.Lmonstre = new Monstre[1];
-        this.Lmonstre[0] = new Monstre(this.map[size-2][size-2],this, this.respawnMonster, Color.CYAN);
+        this.Lmonstre[0] = new Monstre(this.map[size-2][size-2],this, this.respawnMonster, 10);
 
         this.sizeL = size;
         this.sizeH = size;
@@ -106,7 +110,7 @@ public class Model {
                             int b = (int)(Math.random() * 255);
 
                             this.map[j][i - 1]= new Cell(0, j, i - 1, 0);
-                            this.Lmonstre[indexMonster] = new Monstre(this.map[j][i - 1],this, this.respawnMonster, new Color(r, g, b));
+                            this.Lmonstre[indexMonster] = new Monstre3(this.map[j][i - 1],this, this.respawnMonster,this.speed);
 
                         }
                         else
