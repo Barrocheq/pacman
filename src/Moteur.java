@@ -45,7 +45,6 @@ public class Moteur extends Thread {
 			this.view.menu();
 			while(this.view.getWait() && vie == 0) {
 				try {
-					System.out.println("wait");
 					Thread.sleep(100);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
@@ -97,7 +96,11 @@ public class Moteur extends Thread {
 							taille -=2;
 							i--;
 
-							if(vie == 3) vie = 0;
+							if(vie == 3){
+								i = -1;
+								taille = 5;
+								vie = 0;
+							}
 
 							break parti;
 						}
