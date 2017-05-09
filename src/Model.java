@@ -35,6 +35,20 @@ public class Model {
         }
     }
 
+    public void setMap(Cell[][] map) {
+        this.sizeL = map.length;
+        this.sizeH = map.length;
+        timeToEat = 5000;
+        this.map = map;
+
+        this.hero = new Hero(this.map[1][1], this);
+        this.map[1][1] = new Cell(1, 1, 1, 0);
+
+        System.out.println("GoM");
+
+        this.generateMonster();
+    }
+
     public void init(int size) {
         this.sizeL = size;
         this.sizeH = size;
@@ -48,7 +62,7 @@ public class Model {
         this.hero = new Hero(this.map[1][1], this);
         this.map[1][1] = new Cell(1, 1, 1, 0);
 
-
+        System.out.println("Go");
 
         this.generateMonster();
     }

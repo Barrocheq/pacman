@@ -33,12 +33,8 @@ public class Moteur extends Thread {
 		
 		boolean parti = true;
 		int i = -1;
-		int taille = 5;
+		int taille = 9;
 		int vie = 0;
-
-
-
-
 
 
 		while (true) {
