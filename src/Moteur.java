@@ -92,6 +92,8 @@ public class Moteur extends Thread {
 							this.model.stop();
 							this.view.setWait(true);
 							this.view.perdu();
+							taille -=2;
+							i--;
 							try {
 								Thread.sleep(4000);
 							} catch (InterruptedException e) {
