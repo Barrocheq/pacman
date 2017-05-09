@@ -14,28 +14,42 @@ public class BonbonMagique extends Thread {
             this.start();
         }
 
+    public void addTime(int time) {
+        this.time += time;
+    }
+
+    public void stopBonbon() {
+        this.time = 0;
+    }
+
     public void run(){
         synchronized (this.model) {
             this.model.setState(true);
             this.model.getHero().setColor(Color.red);
 
-            try {
-                Thread.sleep(this.time - 3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            while(time > 0) {
+                System.out.println(time);
+
+                if(time > 4000) {
+                    this.model.getHero().setColor(Color.red);
+                }
+                else if(time < 4000) {
+                    System.out.println("C " + this.model.getHero().getColor() + " , t : " + time);
+                    this.model.getHero().blink();
+                }
+
+                try {
+                    Thread.sleep(500);
+                    time -= 500;
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
 
-            this.model.getHero().blink(3000);
 
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            this.model.getHero().stopBlink();
             this.model.getHero().setColor(Color.yellow);
-            this.model.finTime();
+            this.model.setState(false);
+            this.model.finEat();
         }
     }
 }

@@ -17,6 +17,7 @@ public class Model {
 	private Hero hero;
 	private Monstre[] Lmonstre;
 	private boolean state;
+	private BonbonMagique mangeBonbon;
 
 	public Model() {
         
@@ -35,6 +36,10 @@ public class Model {
     }
 
     public void init(int size) {
+        this.sizeL = size;
+        this.sizeH = size;
+        timeToEat = 5000;
+
 	    RandomLvl lvl = new RandomLvl();
 	    lvl.init(size);
 //        this.map = new Cell[size][size];
@@ -42,14 +47,35 @@ public class Model {
 
         this.hero = new Hero(this.map[1][1], this);
         this.map[1][1] = new Cell(1, 1, 1, 0);
-        this.Lmonstre = new Monstre[1];
-        this.Lmonstre[0] = new Monstre(this.map[size-2][size-2],this, this.respawnMonster, 10);
 
-        this.sizeL = size;
-        this.sizeH = size;
 
+
+        this.generateMonster();
     }
 
+    public void generateMonster() {
+	    int nbMonster = this.sizeH/4;
+	    int i = 0;
+        int randI;
+        int randJ;
+        this.respawnMonster = 1000;
+
+        this.Lmonstre = new Monstre[nbMonster];
+
+
+        while (nbMonster > 0) {
+            randI = (int)(Math.random() * ((this.sizeH-1)-1)) + 1;
+            randJ = (int)(Math.random() * ((this.sizeH-1)-1)) + 1;
+            //randI = (int)(Math.random() * (this.sizeH-3)) + 3;
+            //randJ = (int)(Math.random() * (this.sizeH-3)) + 3;
+
+            if(!(this.map[randI][randJ].passable())) {
+                this.Lmonstre[i] = new Monstre(this.map[randI][randJ],this, this.respawnMonster, 10);
+                nbMonster--;
+                i++;
+            }
+        }
+    }
 
     public void setFromFile(String fileName) throws IOException {
 
@@ -162,6 +188,9 @@ public class Model {
 		View.jeu = false;
 	    this.hero.stopHero();
 
+	    if(this.mangeBonbon != null)
+	        this.mangeBonbon.stopBonbon();
+
         for (Monstre m : this.Lmonstre)
             m.stopMonstre();
     }
@@ -184,35 +213,18 @@ public class Model {
 		return this.state;
 	}
 
+	public void finEat() {
+	    this.mangeBonbon = null;
+    }
 
 
     public void mangeBonbonRouge() {
-        new BonbonMagique(this.timeToEat, this);
-	}
-	
-	public void finTime(){
-		this.state = false;
-	}
-	
-
-
-    public void generateMaps() {
-        this.timeToEat = 5000;
-        this.state = false;
-        this.size = 20;
-        this.sizeL = size;
-        this.sizeH = size;
-        this.map = new Cell[this.size][this.size];
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                if (i == 0 || j == 0 || i == size-1 || j == size-1) {
-                    this.map[i][j] = new Cell(0,i,j,0);
-                } else {
-                    this.map[i][j] = new Cell(1,i,j,1);
-                }
-
-            }
+	    if(this.mangeBonbon != null){
+            System.out.println("Deja rouge");
+            this.mangeBonbon.addTime(this.timeToEat);
+        } else {
+            System.out.println("Creation rouge");
+            this.mangeBonbon = new BonbonMagique(this.timeToEat, this);
         }
-    }
-
+	}
 }

@@ -35,7 +35,18 @@ public class Moteur extends Thread {
 		int i = -1;
 		int taille = 5;
 
-		while(true){
+		while (true) {
+
+			parti = true;
+			i++;
+			this.model.init("lvl" + i + ".txt");
+			taille += 2;
+			//this.model.init(taille);
+			this.model.startHero();
+			this.model.startMonstre();
+			this.view.init(this.model, this.model.getSizeH(), this.model.getSizeL());
+			this.frame = view.getFrame();
+			this.controller.init(this.model, this.view);
 			
 			this.view.startPage();
 			while(!View.jeu){

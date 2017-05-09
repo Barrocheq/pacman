@@ -96,23 +96,11 @@ public class Hero extends Thread{
 
 	}
 
-	public void blink(int time) {
-	    this.timer = new Timer();
-
-	    this.timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if(color == Color.yellow) setColor(Color.red);
-                else if(color == Color.red) setColor(Color.yellow);
-                else System.err.println("Erreur blink(Hero)");
-            }
-        }, 0, 500);
-
+	public void blink() {
+		if(this.color == Color.yellow) this.setColor(Color.red);
+		else if(this.color == Color.red) this.setColor(Color.yellow);
+		else System.err.println("Erreur blink(Hero)");
 	}
-
-	public void stopBlink() {
-	    this.timer.cancel();
-    }
 
 
 	/**
@@ -204,8 +192,8 @@ public class Hero extends Thread{
 	public void run(){
 		while(!stop){
 			synchronized (this) {
-			    if(this.model.getState()) this.setColor(Color.red);
-                else this.setColor(Color.yellow);
+			    //if(this.model.getState()) this.setColor(Color.red);
+                //else this.setColor(Color.yellow);
 
 
 				if (this.nextDir != null && this.model.getMap()[this.cell.geti() + this.nextDir.dI()][this.cell.getj() + this.nextDir.dJ()].passable()) {
