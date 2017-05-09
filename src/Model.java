@@ -159,6 +159,7 @@ public class Model {
 	}
 
 	public void stop() {
+		View.jeu = false;
 	    this.hero.stopHero();
 
         for (Monstre m : this.Lmonstre)

@@ -1,7 +1,7 @@
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -9,30 +9,69 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 
 public class View {
 
 	private JFrame frame;
+	private JFrame framemenu;
 	public static final int SCALE = 48;
 	private plateau plateau;
 	private Model model;
 	public JLabel label;
 	private Container cp;
+	private JPanel glass;
+	public static boolean jeu = false;
 
 
     /**
      * Constructeur pour niveau de base
      */
 	public View() {
+		View.jeu = false;
         this.frame = new JFrame();
         cp = frame.getContentPane();
         frame.setTitle("PacMan");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		final JPanel glass = (JPanel) this.frame.getGlassPane();
+		JLabel label = new JLabel();
+		label.setForeground(Color.WHITE);
+		label.setText("PERDU");
+		label.setFont(new Font("Courier", Font.BOLD, this.SCALE));
+		glass.add(label);
+		this.glass = glass;
     }
+	
+	public void startPage(){
+		if(this.frame != null && this.frame.isVisible()){this.frame.setVisible(false);}
+		JFrame framemenu = new JFrame();
+        framemenu.setTitle("PacMan");
+        framemenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		framemenu.setLayout(new FlowLayout());
+		JButton button = new JButton("Jouer");
+		button.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				View.jeu = true;
+				
+			}
+			
+		});
+		framemenu.getContentPane().add(button);
+		framemenu.setSize(500,500);
+		framemenu.setVisible(true);
+		this.framemenu = framemenu;
+
+	}
 
 	public void init(Model model, int sizeH, int sizeL) {
+		this.glass.setVisible(false);
+		this.framemenu.setVisible(false);
         this.model = model;
 
         frame.setSize(((sizeL+1) * SCALE), ((sizeH+2) * SCALE)) ;
@@ -45,6 +84,12 @@ public class View {
 
 	public JFrame getFrame() {
 		return this.frame;
+	}
+	
+	public void perdu(){
+
+		this.glass.setVisible(true);
+		glass.repaint();
 	}
 
 }
