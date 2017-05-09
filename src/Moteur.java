@@ -51,10 +51,21 @@ public class Moteur extends Thread {
 				}
 			}
 
+			taille += 2;
 			parti = true;
 			i++;
-			this.model.init("lvl" + i + ".txt");
-			taille += 2;
+
+			if(this.view.getChoixLvl() == 0 )
+				this.model.init(taille);
+			else if(this.view.getChoixLvl() == 1)
+				this.model.init("lvl" + i + ".txt");
+			else if(this.view.getChoixLvl() == 2)
+				System.out.println("Lancement DnD");
+			else
+				System.err.println("Errurs choix LVL");
+
+
+			//this.model.init("lvl" + i + ".txt");
 			//this.model.init(taille);
 			this.model.startHero();
 			this.model.startMonstre();

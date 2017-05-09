@@ -1,10 +1,4 @@
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -26,10 +20,13 @@ public class View {
 	private Container cp;
 	private JPanel glass;
 	private boolean wait;
-	private JPanel cards;
+	private int choixLvl; // Random = 0, lvl = 1, DnD = 2
 
+	public int getChoixLvl() {
+		return choixLvl;
+	}
 
-    /**
+	/**
      * Constructeur pour niveau de base
      */
 	public View() {
@@ -39,6 +36,7 @@ public class View {
         cp = frame.getContentPane();
         frame.setTitle("PacMan");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        cp.setLayout(new BorderLayout());
 
 		this.glass = (JPanel) this.frame.getGlassPane();
 		label = new JLabel();
@@ -60,13 +58,36 @@ public class View {
 
 		cp.removeAll();
 
-		JButton but = new JButton("Jouer");
-		cp.add(but);
+		JButton jRandom = new JButton("Random");
+		JButton jLevel = new JButton("Level");
+		JButton jDnD = new JButton("Drag&Drop");
 
-		but.addActionListener(new ActionListener() {
+
+		cp.add(jRandom, BorderLayout.LINE_START);
+		cp.add(jLevel, BorderLayout.CENTER);
+		cp.add(jDnD, BorderLayout.LINE_END);
+
+		jRandom.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				wait = false;
+				choixLvl = 0;
+			}
+		});
+
+		jLevel.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				wait = false;
+				choixLvl = 1;
+			}
+		});
+
+		jDnD.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				wait = false;
+				choixLvl = 2;
 			}
 		});
 
