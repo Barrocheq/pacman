@@ -3,6 +3,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.io.File;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
 
@@ -16,6 +18,8 @@ public class Hero extends Thread{
 	private int ScaleX;
 	private int ScaleY;
 	private boolean stop;
+	private Color color;
+    private Timer timer;
 
 	/**
 	 * Constructeur par defaut de la classe Hero
@@ -28,13 +32,18 @@ public class Hero extends Thread{
 		this.ScaleX = 0;
 		this.ScaleY = 0;
 		this.stop = false;
+		this.color = Color.yellow;
 	}
 	
 	public int getScore(){
 		return this.Score;
 	}
-	
-	public void incScore(int x){
+
+    public void setColor(Color c) {
+        this.color = c;
+    }
+
+    public void incScore(int x){
 		this.Score = this.Score +x;
 	}
 
@@ -69,7 +78,11 @@ public class Hero extends Thread{
 	public Direction getLastDir() { return this.lastDir; }
 	public Direction getNextDir() { return this.nextDir; }
 
-	/**
+    public Color getColor() {
+        return color;
+    }
+
+    /**
 	 * Fonction qui regarde si la case suivante est passable
 	 * @return true si elle l'est
 	 */
@@ -80,7 +93,26 @@ public class Hero extends Thread{
 			return true;
 		else
 			return false;
+
 	}
+
+	public void blink(int time) {
+	    this.timer = new Timer();
+
+	    this.timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if(color == Color.yellow) setColor(Color.red);
+                else if(color == Color.red) setColor(Color.yellow);
+                else System.err.println("Erreur blink(Hero)");
+            }
+        }, 0, 500);
+
+	}
+
+	public void stopBlink() {
+	    this.timer.cancel();
+    }
 
 
 	/**
@@ -111,11 +143,7 @@ public class Hero extends Thread{
             y = 2;
         }
 
-        if(!this.model.getState()){
-            g2d.setPaint(Color.YELLOW); // Jaune si pas de super bonbon
-        }else{
-            g2d.setPaint(Color.RED); // Rouge si super bonbon
-        }
+        g2d.setColor(this.color);
 
         g2d.fillArc((this.cell.geti() * scale)+this.ScaleY, (this.cell.getj() * scale)+this.ScaleX, scale, scale, x - i, 300 + 2 * i);
 
@@ -155,11 +183,8 @@ public class Hero extends Thread{
 			y = 2;
 		}
 
-		if(!this.model.getState()){
-			g2d.setPaint(Color.YELLOW);
-		}else{
-			g2d.setPaint(Color.RED);
-		}
+
+		g2d.setColor(this.color);
 
 		g2d.fillArc((this.cell.geti() * scale)+this.ScaleY, (this.cell.getj() * scale)+this.ScaleX, scale, scale, x, 300);
 
@@ -179,6 +204,10 @@ public class Hero extends Thread{
 	public void run(){
 		while(!stop){
 			synchronized (this) {
+			    if(this.model.getState()) this.setColor(Color.red);
+                else this.setColor(Color.yellow);
+
+
 				if (this.nextDir != null && this.model.getMap()[this.cell.geti() + this.nextDir.dI()][this.cell.getj() + this.nextDir.dJ()].passable()) {
 					this.lastDir = this.nextDir;
 
