@@ -107,6 +107,9 @@ class DND extends Thread{
 
     public void MapToFile(String fileName) throws IOException {
 
+
+        System.out.println("i : " + this.hero.getCell().geti() + ", j " + this.hero.getCell().getj());
+
         this.fileName = fileName;
         BufferedWriter file = new BufferedWriter(new FileWriter(fileName));
         String line;
@@ -118,12 +121,12 @@ class DND extends Thread{
         for (int i = 0; i < this.size; i++) {
             boucleline :for (int j = 0; j < this.size; j++) {
                 for(Monstre m :this.Lmonstre){
-                    if(m.getCell().geti() == i && m.getCell().getj() == j){
+                    if(m.getCell().geti() == j && m.getCell().getj() == i){
                         line+="0";
                         continue boucleline;
                     }
                 }
-                if (this.hero.getCell().geti() == i && this.hero.getCell().getj() == j) {
+                if (this.hero.getCell().geti() == j && this.hero.getCell().getj() == i) {
                     line += "C";
                 } else if (this.map[j][i].getStats() == 0) {
                     line += "#";
