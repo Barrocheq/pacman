@@ -179,7 +179,7 @@ public class Model {
 							int b = (int) (Math.random() * 255);
 
 							this.map[j][i - 1] = new Cell(0, j, i - 1, 0);
-							this.Lmonstre[indexMonster] = new Monstre3(this.map[j][i - 1], this, this.respawnMonster,
+							this.Lmonstre[indexMonster] = new Monstre4(this.map[j][i - 1], this, this.respawnMonster,
 									this.speed);
 
 						} else
