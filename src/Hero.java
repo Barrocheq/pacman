@@ -19,6 +19,7 @@ public class Hero extends Thread{
 	private boolean stop;
 	private Color color;
     private Timer timer;
+	private boolean running;
 
 	/**
 	 * Constructeur par defaut de la classe Hero
@@ -32,6 +33,7 @@ public class Hero extends Thread{
 		this.ScaleY = 0;
 		this.stop = false;
 		this.color = Color.yellow;
+		this.running = true;
 	}
 
 	public Hero(Cell cell) {
@@ -40,6 +42,7 @@ public class Hero extends Thread{
 		this.ScaleY = 0;
 		this.stop = false;
 		this.color = Color.yellow;
+		this.running = true;
 	}
 
 	public Hero(Cell cell, RandomLvl r) {
@@ -48,6 +51,7 @@ public class Hero extends Thread{
 		this.ScaleY = 0;
 		this.stop = false;
 		this.color = Color.yellow;
+		this.running = true;
 
 		//this.cell = r.getMap()[this.cell.geti()][this.cell.getj()];
 	}
@@ -197,6 +201,30 @@ public class Hero extends Thread{
 		this.stop = true;
 	}
 
+	public void pause() {
+		synchronized (this) {
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+				System.err.println("Erreur mise en pause Hero");
+			}
+		}
+	}
+
+	public void unPause() {
+		synchronized (this) {
+			this.notifyAll();
+		}
+	}
+
+	public void pauseThread() throws InterruptedException {
+		running = false;
+	}
+
+	public void resumeThread() {
+		running = true;
+	}
 
 	public void run(){
 		while(!stop){
@@ -204,6 +232,8 @@ public class Hero extends Thread{
 			    //if(this.model.getState()) this.setColor(Color.red);
                 //else this.setColor(Color.yellow);
 
+				while(!running)
+					yield();
 
 				if (this.nextDir != null && this.model.getMap()[this.cell.geti() + this.nextDir.dI()][this.cell.getj() + this.nextDir.dJ()].passable()) {
 					this.lastDir = this.nextDir;

@@ -22,8 +22,9 @@ public class Monstre extends Thread{
 	private int ScaleX;
 	private boolean stop;
 	private int speed;
-	
-	
+	private boolean running;
+
+
 	public Monstre(Cell cell,Model model,int repop, int speed) {
 		this.ScaleX = 0;
 		this.ScaleY = 0;
@@ -36,6 +37,7 @@ public class Monstre extends Thread{
 		this.vivant = true;
 		this.stop = false;
 		this.speed = speed;
+		this.running = true;
 
 	}
 
@@ -48,6 +50,7 @@ public class Monstre extends Thread{
 		this.vivant = true;
 		this.stop = false;
 		this.model = null;
+		this.running = true;
 	}
 	
 	protected Monstre(Cell cell,Model model,int repop,Color color, int speed) {
@@ -62,6 +65,7 @@ public class Monstre extends Thread{
 		this.vivant = true;
 		this.stop = false;
 		this.speed = speed;
+		this.running = true;
 
 	}
 
@@ -126,8 +130,17 @@ public class Monstre extends Thread{
 	public void repop(){
 		this.vivant = true;
 	}
-	
-	
+
+	public void pause() {
+		synchronized (this.model) {
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+				System.err.println("Erreur mise en pause Monstre");
+			}
+		}
+	}
 
 	public void paintMonstre(Graphics2D g2d, int scale) throws IOException {
 		if(this.vivant){
@@ -196,10 +209,23 @@ public class Monstre extends Thread{
         this.stop = true;
     }
 
+	public void pauseThread() throws InterruptedException {
+		running = false;
+	}
 
-    @Override
+	public void resumeThread() {
+		running = true;
+	}
+
+
+
+	@Override
 	public void run() {
 		while(!stop){
+
+			while(!running)
+				yield();
+
 			if(this.vivant){
 				Direction dir = this.Dir();
 				
