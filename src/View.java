@@ -55,6 +55,17 @@ public class View {
 		glass.add(label);
 	}
 
+	public void setPause() {
+		this.label.setForeground(Color.RED);
+		this.label.setSize(300, 300);
+		this.label.setText("Pause");
+		this.glass.setVisible(true);
+	}
+
+	public void releasedPause() {
+		this.glass.setVisible(false);
+	}
+
 	public void setWait(boolean wait) {
 		this.wait = wait;
 	}

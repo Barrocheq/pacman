@@ -14,6 +14,7 @@ public class Moteur extends Thread {
 	private Controller controller;
 	private boolean running;
 
+
 	/**
 	 * Constructeur par defaut
 	 */
@@ -21,8 +22,10 @@ public class Moteur extends Thread {
 		this.model = new Model();
 		this.view = new View();
 		this.controller = new Controller(this);
+		this.controller.init(this.model, this.view);
 
 		this.frame = null;
+
 		this.running = true;
 
 		this.start(); // lancement du thread
@@ -36,16 +39,6 @@ public class Moteur extends Thread {
 		running = true;
 	}
 
-	public void pause() {
-		synchronized (this.model) {
-			try {
-				wait();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-				System.err.println("Erreur mise en pause Moteur");
-			}
-		}
-	}
 
 	/**
 	 * Fonction de lancement de notre moteur graphique
@@ -102,7 +95,7 @@ public class Moteur extends Thread {
 
 			this.model.startHero();
 			this.model.startMonstre();
-			this.controller.init(this.model, this.view);
+
 			this.view.init(this.model, this.model.getSizeH(), this.model.getSizeL());
 			this.frame = view.getFrame();
 
@@ -154,6 +147,7 @@ public class Moteur extends Thread {
 									e.printStackTrace();
 								}
 							}
+
 
 							break parti;
 						}

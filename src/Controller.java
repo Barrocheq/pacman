@@ -41,17 +41,13 @@ public class Controller implements KeyListener, MouseListener, MouseMotionListen
     }
 
 	public void init(Model model, View view) {
-
         this.model = model;
         this.frame = view.getFrame();
         this.view = view;
         this.frame.addKeyListener(this);
         this.frame.setFocusable(true);
-
-
-
-
-	}
+        this.pause = false;
+    }
 
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -71,7 +67,7 @@ public class Controller implements KeyListener, MouseListener, MouseMotionListen
      * @param e
      */
 	@Override
-	public void keyTyped(KeyEvent e) {
+	public synchronized void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 
 		if (e.getKeyChar() == 'z') {
@@ -92,42 +88,50 @@ public class Controller implements KeyListener, MouseListener, MouseMotionListen
 
         if (Character.isSpaceChar(e.getKeyChar())) {
 
-            this.setPause(!this.getPause());
-
-            if (this.getPause()) {
-                System.out.println("Mise en pause");
+            System.out.println("space");
 
 
-                try {
+            //synchronized (this) {
 
-                    // Permet de mettre en pause uniquement si le thread de bonbonMagique est lancé
-                    if(this.model.getMangeBonbon() != null)
-                        this.model.getMangeBonbon().pauseThread();
+            synchronized (this.moteur) {
 
-                    this.model.getHero().pauseThread();
+                this.pause = !this.pause;
 
-                    for(Monstre m : this.model.getMonstre())
-                        m.pauseThread();
+                if (this.pause) {
+                    try {
 
-                    this.moteur.pauseThread();
+                        // Permet de mettre en pause uniquement si le thread de bonbonMagique est lancé
+                        if (this.model.getMangeBonbon() != null)
+                            this.model.getMangeBonbon().pauseThread();
 
-                } catch (InterruptedException e1) {
-                    e1.printStackTrace();
-                }
+                        this.model.getHero().pauseThread();
 
+                        for (Monstre m : this.model.getMonstre())
+                            m.pauseThread();
 
-            } else {
-                System.out.println("Sorti pause");
+                        this.moteur.pauseThread();
 
-                if(this.model.getMangeBonbon() != null)
-                    this.model.getMangeBonbon().resumeThread();
-                
-                this.model.getHero().resumeThread();
-                for(Monstre m : this.model.getMonstre())
-                    m.resumeThread();
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
 
-                this.moteur.resumeThread();
+                    this.view.setPause();
 
+                } else if (!this.pause) {
+
+                    if (this.model.getMangeBonbon() != null)
+                        this.model.getMangeBonbon().resumeThread();
+
+                    this.model.getHero().resumeThread();
+                    for (Monstre m : this.model.getMonstre())
+                        m.resumeThread();
+
+                    this.moteur.resumeThread();
+
+                    this.view.releasedPause();
+
+                } else
+                    System.err.println("Erreur mise en pause null");
             }
         }
 

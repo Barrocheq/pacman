@@ -218,6 +218,10 @@ public class Hero extends Thread{
 		}
 	}
 
+	public boolean getRunning() {
+		return running;
+	}
+
 	public void pauseThread() throws InterruptedException {
 		running = false;
 	}
