@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -9,10 +10,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Rectangle2D;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -80,17 +81,20 @@ public class View {
 	public void menu()  {
 		this.glass.setVisible(false);
 
-		this.frame.setSize(400, 400);
+		this.frame.setSize(500, 300);
 
 		cp.removeAll();
 
+		JPanel pan = new JPanel();
+		pan.setLayout(new FlowLayout());
 		JButton jRandom = new JButton("Random");
 		JButton jLevel = new JButton("Level");
 		JButton jDnD = new JButton("Drag&Drop");
+		
 		JLabel score;
 		try {
 			score = new JLabel("Meilleur score : "+this.Best());
-			cp.add(score, BorderLayout.NORTH);
+			pan.add(score);
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -98,9 +102,9 @@ public class View {
 
 		// cp.setLayout(new FlowLayout());
 		
-		cp.add(jRandom, BorderLayout.LINE_START);
-		cp.add(jLevel, BorderLayout.CENTER);
-		cp.add(jDnD, BorderLayout.LINE_END);
+		pan.add(jRandom);
+		pan.add(jLevel);
+		pan.add(jDnD);
 
 		jRandom.addActionListener(new ActionListener() {
 			@Override
@@ -126,6 +130,8 @@ public class View {
 			}
 		});
 
+		cp.add(pan,BorderLayout.NORTH);
+		cp.add(new JLabel(new ImageIcon("pacman.png")),BorderLayout.CENTER);
 		cp.revalidate();
 		cp.repaint();
 		this.frame.setVisible(true);
