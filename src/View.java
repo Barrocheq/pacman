@@ -109,7 +109,7 @@ public class View {
 
         this.frame.setSize(((size+1) * SCALE), ((size+2) * SCALE)) ;
 
-
+        
 
         cp.revalidate();
         cp.repaint();

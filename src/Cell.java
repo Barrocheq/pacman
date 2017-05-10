@@ -45,6 +45,11 @@ public class Cell {
 	public int geti(){
 		return i;
 	}
+	
+	public int getStats(){
+		return this.stats;
+	}
+	
 	public int getj(){
 		return j;
 	}
