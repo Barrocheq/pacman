@@ -87,12 +87,6 @@ public class Controller implements KeyListener, MouseListener, MouseMotionListen
 		}
 
         if (Character.isSpaceChar(e.getKeyChar())) {
-
-            System.out.println("space");
-
-
-            //synchronized (this) {
-
             synchronized (this.moteur) {
 
                 this.pause = !this.pause;

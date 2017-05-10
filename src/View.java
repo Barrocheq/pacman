@@ -48,21 +48,21 @@ public class View {
 
 		this.glass = (JPanel) this.frame.getGlassPane();
 		label = new JLabel();
-		// label.setForeground(Color.WHITE);
-		label.setText(String.format("<html><font color='rgb(%s, %s, %s)'>PERDU</font></html>",
-				(int) (Math.random() * 255), (int) (Math.random() * 255), (int) (Math.random() * 255)));
-		label.setFont(new Font("Courier", Font.BOLD, this.SCALE / 2));
+		label.setForeground(Color.RED);
+		label.setFont(new Font("Courier", Font.BOLD, this.SCALE));
 		glass.add(label);
 	}
 
 	public void setPause() {
 		this.label.setForeground(Color.RED);
-		this.label.setSize(300, 300);
 		this.label.setText("Pause");
+		this.label.setFont(new Font("Courier", Font.BOLD, this.SCALE * 2 ));
+
 		this.glass.setVisible(true);
 	}
 
 	public void releasedPause() {
+		this.label.setFont(new Font("Courier", Font.BOLD, this.SCALE));
 		this.glass.setVisible(false);
 	}
 
@@ -131,11 +131,28 @@ public class View {
 		this.frame.setVisible(true);
 	}
 
+
+	public void setSizeFrame(int sizeH, int sizeL) {
+
+		String os = System.getProperty("os.name").toLowerCase();
+
+
+		if (os.contains("win"))
+			this.frame.setSize(((sizeL + 1) * SCALE), ((sizeH + 2) * SCALE));
+		else if (os.contains("nux") || os.contains("nix"))
+			this.frame.setSize(((sizeL + 1) * SCALE), ((sizeH + 2) * SCALE));
+		else
+			this.frame.setSize((sizeL) * SCALE, (sizeH) * SCALE + 22);
+
+
+
+	}
+
 	public void init(int size) {
 		// this.model = model;
 		cp.removeAll();
 
-		this.frame.setSize(((size + 1) * SCALE), ((size + 2) * SCALE));
+		setSizeFrame(size, size);
 
 		cp.revalidate();
 		cp.repaint();
@@ -148,7 +165,7 @@ public class View {
 		this.model = model;
 		cp.removeAll();
 
-		this.frame.setSize(((sizeL + 1) * SCALE), ((sizeH + 2) * SCALE));
+		setSizeFrame(sizeH, sizeL);
 		this.plateau = new plateau(this.model); // Dessins du plateau
 		cp.add(this.plateau);
 
@@ -162,7 +179,7 @@ public class View {
 		// this.glass.setLayout(null);
 		label.setForeground(Color.WHITE);
 		label.setText(Integer.toString(100 - (model.getNbTrou() * (100 / (8 * 8)))) + "%");
-		this.frame.setSize(((sizeL + 1) * SCALE), ((sizeH + 2) * SCALE));
+		setSizeFrame(sizeH, sizeL);
 		Construction plateau = new Construction(model); // Dessins du plateau
 		cp.add(plateau);
 
@@ -176,9 +193,7 @@ public class View {
 
 	public void perdu(int vie) {
 		for (int i = 0; i < 5; i++) {
-			this.label.setText(String.format(
-					"<html><font color='rgb(%s, %s, %s)'>PERDU, VIE RESTANTES: %s</font></html>",
-					(int) (Math.random() * 255), (int) (Math.random() * 255), (int) (Math.random() * 255), 3 - vie));
+			this.label.setText("VIE RESTANTES: " + ( 3 - vie));
 			this.glass.setVisible(true);
 			glass.repaint();
 

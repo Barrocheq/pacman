@@ -41,7 +41,7 @@ public class RandomLvl  {
         this.size = size;
 
         this.nbTrou = (size/2) * (size/2) - 1;
-        this.nbTrouSupple = size/2 +1;
+        this.nbTrouSupple = size;
         this.nbRouge = size/4;
         this.map = new Cell[size][size];
 

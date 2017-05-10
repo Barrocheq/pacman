@@ -27,6 +27,23 @@ class DND extends Thread{
         return panel;
     }
 
+
+    public void setSizeFrame(int sizeH, int sizeL) {
+
+        String os = System.getProperty("os.name").toLowerCase();
+
+
+        if (os.contains("win"))
+            this.frame.setSize(((sizeL + 1) * View.SCALE), ((sizeH + 2) * View.SCALE));
+        else if (os.contains("nux") || os.contains("nix"))
+            this.frame.setSize(((sizeL + 1) * View.SCALE), ((sizeH + 2) * View.SCALE));
+        else
+            this.frame.setSize((sizeL) * View.SCALE, (sizeH) * View.SCALE + 22);
+
+
+
+    }
+
     public DND(int size, Moteur moteur){
 
         Lmonstre = new ArrayList<>();
@@ -56,8 +73,7 @@ class DND extends Thread{
         this.fakeHero = new Hero(this.map[size+1][4]);
 
         frame = new JFrame();
-        this.frame.setSize(((size+1) * View.SCALE), ((size+2) * View.SCALE)) ;
-        frame.setSize(1000,550);
+        setSizeFrame(size, size+6);
         frame.setTitle("PacMan");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -79,6 +95,7 @@ class DND extends Thread{
             public void actionPerformed(ActionEvent e) {
                 try {
                     MapToFile("tmp.txt");
+                    frame.setVisible(false);
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
