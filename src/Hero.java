@@ -11,7 +11,6 @@ import javax.imageio.ImageIO;
 public class Hero extends Thread{
 
 	private Cell cell;
-	private int Score;
 	private Model model;
 	private Direction lastDir;
 	private Direction nextDir;
@@ -52,18 +51,10 @@ public class Hero extends Thread{
 
 		//this.cell = r.getMap()[this.cell.geti()][this.cell.getj()];
 	}
-	
-	public int getScore(){
-		return this.Score;
-	}
 
     public void setColor(Color c) {
         this.color = c;
     }
-
-    public void incScore(int x){
-		this.Score = this.Score +x;
-	}
 
 
 	/**
@@ -78,9 +69,9 @@ public class Hero extends Thread{
 			int tmpbonbon = this.cell.mangeBonbon();
 
 			if(tmpbonbon == 1) // bonbon classique
-				this.Score++;
+				this.model.incScore(1);
 			else if(tmpbonbon == 2) { // bonbon magique
-				this.Score += 10;
+				this.model.incScore(10);
 				this.model.mangeBonbonRouge();
 			}
 		}

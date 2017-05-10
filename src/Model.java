@@ -19,12 +19,12 @@ public class Model {
 	private Monstre[] Lmonstre;
 	private boolean state;
 	private BonbonMagique mangeBonbon;
+	private int Score;
+	private String nom;
 
 	public Model() {
-
-
+		this.nom = "default";
 	}
-
 
 	public void init(String f) {
 
@@ -102,10 +102,10 @@ public class Model {
 		file.newLine();
 		line = "";
 		for (int i = 0; i < this.sizeH; i++) {
-boucleline :for (int j = 0; j < this.sizeL; j++) {
-				for(Monstre m :this.Lmonstre){
-					if(m.getCell().geti() == i && m.getCell().getj() == j){
-						line+="0";
+			boucleline: for (int j = 0; j < this.sizeL; j++) {
+				for (Monstre m : this.Lmonstre) {
+					if (m.getCell().geti() == i && m.getCell().getj() == j) {
+						line += "0";
 						continue boucleline;
 					}
 				}
@@ -120,12 +120,11 @@ boucleline :for (int j = 0; j < this.sizeL; j++) {
 						line += "o";
 					}
 				}
-				
 
 			}
 			file.write(line);
 			file.newLine();
-			line="";
+			line = "";
 		}
 		file.close();
 	}
@@ -278,5 +277,25 @@ boucleline :for (int j = 0; j < this.sizeL; j++) {
 			System.out.println("Creation rouge");
 			this.mangeBonbon = new BonbonMagique(this.timeToEat, this);
 		}
+	}
+
+	public void incScore(int i) {
+		this.Score += i;
+		System.out.println(this.Score);
+
+	}
+	
+	public int getScore(){
+		return this.Score;
+	}
+
+	public void saveScore() throws IOException {
+		
+		BufferedWriter file = new BufferedWriter(new FileWriter("score.txt",true	));
+		file.append(this.nom+":"+Integer.toString(this.Score));
+		file.newLine();
+		file.close();
+		this.Score = 0;
+		
 	}
 }

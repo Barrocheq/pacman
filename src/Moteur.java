@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Font;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -97,7 +98,7 @@ public class Moteur extends Thread {
 					for (Monstre m : this.model.getMonstre()) {
 						if (m != null && this.model.getHero().getCell().equals(m.getCell())) {
 							m.meur();
-							this.model.getHero().incScore(20);
+							this.model.incScore(20);
 						}
 					}
 				} else {
@@ -114,6 +115,12 @@ public class Moteur extends Thread {
 								i = -1;
 								taille = 5;
 								vie = 0;
+								try {
+									this.model.saveScore();
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
 							}
 
 							break parti;
