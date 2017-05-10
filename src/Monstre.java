@@ -231,7 +231,7 @@ public class Monstre extends Thread{
 				
 				Direction dir = this.Dir();
 				if(dir!=null){
-					//System.out.println("null");
+
 					for(int i = 0; i < View.SCALE; i++){
 	                    if(stop) break;
 						this.ScaleX = dir.dJ()*i;
