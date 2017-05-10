@@ -104,6 +104,7 @@ public class Monstre extends Thread{
 				}
 			}
 		}
+		if(i==0)return null;
 		Direction[] res = new Direction[i];
 		for(int j=0; j<i;j++){
 			res[j]=tmp[j];
@@ -113,6 +114,7 @@ public class Monstre extends Thread{
 	
 	public Direction Dir(){
 		Direction[] dirs = movePossible();
+		if(dirs==null)return null;
 		return dirs[(int) (dirs.length*Math.random())];
 		
 	}
@@ -201,24 +203,27 @@ public class Monstre extends Thread{
 	public void run() {
 		while(!stop){
 			if(this.vivant){
-				Direction dir = this.Dir();
 				
-				for(int i = 0; i < View.SCALE; i++){
-                    if(stop) break;
-					this.ScaleX = dir.dJ()*i;
-					this.ScaleY = dir.dI()*i;
-					try {
-						Thread.sleep(100/speed);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
+				Direction dir = this.Dir();
+				if(dir!=null){
+					System.out.println("null");
+					for(int i = 0; i < View.SCALE; i++){
+	                    if(stop) break;
+						this.ScaleX = dir.dJ()*i;
+						this.ScaleY = dir.dI()*i;
+						try {
+							Thread.sleep(100/speed);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+	
 					}
-
+					this.ScaleX = 0;
+					this.ScaleY = 0;
+	
+	                if(stop) break;
+					this.move(dir);
 				}
-				this.ScaleX = 0;
-				this.ScaleY = 0;
-
-                if(stop) break;
-				this.move(dir);
 			} else{
 				try {
 					Thread.sleep(this.repop);
