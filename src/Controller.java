@@ -5,39 +5,49 @@ import javax.swing.JFrame;
 public class Controller implements KeyListener, MouseListener, MouseMotionListener{
 
 	private Model model;
+	private Moteur moteur;
 	private JFrame frame;
 	private View view;
     private DND dnd;
     private int cell;
+    private boolean pause;
+
+    public boolean getPause() {
+        return pause;
+    }
+
+    public void setPause(boolean pause) {
+        this.pause = pause;
+    }
 
     /**
      * Constructeur par defaut
      */
 	public Controller() {
-
+        this.pause = false;
 	}
+
+    public Controller(Moteur moteur) {
+        this.moteur = moteur;
+        this.pause = false;
+    }
 
     public Controller(DND dnd) {
         // TODO Auto-generated constructor stub
         this.dnd = dnd;
         dnd.getPanel().addMouseListener(this);
         this.cell = 0;
+        this.pause = false;
     }
 
 	public void init(Model model, View view) {
-
-		System.out.println("Controller started");
-
         this.model = model;
         this.frame = view.getFrame();
         this.view = view;
         this.frame.addKeyListener(this);
         this.frame.setFocusable(true);
-
-
-
-
-	}
+        this.pause = false;
+    }
 
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -57,7 +67,7 @@ public class Controller implements KeyListener, MouseListener, MouseMotionListen
      * @param e
      */
 	@Override
-	public void keyTyped(KeyEvent e) {
+	public synchronized void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 
 		if (e.getKeyChar() == 'z') {
@@ -75,6 +85,55 @@ public class Controller implements KeyListener, MouseListener, MouseMotionListen
 		if (e.getKeyChar() == 'q') {
 			this.model.getHero().nextDir(Direction.WEST);
 		}
+
+        if (Character.isSpaceChar(e.getKeyChar())) {
+
+            System.out.println("space");
+
+
+            //synchronized (this) {
+
+            synchronized (this.moteur) {
+
+                this.pause = !this.pause;
+
+                if (this.pause) {
+                    try {
+
+                        // Permet de mettre en pause uniquement si le thread de bonbonMagique est lancé
+                        if (this.model.getMangeBonbon() != null)
+                            this.model.getMangeBonbon().pauseThread();
+
+                        this.model.getHero().pauseThread();
+
+                        for (Monstre m : this.model.getMonstre())
+                            m.pauseThread();
+
+                        this.moteur.pauseThread();
+
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
+
+                    this.view.setPause();
+
+                } else if (!this.pause) {
+
+                    if (this.model.getMangeBonbon() != null)
+                        this.model.getMangeBonbon().resumeThread();
+
+                    this.model.getHero().resumeThread();
+                    for (Monstre m : this.model.getMonstre())
+                        m.resumeThread();
+
+                    this.moteur.resumeThread();
+
+                    this.view.releasedPause();
+
+                } else
+                    System.err.println("Erreur mise en pause null");
+            }
+        }
 
 	}
 

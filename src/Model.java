@@ -271,17 +271,18 @@ public class Model {
 
 	public void mangeBonbonRouge() {
 		if (this.mangeBonbon != null) {
-			System.out.println("Deja rouge");
 			this.mangeBonbon.addTime(this.timeToEat);
 		} else {
-			System.out.println("Creation rouge");
 			this.mangeBonbon = new BonbonMagique(this.timeToEat, this);
 		}
 	}
 
+	public BonbonMagique getMangeBonbon() {
+		return mangeBonbon;
+	}
+
 	public void incScore(int i) {
 		this.Score += i;
-		System.out.println(this.Score);
 
 	}
 	

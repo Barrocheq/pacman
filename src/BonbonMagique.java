@@ -7,10 +7,12 @@ import java.awt.*;
 public class BonbonMagique extends Thread {
     private int time;
     private Model model;
+    private boolean running;
 
     public BonbonMagique(int time,Model model){
             this.time = time;
             this.model = model;
+            this.running = true;
             this.start();
         }
 
@@ -22,12 +24,26 @@ public class BonbonMagique extends Thread {
         this.time = 0;
     }
 
+
+    public void pauseThread() throws InterruptedException {
+        running = false;
+    }
+
+    public void resumeThread() {
+        running = true;
+    }
+
+
     public void run(){
         synchronized (this.model) {
             this.model.setState(true);
             this.model.getHero().setColor(Color.red);
 
             while(time > 0) {
+
+                while(!running)
+                    yield();
+
                 System.out.println(time);
 
                 if(time > 4000)

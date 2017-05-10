@@ -12,6 +12,8 @@ public class Moteur extends Thread {
 	private View view;
 	private Model model;
 	private Controller controller;
+	private boolean running;
+
 
 	/**
 	 * Constructeur par defaut
@@ -19,12 +21,24 @@ public class Moteur extends Thread {
 	public Moteur() {
 		this.model = new Model();
 		this.view = new View();
-		this.controller = new Controller();
+		this.controller = new Controller(this);
+		this.controller.init(this.model, this.view);
 
 		this.frame = null;
 
+		this.running = true;
+
 		this.start(); // lancement du thread
 	}
+
+	public void pauseThread() throws InterruptedException {
+		running = false;
+	}
+
+	public void resumeThread() {
+		running = true;
+	}
+
 
 	/**
 	 * Fonction de lancement de notre moteur graphique
@@ -80,15 +94,18 @@ public class Moteur extends Thread {
 			//this.model.init(taille);
 
 			this.model.startHero();
-				this.model.startMonstre();
-				this.controller.init(this.model, this.view);
-				this.view.init(this.model, this.model.getSizeH(), this.model.getSizeL());
-				this.frame = view.getFrame();
+			this.model.startMonstre();
+
+			this.view.init(this.model, this.model.getSizeH(), this.model.getSizeL());
+			this.frame = view.getFrame();
 
 
 
 			parti : while (parti) {
 				this.frame.repaint();
+
+				while(!running)
+					yield();
 
 				if (this.model.nbBonbon() == 0) {
 
@@ -130,6 +147,7 @@ public class Moteur extends Thread {
 									e.printStackTrace();
 								}
 							}
+
 
 							break parti;
 						}
