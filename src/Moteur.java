@@ -33,28 +33,35 @@ public class Moteur extends Thread {
 		
 		boolean parti = true;
 		int i = -1;
-		int taille = 5;
+		int taille = 9;
+		int vie = 0;
 
 
-
-
-
-
-		while (true) {
+		/*while (true) {
 			this.view.menu();
-			while(this.view.getWait()) {
+			while(this.view.getWait() && vie == 0) {
 				try {
-					System.out.println("wait");
 					Thread.sleep(100);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
 
+			taille += 2;
 			parti = true;
 			i++;
-			this.model.init("lvl" + i + ".txt");
-			taille += 2;
+
+			if(this.view.getChoixLvl() == 0 )
+				this.model.init(taille);
+			else if(this.view.getChoixLvl() == 1)
+				this.model.init("lvl" + i + ".txt");
+			else if(this.view.getChoixLvl() == 2)*/
+				this.view.init(20);
+			/*else
+				System.err.println("Errurs choix LVL");*/
+
+
+			/*//this.model.init("lvl" + i + ".txt");
 			//this.model.init(taille);
 			this.model.startHero();
 			this.model.startMonstre();
@@ -91,19 +98,22 @@ public class Moteur extends Thread {
 						if (this.model.getHero().getCell().equals(m.getCell())) {
 							this.model.stop();
 							this.view.setWait(true);
-							this.view.perdu();
-							try {
-								Thread.sleep(4000);
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+							vie++;
+							this.view.perdu(vie);
+							taille -=2;
+							i--;
+
+							if(vie == 3){
+								i = -1;
+								taille = 5;
+								vie = 0;
 							}
 
 							break parti;
 						}
 					}
 				}
-			}
-		}
+			}*/
+		//}
 	}
 }
