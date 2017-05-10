@@ -23,6 +23,27 @@ public class Model {
         
     }
 
+    public void initDnD(int size) {
+        this.size = size;
+
+        this.map = new Cell[this.size+6][this.size];
+
+
+        for(int i=0; i<size+6;i++){
+            for(int j=0;j<size;j++){
+                if(i==0 || j==0 || j==(size-1) || (i==size-1) || (i==size+5)){
+                    this.map[i][j] = new Cell(0,i,j,0);
+                }else if(i<10 && j<10){
+                    this.map[i][j]=new Cell(1,i,j,1);
+                }
+            }
+        }
+
+        // Cellules coter
+        this.map[11][2] = new Cell(0,11,2,0);
+        this.map[13][2] = new Cell(1,13,2,2);
+
+    }
 
 	public void init(String f) {
 

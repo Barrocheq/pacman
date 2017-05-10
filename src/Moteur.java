@@ -37,7 +37,7 @@ public class Moteur extends Thread {
 		int vie = 0;
 
 
-		/*while (true) {
+		while (true) {
 			this.view.menu();
 			while(this.view.getWait() && vie == 0) {
 				try {
@@ -51,18 +51,25 @@ public class Moteur extends Thread {
 			parti = true;
 			i++;
 
-			if(this.view.getChoixLvl() == 0 )
+			if(this.view.getChoixLvl() == 0 ) {
 				this.model.init(taille);
-			else if(this.view.getChoixLvl() == 1)
+			}
+			else if(this.view.getChoixLvl() == 1) {
 				this.model.init("lvl" + i + ".txt");
-			else if(this.view.getChoixLvl() == 2)*/
-				this.view.init(20);
-			/*else
-				System.err.println("Errurs choix LVL");*/
+			}
+			else if(this.view.getChoixLvl() == 2) {
+				DND dnd = new DND(15);
+				Controller controleur = new Controller(dnd);
+
+			}
+			else
+				System.err.println("Errurs choix LVL");
 
 
-			/*//this.model.init("lvl" + i + ".txt");
+			//this.model.init("lvl" + i + ".txt");
 			//this.model.init(taille);
+
+
 			this.model.startHero();
 			this.model.startMonstre();
 			this.controller.init(this.model, this.view);
@@ -113,7 +120,7 @@ public class Moteur extends Thread {
 						}
 					}
 				}
-			}*/
-		//}
+			}
+		}
 	}
 }

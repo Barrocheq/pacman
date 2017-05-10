@@ -1,3 +1,4 @@
+/*
 import javax.swing.*;
 import java.awt.*;
 
@@ -39,3 +40,4 @@ class Cercle extends Thread{
         }
     }
 }
+*/

@@ -35,6 +35,14 @@ public class Hero extends Thread{
 		this.color = Color.yellow;
 	}
 
+	public Hero(Cell cell) {
+		this.cell = cell;
+		this.ScaleX = 0;
+		this.ScaleY = 0;
+		this.stop = false;
+		this.color = Color.yellow;
+	}
+
 	public Hero(Cell cell, RandomLvl r) {
 		this.cell = cell;
 		this.ScaleX = 0;
