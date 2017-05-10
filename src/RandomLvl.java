@@ -12,6 +12,7 @@ public class RandomLvl  {
     private int nbTrouSupple;
     private int size;
     private int nbRouge;
+    private Hero hero;
 
     public RandomLvl() {
         this.i = 1;
@@ -65,6 +66,10 @@ public class RandomLvl  {
         return nbTrou;
     }
 
+    public Hero getHero() {
+        return hero;
+    }
+
     public void make() {
         int nextI = 0;
         int nextJ = 0;
@@ -72,8 +77,12 @@ public class RandomLvl  {
         View v = new View();
 
         while (nbTrou > 0) {
+            if(false) {
+                v.init(this, this.getSize(), this.getSize(), true);
+                this.hero = new Hero(this.map[i][j], this);
+            }
 
-            v.init(this, this.getSize(), this.getSize(), true);
+
             this.d = Direction.random();
             nextI = this.d.dI() * 2;
             nextJ = this.d.dJ() * 2;
@@ -83,6 +92,8 @@ public class RandomLvl  {
             } catch (ArrayIndexOutOfBoundsException e) {
                 continue;
             }
+
+
 
             if(check(this.i + nextI, this.j + nextJ, 4)) {
                 this.map[this.i+this.d.dI()][this.j+this.d.dJ()] = new Cell(1,this.i+this.d.dI(),this.j+this.d.dJ(),1);
@@ -98,7 +109,7 @@ public class RandomLvl  {
         }
 
         while (nbTrouSupple > 0) {
-            v.init(this, this.getSize(), this.getSize(), true);
+            //v.init(this, this.getSize(), this.getSize(), true);
             this.d = Direction.random();
             nextI = this.d.dI() * 2;
             nextJ = this.d.dJ() * 2;
