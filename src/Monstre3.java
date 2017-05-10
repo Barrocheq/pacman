@@ -19,6 +19,10 @@ public class Monstre3 extends Monstre{
 		// TODO Auto-generated constructor stub
 	}
 
+	public Monstre3(Cell cell) {
+		super(cell, Color.PINK);
+	}
+
 	public void meur(){
 		this.vivant = false;
 		this.cell=this.cellpop;

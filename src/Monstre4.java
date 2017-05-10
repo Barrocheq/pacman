@@ -2,8 +2,12 @@ import java.awt.Color;
 
 public class Monstre4 extends Monstre{
 
+	public Monstre4(Cell cell) {
+		super(cell, Color.ORANGE);
+	}
+
 	public Monstre4(Cell cell, Model model, int repop, int speed) {
-		super(cell, model, repop,Color.BLACK, speed);
+		super(cell, model, repop,Color.ORANGE, speed);
 		// TODO Auto-generated constructor stub
 	}
 	public Direction[] movePossible() {

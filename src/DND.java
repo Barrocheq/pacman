@@ -16,6 +16,9 @@ class DND extends Thread{
     private Hero hero;
     private Hero fakeHero;
     private Monstre fakeMonster;
+    private Monstre2 fakeMonster2;
+    private Monstre3 fakeMonster3;
+    private Monstre4 fakeMonster4;
     private ArrayList<Monstre> Lmonstre;
     private String fileName;
 
@@ -65,8 +68,19 @@ class DND extends Thread{
         this.map[size+1][4] = new Cell(1,size+1,4,1);
 
         this.map[size+3][4] = new Cell(1, size+3, 4, 0);
-        this.fakeMonster = new Monstre(this.map[size+3][4]);
-        //Lmonstre.add(new Monstre(this.map[size+3][4]));
+        this.fakeMonster = new Monstre(this.map[size+3][4], Color.GREEN);
+
+        this.map[size+1][6] = new Cell(1, size+1, 6, 0);
+        this.fakeMonster2 = new Monstre2(this.map[size+1][6]);
+
+        this.map[size+3][6] = new Cell(1, size+3, 6, 0);
+        this.fakeMonster3 = new Monstre3(this.map[size+3][6]);
+
+        this.map[size+1][8] = new Cell(1, size+1, 8, 0);
+        this.fakeMonster4 = new Monstre4(this.map[size+1][8]);
+
+
+
 
 
         this.hero = new Hero(this.map[size+1][4]);
@@ -85,16 +99,29 @@ class DND extends Thread{
         //panel.setLayout(null);
         cp.add(panel);
 
-        JButton but = new JButton("Valider");
-        but.setLocation(size, size);
-        panel.add(but);
+        JButton valider = new JButton("Valider");
+        valider.setLocation(size, size);
+
+        panel.add(valider);
+
+        JTextField eat = new JTextField("Time to eat (millisec)");
+        panel.add(eat);
+
+        JTextField respawn = new JTextField("Time to respawn (millisec)");
+        panel.add(respawn);
+
+        JTextField refresh = new JTextField("Refresh (millisec)");
+        panel.add(refresh);
 
 
-        but.addActionListener(new ActionListener() {
+
+
+
+        valider.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    MapToFile("tmp.txt");
+                    MapToFile("tmp.txt", refresh.getText(), respawn.getText(), eat.getText());
                     frame.setVisible(false);
                 } catch (IOException e1) {
                     e1.printStackTrace();
@@ -112,7 +139,6 @@ class DND extends Thread{
             }
         });
 
-
         frame.setVisible(true);
         this.start();
 
@@ -122,15 +148,37 @@ class DND extends Thread{
         return this.fileName;
     }
 
-    public void MapToFile(String fileName) throws IOException {
+    public void MapToFile(String fileName, String refresh, String respawn ,String timeToEat) throws IOException {
 
 
-        System.out.println("i : " + this.hero.getCell().geti() + ", j " + this.hero.getCell().getj());
+        try {
+            Integer.parseInt(refresh);
+        } catch (NumberFormatException e) {
+            System.out.println("Erreur refresh n'est pas un entier");
+            refresh = "100";
+        }
+
+        try {
+            Integer.parseInt(respawn);
+        } catch (NumberFormatException e) {
+            System.out.println("Erreur respawn n'est pas un entier");
+            respawn = "5000";
+        }
+
+        try {
+            Integer.parseInt(timeToEat);
+        } catch (NumberFormatException e) {
+            System.out.println("Erreur timeToEat n'est pas un entier");
+            timeToEat = "8000";
+        }
+
+
+        //System.out.println("i : " + this.hero.getCell().geti() + ", j " + this.hero.getCell().getj());
 
         this.fileName = fileName;
         BufferedWriter file = new BufferedWriter(new FileWriter(fileName));
         String line;
-        line = this.size + "," + this.size + "," + Integer.toString(100) + "," + Integer.toString(100) + "," + Integer.toString(1000) + ","
+        line = this.size + "," + this.size + "," + refresh + "," + respawn + "," + timeToEat + ","
                 + this.Lmonstre.size();
         file.write(line);
         file.newLine();
@@ -139,7 +187,15 @@ class DND extends Thread{
             boucleline :for (int j = 0; j < this.size; j++) {
                 for(Monstre m :this.Lmonstre){
                     if(m.getCell().geti() == j && m.getCell().getj() == i){
-                        line+="0";
+                        if(m instanceof Monstre4)
+                            line+="3";
+                        else if(m instanceof Monstre3)
+                            line+="2";
+                        else if(m instanceof  Monstre2)
+                            line+="1";
+                        else
+                            line+="0";
+
                         continue boucleline;
                     }
                 }
@@ -195,6 +251,15 @@ class DND extends Thread{
     public Monstre getFakeMonster() {
         return fakeMonster;
     }
+    public Monstre2 getFakeMonster2() {
+        return fakeMonster2;
+    }
+    public Monstre3 getFakeMonster3() {
+        return fakeMonster3;
+    }
+    public Monstre4 getFakeMonster4() {
+        return fakeMonster4;
+    }
 
     public void run(){
         while(true){
@@ -234,6 +299,9 @@ class Panel extends JPanel{
             this.dnd.getHero().paintHero(g2, View.SCALE);
             this.dnd.getFakeHero().paintHero(g2, View.SCALE);
             this.dnd.getFakeMonster().paintMonstre(g2, View.SCALE);
+            this.dnd.getFakeMonster2().paintMonstre(g2, View.SCALE);
+            this.dnd.getFakeMonster3().paintMonstre(g2, View.SCALE);
+            this.dnd.getFakeMonster4().paintMonstre(g2, View.SCALE);
         } catch (IOException e) {
             e.printStackTrace();
         }

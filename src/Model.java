@@ -46,7 +46,7 @@ public class Model {
 		this.hero = new Hero(this.map[1][1], this);
 		this.map[1][1] = new Cell(1, 1, 1, 0);
 
-		System.out.println("GoM");
+		//System.out.println("GoM");
 
 		this.generateMonster();
 	}
@@ -64,7 +64,7 @@ public class Model {
 		this.hero = new Hero(this.map[1][1], this);
 		this.map[1][1] = new Cell(1, 1, 1, 0);
 
-		System.out.println("Go");
+		//System.out.println("Go");
 
 		this.generateMonster();
 	}
@@ -92,42 +92,6 @@ public class Model {
 		}
 	}
 
-	public void MapToFile(String fileName) throws IOException {
-
-		BufferedWriter file = new BufferedWriter(new FileWriter(fileName));
-		String line;
-		line = this.sizeH + "," + this.sizeL + "," + this.speed + "," + this.respawnMonster + "," + this.timeToEat + ","
-				+ this.numberOfMonster;
-		file.write(line);
-		file.newLine();
-		line = "";
-		for (int i = 0; i < this.sizeH; i++) {
-			boucleline: for (int j = 0; j < this.sizeL; j++) {
-				for (Monstre m : this.Lmonstre) {
-					if (m.getCell().geti() == i && m.getCell().getj() == j) {
-						line += "0";
-						continue boucleline;
-					}
-				}
-				if (this.hero.getCell().geti() == i && this.hero.getCell().getj() == j) {
-					line += "C";
-				} else if (this.map[j][i].getStats() == 0) {
-					line += "#";
-				} else if (this.map[j][i].getStats() == 1) {
-					if (this.map[j][i].getBonbon() == 1) {
-						line += ".";
-					} else {
-						line += "o";
-					}
-				}
-
-			}
-			file.write(line);
-			file.newLine();
-			line = "";
-		}
-		file.close();
-	}
 
 	public void setFromFile(String fileName) throws IOException {
 
@@ -174,13 +138,18 @@ public class Model {
 								System.exit(0);
 							}
 
-							int r = (int) (Math.random() * 255);
-							int g = (int) (Math.random() * 255);
-							int b = (int) (Math.random() * 255);
-
 							this.map[j][i - 1] = new Cell(0, j, i - 1, 0);
-							this.Lmonstre[indexMonster] = new Monstre4(this.map[j][i - 1], this, this.respawnMonster,
-									this.speed);
+
+							if(Integer.parseInt(s) == 0)
+								this.Lmonstre[indexMonster] = new Monstre(this.map[j][i - 1], this, this.respawnMonster, this.speed);
+							else if (Integer.parseInt(s) == 1)
+								this.Lmonstre[indexMonster] = new Monstre2(this.map[j][i - 1], this, this.respawnMonster, this.speed);
+							else if (Integer.parseInt(s) == 2)
+								this.Lmonstre[indexMonster] = new Monstre3(this.map[j][i - 1], this, this.respawnMonster, this.speed);
+							else if (Integer.parseInt(s) == 3)
+								this.Lmonstre[indexMonster] = new Monstre4(this.map[j][i - 1], this, this.respawnMonster, this.speed);
+							else
+								this.Lmonstre[indexMonster] = new Monstre(this.map[j][i - 1], this, this.respawnMonster, this.speed);
 
 						} else
 							System.err.println("Symbol non reconnu lors de l'initialisation du tableau : " + s);

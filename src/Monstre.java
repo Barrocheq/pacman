@@ -41,10 +41,10 @@ public class Monstre extends Thread{
 
 	}
 
-	public Monstre(Cell cell) {
+	public Monstre(Cell cell, Color color) {
 		this.ScaleX = 0;
 		this.ScaleY = 0;
-		this.color = Color.GREEN;
+		this.color = color;
 		this.cell = cell;
 		this.cellpop = cell;
 		this.vivant = true;
@@ -148,8 +148,7 @@ public class Monstre extends Thread{
 		if(this.vivant){
 			//g2d.drawImage(image, this.cell.geti() * scale, this.cell.getj() * scale, scale, scale, null);
 			if(this.model == null) {
-				g2d.setPaint(Color.GREEN);
-
+				g2d.setPaint(this.color);
 				g2d.fillOval((this.cell.geti()*scale)+(scale/4)+this.ScaleY, (this.cell.getj()*scale)+this.ScaleX, scale/2, scale/2);
 
 				g2d.fillOval((this.cell.geti()*scale)+(scale/4)+this.ScaleY, (this.cell.getj()*scale)+(3*scale/4)-(scale/12)+this.ScaleX, scale/6, scale/6);
@@ -232,13 +231,13 @@ public class Monstre extends Thread{
 				
 				Direction dir = this.Dir();
 				if(dir!=null){
-					System.out.println("null");
+					//System.out.println("null");
 					for(int i = 0; i < View.SCALE; i++){
 	                    if(stop) break;
 						this.ScaleX = dir.dJ()*i;
 						this.ScaleY = dir.dI()*i;
 						try {
-							Thread.sleep(100/speed);
+							Thread.sleep(10);
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}

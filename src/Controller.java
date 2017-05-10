@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.JFrame;
@@ -149,6 +150,12 @@ public class Controller implements KeyListener, MouseListener, MouseMotionListen
             this.cell = 3;
         } else if (e.getX()/View.SCALE==dnd.getSize()+3 && (e.getY()/View.SCALE)==4) {
             this.cell = 4;
+        } else if (e.getX()/View.SCALE==dnd.getSize()+1 && (e.getY()/View.SCALE)==6) {
+            this.cell = 5;
+        } else if (e.getX()/View.SCALE==dnd.getSize()+3 && (e.getY()/View.SCALE)==6) {
+            this.cell = 6;
+        } else if (e.getX()/View.SCALE==dnd.getSize()+1 && (e.getY()/View.SCALE)==8) {
+            this.cell = 7;
         }
     }
 
@@ -165,7 +172,16 @@ public class Controller implements KeyListener, MouseListener, MouseMotionListen
             this.dnd.setHero(new Hero(this.dnd.getMap()[e.getX()/View.SCALE][e.getY()/View.SCALE]));
             this.cell = 0;
         } else if(this.cell == 4) {
-            this.dnd.setLmonstre(new Monstre(this.dnd.getMap()[e.getX()/View.SCALE][e.getY()/View.SCALE]));
+            this.dnd.setLmonstre(new Monstre(this.dnd.getMap()[e.getX()/View.SCALE][e.getY()/View.SCALE], Color.GREEN));
+            this.cell = 0;
+        } else if(this.cell == 5) {
+            this.dnd.setLmonstre(new Monstre2(this.dnd.getMap()[e.getX()/View.SCALE][e.getY()/View.SCALE]));
+            this.cell = 0;
+        } else if(this.cell == 6) {
+            this.dnd.setLmonstre(new Monstre3(this.dnd.getMap()[e.getX()/View.SCALE][e.getY()/View.SCALE]));
+            this.cell = 0;
+        } else if(this.cell == 7) {
+            this.dnd.setLmonstre(new Monstre4(this.dnd.getMap()[e.getX()/View.SCALE][e.getY()/View.SCALE]));
             this.cell = 0;
         }
     }

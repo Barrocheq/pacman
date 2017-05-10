@@ -6,7 +6,11 @@ public class Monstre2 extends Monstre {
 		super(cell, model, repop,Color.RED, speed);
 		// TODO Auto-generated constructor stub
 	}
-	
+
+	public Monstre2(Cell cell) {
+		super(cell, Color.RED);
+	}
+
 	public Direction Dir(){
 		Direction dir = getHeroLine();
 		if(dir != null){
