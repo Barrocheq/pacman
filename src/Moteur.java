@@ -58,23 +58,31 @@ public class Moteur extends Thread {
 				this.model.init("lvl" + i + ".txt");
 			}
 			else if(this.view.getChoixLvl() == 2) {
-				DND dnd = new DND(15);
+				DND dnd = new DND(15, this);
 				Controller controleur = new Controller(dnd);
+
+				synchronized (this) {
+					try {
+						wait();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+
+					this.model.init(dnd.getNameFile());
+				}
 
 			}
 			else
 				System.err.println("Errurs choix LVL");
 
-
 			//this.model.init("lvl" + i + ".txt");
 			//this.model.init(taille);
 
-
 			this.model.startHero();
-			this.model.startMonstre();
-			this.controller.init(this.model, this.view);
-			this.view.init(this.model, this.model.getSizeH(), this.model.getSizeL());
-			this.frame = view.getFrame();
+				this.model.startMonstre();
+				this.controller.init(this.model, this.view);
+				this.view.init(this.model, this.model.getSizeH(), this.model.getSizeL());
+				this.frame = view.getFrame();
 
 
 

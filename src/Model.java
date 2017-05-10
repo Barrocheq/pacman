@@ -111,10 +111,10 @@ boucleline :for (int j = 0; j < this.sizeL; j++) {
 				}
 				if (this.hero.getCell().geti() == i && this.hero.getCell().getj() == j) {
 					line += "C";
-				} else if (this.map[i][j].getStats() == 0) {
+				} else if (this.map[j][i].getStats() == 0) {
 					line += "#";
-				} else if (this.map[i][j].getStats() == 1) {
-					if (this.map[i][j].getBonbon() == 1) {
+				} else if (this.map[j][i].getStats() == 1) {
+					if (this.map[j][i].getBonbon() == 1) {
 						line += ".";
 					} else {
 						line += "o";

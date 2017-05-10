@@ -38,6 +38,17 @@ public class Monstre extends Thread{
 		this.speed = speed;
 
 	}
+
+	public Monstre(Cell cell) {
+		this.ScaleX = 0;
+		this.ScaleY = 0;
+		this.color = Color.GREEN;
+		this.cell = cell;
+		this.cellpop = cell;
+		this.vivant = true;
+		this.stop = false;
+		this.model = null;
+	}
 	
 	protected Monstre(Cell cell,Model model,int repop,Color color, int speed) {
 		this.ScaleX = 0;
@@ -121,7 +132,27 @@ public class Monstre extends Thread{
 	public void paintMonstre(Graphics2D g2d, int scale) throws IOException {
 		if(this.vivant){
 			//g2d.drawImage(image, this.cell.geti() * scale, this.cell.getj() * scale, scale, scale, null);
-			if(this.model.getState()){
+			if(this.model == null) {
+				g2d.setPaint(Color.GREEN);
+
+				g2d.fillOval((this.cell.geti()*scale)+(scale/4)+this.ScaleY, (this.cell.getj()*scale)+this.ScaleX, scale/2, scale/2);
+
+				g2d.fillOval((this.cell.geti()*scale)+(scale/4)+this.ScaleY, (this.cell.getj()*scale)+(3*scale/4)-(scale/12)+this.ScaleX, scale/6, scale/6);
+				g2d.fillOval((this.cell.geti()*scale)+(scale/4)+(scale/6)+this.ScaleY, (this.cell.getj()*scale)+(3*scale/4)-(scale/12)+this.ScaleX, scale/6, scale/6);
+				g2d.fillOval((this.cell.geti()*scale)+(scale/4)+(scale/3)+this.ScaleY, (this.cell.getj()*scale)+(3*scale/4)-(scale/12)+this.ScaleX, scale/6, scale/6);
+
+				g2d.fillRect((this.cell.geti()*scale)+(scale/4)+this.ScaleY, (this.cell.getj()*scale)+(scale/4)+this.ScaleX, scale/2, scale/2);
+
+				g2d.setPaint(Color.WHITE);
+				g2d.fillOval((this.cell.geti()*scale)+(scale/4)+this.ScaleY, (this.cell.getj()*scale)+(scale/4)+this.ScaleX, scale/6, scale/6);
+				g2d.fillOval((this.cell.geti()*scale)+(3*scale/4)-(scale/6)+this.ScaleY, (this.cell.getj()*scale)+(scale/4)+this.ScaleX, scale/6, scale/6);
+
+
+				g2d.fillOval((this.cell.geti()*scale)+(scale/2)-(scale/12)+this.ScaleY, (this.cell.getj()*scale)+(scale/2)-(scale/12)+this.ScaleX, scale/6, scale/6);
+
+
+			}
+			else if(this.model.getState()){
 				g2d.setPaint(Color.BLUE);
 				g2d.fillOval((this.cell.geti()*scale)+(scale/4)+this.ScaleY, (this.cell.getj()*scale)+this.ScaleX, scale/2, scale/2);
 				
