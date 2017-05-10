@@ -19,6 +19,15 @@ public class Monstre3 extends Monstre{
 		// TODO Auto-generated constructor stub
 	}
 
+	public void meur(){
+		this.vivant = false;
+		this.cell=this.cellpop;
+		this.lastMove = null;
+		this.lastDir = null;
+		this.heroDir = null;
+		this.nextDir = null;
+		
+	}
 	
 	public Direction Dir(){
 		this.heroDir = null;

@@ -10,12 +10,12 @@ import javax.imageio.ImageIO;
 public class Monstre extends Thread{
 
 	protected Cell cell;
-	private Cell cellpop;
+	protected Cell cellpop;
 	protected Cell[][] map;
 	protected Model model;
-	private Direction lastMove;
+	protected Direction lastMove;
 	private BufferedImage image;
-	private boolean vivant;
+	protected boolean vivant;
 	private int repop;
 	private Color color;
 	private int ScaleY;
@@ -109,6 +109,7 @@ public class Monstre extends Thread{
 	public void meur(){
 		this.vivant = false;
 		this.cell=this.cellpop;
+		this.lastMove = null;
 	}
 	
 	public void repop(){
