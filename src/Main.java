@@ -12,6 +12,7 @@ public class Main {
 		/*Model model = new Model();
 		model.init(11);
 		model.MapToFile("Bonjour.txt");*/
+
         //DragnDrop drop = new DragnDrop();
 
 	}
