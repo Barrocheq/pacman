@@ -103,6 +103,20 @@ public class View {
 		else return false;
 	}
 
+	public void init(int size) {
+        //this.model = model;
+        cp.removeAll();
+
+        this.frame.setSize(((size+1) * SCALE), ((size+2) * SCALE)) ;
+
+
+
+        cp.revalidate();
+        cp.repaint();
+
+        this.frame.setVisible(true);
+    }
+
 	public void init(Model model, int sizeH, int sizeL) {
 
 		this.model = model;
@@ -190,12 +204,15 @@ class Construction extends JPanel {
 		g2.setPaint(new Color(0,0,0, this.model.getNbTrou() * (255/ (8*8))));
 		g2.fill(rect);
 
-		//System.out.println(this.model.getNbTrou() * (255/ (8*8)));
-
-		//op = this.model.getNbTrou() * ( ((this.model.getSize()/2) * (this.model.getSize()/2) - 1)  / 255 );
-
 		if(op > 255) op = 255;
-	}
+
+        try {
+            this.model.getHero().paintHero(g2, this.SCALE);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 }
 
 
