@@ -21,6 +21,8 @@ public class Model {
 	private BonbonMagique mangeBonbon;
 	private int Score;
 	private String nom;
+	private Cercle Cercle;
+	
 
 	public Model() {
 		this.nom = "default";
@@ -216,6 +218,7 @@ public class Model {
 
 		for (Monstre m : this.Lmonstre)
 			m.stopMonstre();
+		this.Cercle = null;
 	}
 
 	public int nbBonbon() {
@@ -244,6 +247,7 @@ public class Model {
 		} else {
 			this.mangeBonbon = new BonbonMagique(this.timeToEat, this);
 		}
+		this.Cercle = new Cercle(this);
 	}
 
 	public BonbonMagique getMangeBonbon() {
@@ -267,5 +271,13 @@ public class Model {
 		file.close();
 		this.Score = 0;
 		
+	}
+	
+	public void setCercle(Cercle cercle){
+		this.Cercle = cercle;
+	}
+	
+	public Cercle getCercle(){
+		return this.Cercle;
 	}
 }

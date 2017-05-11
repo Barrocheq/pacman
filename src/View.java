@@ -348,5 +348,8 @@ class plateau extends JPanel {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		if(this.model.getCercle() != null){
+			this.model.getCercle().paintCercle(g2, SCALE);
+		}
 	}
 }
