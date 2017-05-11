@@ -84,7 +84,7 @@ public class Model {
 			// randJ = (int)(Math.random() * (this.sizeH-3)) + 3;
 
 			if (!(this.map[randI][randJ].passable())) {
-				this.Lmonstre[i] = new Monstre(this.map[randI][randJ], this, this.respawnMonster, 10);
+				this.Lmonstre[i] = new Monstre(this.map[randI][randJ], this, this.respawnMonster);
 				nbMonster--;
 				i++;
 			}
@@ -138,15 +138,15 @@ public class Model {
 						this.map[j][i - 1] = new Cell(0, j, i - 1, 0);
 
 						if(Integer.parseInt(s) == 0)
-							this.Lmonstre[indexMonster] = new Monstre(this.map[j][i - 1], this, this.respawnMonster, this.speed);
+							this.Lmonstre[indexMonster] = new Monstre(this.map[j][i - 1], this, this.respawnMonster);
 						else if (Integer.parseInt(s) == 1)
-							this.Lmonstre[indexMonster] = new Monstre2(this.map[j][i - 1], this, this.respawnMonster, this.speed);
+							this.Lmonstre[indexMonster] = new Monstre2(this.map[j][i - 1], this, this.respawnMonster);
 						else if (Integer.parseInt(s) == 2)
-							this.Lmonstre[indexMonster] = new Monstre3(this.map[j][i - 1], this, this.respawnMonster, this.speed);
+							this.Lmonstre[indexMonster] = new Monstre3(this.map[j][i - 1], this, this.respawnMonster);
 						else if (Integer.parseInt(s) == 3)
-							this.Lmonstre[indexMonster] = new Monstre4(this.map[j][i - 1], this, this.respawnMonster, this.speed);
+							this.Lmonstre[indexMonster] = new Monstre4(this.map[j][i - 1], this, this.respawnMonster);
 						else
-							this.Lmonstre[indexMonster] = new Monstre(this.map[j][i - 1], this, this.respawnMonster, this.speed);
+							this.Lmonstre[indexMonster] = new Monstre(this.map[j][i - 1], this, this.respawnMonster);
 
 
 					} else

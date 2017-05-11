@@ -9,8 +9,8 @@ public class Monstre3 extends Monstre{
 	private Direction lastDir;
 	private Direction heroDir;
 	
-	public Monstre3(Cell cell, Model model, int repop, int speed) {
-		super(cell, model, repop, Color.PINK, speed);
+	public Monstre3(Cell cell, Model model, int repop) {
+		super(cell, model, repop, Color.PINK);
 		this.i = 0;
 		this.j = 0;
 		this.nextDir = null;
