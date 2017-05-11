@@ -100,6 +100,8 @@ public class Controller implements KeyListener, MouseListener, MouseMotionListen
                             this.model.getMangeBonbon().pauseThread();
 
                         this.model.getHero().pauseThread();
+                        if(this.model.getCercle()!=null)
+                        this.model.getCercle().pauseThread();
 
                         for (Monstre m : this.model.getMonstre())
                             m.pauseThread();
@@ -109,7 +111,6 @@ public class Controller implements KeyListener, MouseListener, MouseMotionListen
                     } catch (InterruptedException e1) {
                         e1.printStackTrace();
                     }
-
                     this.view.setPause();
 
                 } else if (!this.pause) {
@@ -118,11 +119,13 @@ public class Controller implements KeyListener, MouseListener, MouseMotionListen
                         this.model.getMangeBonbon().resumeThread();
 
                     this.model.getHero().resumeThread();
+                    if(this.model.getCercle()!=null)
+                    	this.model.getCercle().resumeThread();
                     for (Monstre m : this.model.getMonstre())
                         m.resumeThread();
 
                     this.moteur.resumeThread();
-
+                    
                     this.view.releasedPause();
 
                 } else
