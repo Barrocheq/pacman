@@ -6,8 +6,8 @@ public class Monstre4 extends Monstre {
 		super(cell, Color.ORANGE);
 	}
 
-	public Monstre4(Cell cell, Model model, int repop, int speed) {
-		super(cell, model, repop,Color.ORANGE, speed);
+	public Monstre4(Cell cell, Model model, int repop) {
+		super(cell, model, repop,Color.ORANGE);
 
 		// TODO Auto-generated constructor stub
 	}

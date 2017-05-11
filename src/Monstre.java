@@ -14,18 +14,16 @@ public class Monstre extends Thread{
 	protected Cell[][] map;
 	protected Model model;
 	protected Direction lastMove;
-	private BufferedImage image;
 	protected boolean vivant;
 	private int repop;
 	private Color color;
 	private int ScaleY;
 	private int ScaleX;
 	private boolean stop;
-	private int speed;
 	private boolean running;
 
 
-	public Monstre(Cell cell,Model model,int repop, int speed) {
+	public Monstre(Cell cell,Model model,int repop) {
 		this.ScaleX = 0;
 		this.ScaleY = 0;
 		this.color = Color.GREEN;
@@ -36,7 +34,6 @@ public class Monstre extends Thread{
 		this.cellpop = cell;
 		this.vivant = true;
 		this.stop = false;
-		this.speed = speed;
 		this.running = true;
 
 	}
@@ -53,7 +50,7 @@ public class Monstre extends Thread{
 		this.running = true;
 	}
 	
-	protected Monstre(Cell cell,Model model,int repop,Color color, int speed) {
+	protected Monstre(Cell cell,Model model,int repop,Color color) {
 		this.ScaleX = 0;
 		this.ScaleY = 0;
 		this.color = color;
@@ -64,7 +61,6 @@ public class Monstre extends Thread{
 		this.cellpop = cell;
 		this.vivant = true;
 		this.stop = false;
-		this.speed = speed;
 		this.running = true;
 
 	}
@@ -128,21 +124,7 @@ public class Monstre extends Thread{
 		this.cell=this.cellpop;
 		this.lastMove = null;
 	}
-	
-	public void repop(){
-		this.vivant = true;
-	}
 
-	public void pause() {
-		synchronized (this.model) {
-			try {
-				wait();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-				System.err.println("Erreur mise en pause Monstre");
-			}
-		}
-	}
 
 	public void paintMonstre(Graphics2D g2d, int scale) throws IOException {
 		if(this.vivant){

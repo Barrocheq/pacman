@@ -2,8 +2,8 @@ import java.awt.Color;
 
 public class Monstre2 extends Monstre {
 
-	public Monstre2(Cell cell, Model model, int repop, int speed) {
-		super(cell, model, repop,Color.RED, speed);
+	public Monstre2(Cell cell, Model model, int repop) {
+		super(cell, model, repop,Color.RED);
 		// TODO Auto-generated constructor stub
 	}
 

@@ -44,7 +44,6 @@ public class BonbonMagique extends Thread {
                 while(!running)
                     yield();
 
-                System.out.println(time);
 
                 if(time > 4000)
                     this.model.getHero().setColor(Color.red);

@@ -16,7 +16,7 @@ class Cercle extends Thread{
     	this.size = 0;
 		this.i = this.model.getHero().getCell().geti();
 		this.j = this.model.getHero().getCell().getj();
-        System.out.println("Lancement Thread Cercle");
+        this.running = true;
 
         this.start();
     }
@@ -33,7 +33,8 @@ class Cercle extends Thread{
     
     public void run(){
         for(int i=0; i<10000; i++){
-        	if(!this.running)yield();
+        	while(!this.running)
+				yield();
         	this.size = i;
             try {
                 Thread.sleep(5);

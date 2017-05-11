@@ -174,38 +174,38 @@ public class Controller implements KeyListener, MouseListener, MouseMotionListen
                 
             } else if(this.cell == 2) {
                 this.dnd.getMap()[(e.getX()/View.SCALE)][(e.getY()/View.SCALE)] = new Cell(1,e.getX()/View.SCALE,(e.getY()/View.SCALE),2);
-                
+
             } else if(this.cell == 3) {
                 this.dnd.setHero(new Hero(this.dnd.getMap()[e.getX()/View.SCALE][e.getY()/View.SCALE]));
-                
+
             } else if(this.cell == 4) {
                 this.dnd.setLmonstre(new Monstre(this.dnd.getMap()[e.getX()/View.SCALE][e.getY()/View.SCALE], Color.GREEN));
 
                 this.dnd.getFakeMonster().getCell().setI(this.dnd.getSize()+3);
                 this.dnd.getFakeMonster().getCell().setJ(4);
 
-                
+
             } else if(this.cell == 5) {
                 this.dnd.setLmonstre(new Monstre2(this.dnd.getMap()[e.getX()/View.SCALE][e.getY()/View.SCALE]));
 
                 this.dnd.getFakeMonster2().getCell().setI(this.dnd.getSize()+1);
                 this.dnd.getFakeMonster2().getCell().setJ(6);
 
-                
+
             } else if(this.cell == 6) {
                 this.dnd.setLmonstre(new Monstre3(this.dnd.getMap()[e.getX()/View.SCALE][e.getY()/View.SCALE]));
 
                 this.dnd.getFakeMonster3().getCell().setI(this.dnd.getSize()+3);
                 this.dnd.getFakeMonster3().getCell().setJ(6);
 
-                
+
             } else if(this.cell == 7) {
                 this.dnd.setLmonstre(new Monstre4(this.dnd.getMap()[e.getX() / View.SCALE][e.getY() / View.SCALE]));
 
                 this.dnd.getFakeMonster4().getCell().setI(this.dnd.getSize() + 1);
                 this.dnd.getFakeMonster4().getCell().setJ(8);
 
-                
+
             }
         }
         this.cell = 0;

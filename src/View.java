@@ -13,11 +13,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class View {
 
@@ -76,6 +72,20 @@ public class View {
 			return true;
 		else
 			return false;
+	}
+
+	public void loading(Model m) {
+		cp.removeAll();
+
+		JProgressBar bar = new JProgressBar(0, 100);
+		bar.setValue(m.getLoading());
+
+
+		cp.add(bar);
+		cp.revalidate();
+		cp.repaint();
+
+		this.frame.setVisible(true);
 	}
 
 	public void menu()  {
