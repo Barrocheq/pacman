@@ -102,6 +102,12 @@ public class Moteur extends Thread {
 
 
 			parti : while (parti) {
+				try {
+					Thread.sleep(10);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				this.frame.repaint();
 
 				while(!running)
