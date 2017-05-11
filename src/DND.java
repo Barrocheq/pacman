@@ -12,6 +12,7 @@ class DND extends Thread{
     private Panel panel;
     private JFrame frame;
     private Cell[][] map;
+    private Cell fakeCell;
     private int size;
     private Hero hero;
     private Hero fakeHero;
@@ -47,6 +48,23 @@ class DND extends Thread{
 
     }
 
+
+    public void setFakeMonster(Monstre fakeMonster) {
+        this.fakeMonster = fakeMonster;
+    }
+
+    public void setFakeMonster2(Monstre2 fakeMonster2) {
+        this.fakeMonster2 = fakeMonster2;
+    }
+
+    public void setFakeMonster3(Monstre3 fakeMonster3) {
+        this.fakeMonster3 = fakeMonster3;
+    }
+
+    public void setFakeMonster4(Monstre4 fakeMonster4) {
+        this.fakeMonster4 = fakeMonster4;
+    }
+
     public DND(int size, Moteur moteur){
 
         Lmonstre = new ArrayList<>();
@@ -64,6 +82,9 @@ class DND extends Thread{
         }
 
         this.map[size+1][2] = new Cell(0,size+1,2,0);
+        this.fakeCell = new Cell(0, size+1,2, 0);
+
+
         this.map[size+3][2] = new Cell(1,size+3,2,2);
         this.map[size+1][4] = new Cell(1,size+1,4,1);
 
@@ -261,7 +282,16 @@ class DND extends Thread{
         return fakeMonster4;
     }
 
+    public Cell getFakeCell() {
+        return fakeCell;
+    }
+
+    public void setFakeCell(Cell fakeCell) {
+        this.fakeCell = fakeCell;
+    }
+
     public void run(){
+
         while(true){
             this.frame.repaint();
             try {
@@ -284,6 +314,7 @@ class Panel extends JPanel{
         this.dnd = dnd;
     }
 
+
     public void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         for(int i=0; i<this.dnd.getSize()+6;i++){
@@ -294,6 +325,8 @@ class Panel extends JPanel{
                 }
             }
         }
+
+        this.dnd.getFakeCell().paintCell(g2, this.dnd.getFakeCell().geti(), this.dnd.getFakeCell().getj(), View.SCALE);
 
         try {
             this.dnd.getHero().paintHero(g2, View.SCALE);

@@ -157,6 +157,26 @@ public class Hero extends Thread{
     }
 
 
+	public int getScaleX() {
+		return ScaleX;
+	}
+
+	public void setScaleX(int scaleX) {
+		ScaleX = scaleX;
+	}
+
+	public int getScaleY() {
+		return ScaleY;
+	}
+
+	public void setScaleY(int scaleY) {
+		ScaleY = scaleY;
+	}
+
+	public void setCell(Cell cell) {
+		this.cell = cell;
+	}
+
 	/**
 	 * Fonction de dessins du hero non animé
 	 * @param g2d dessins

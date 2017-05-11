@@ -70,7 +70,8 @@ public class Moteur extends Thread {
 				this.model.init(taille);
 			}
 			else if(this.view.getChoixLvl() == 1) {
-				this.model.init("lvl" + i + ".txt");
+				//this.model.init("lvl" + i + ".txt");
+				this.model.init("tmp.txt");
 			}
 			else if(this.view.getChoixLvl() == 2) {
 				DND dnd = new DND(15, this);

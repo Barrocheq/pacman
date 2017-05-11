@@ -41,7 +41,15 @@ public class Cell {
 			
 		}
 	}
-	
+
+	public void setI(int i) {
+		this.i = i;
+	}
+
+	public void setJ(int j) {
+		this.j = j;
+	}
+
 	public int geti(){
 		return i;
 	}

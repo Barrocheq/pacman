@@ -206,6 +206,8 @@ public class Model {
 	}
 
 	public void startMonstre() {
+		System.out.println(this.Lmonstre.length);
+
 		for (Monstre m : this.Lmonstre)
 			m.start();
 	}
