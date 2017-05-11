@@ -54,6 +54,7 @@ public class Model {
 		this.sizeL = size;
 		this.sizeH = size;
 		timeToEat = 5000;
+		this.speed = 10;
 
 		RandomLvl lvl = new RandomLvl();
 		lvl.init(size);

@@ -144,7 +144,6 @@ public class RandomLvl  {
      * @return true si oui
      */
     public boolean check(int nI, int nJ, int nbMur) {
-        boolean fourWall = true;
         int nbWall = nbMur;
         int newI = 0;
         int newJ = 0;
