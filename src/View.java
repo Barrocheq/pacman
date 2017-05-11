@@ -104,6 +104,7 @@ public class View {
 		JLabel score;
 		try {
 			score = new JLabel("Meilleur score : "+this.Best());
+			score.setForeground(Color.WHITE);
 			pan.add(score);
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
@@ -142,9 +143,11 @@ public class View {
 		});
 
 		cp.add(pan,BorderLayout.NORTH);
-		cp.add(new JLabel(new ImageIcon("pacman.png")),BorderLayout.CENTER);
+		JLabel image = new JLabel(new ImageIcon("pacman.png"));
+		cp.add(image,BorderLayout.CENTER);
 		cp.revalidate();
 		cp.repaint();
+		cp.setBackground(Color.black);
 		this.frame.setVisible(true);
 	}
 
