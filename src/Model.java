@@ -275,6 +275,9 @@ public class Model {
 		
 	}
 	
+	public int getSpeed(){
+		return this.speed;
+	}
 	public void setCercle(Cercle cercle){
 		this.Cercle = cercle;
 	}

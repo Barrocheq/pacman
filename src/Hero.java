@@ -255,7 +255,6 @@ public class Hero extends Thread{
 			synchronized (this) {
 			    //if(this.model.getState()) this.setColor(Color.red);
                 //else this.setColor(Color.yellow);
-
 				while(!running)
 					yield();
 

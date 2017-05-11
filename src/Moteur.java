@@ -70,8 +70,7 @@ public class Moteur extends Thread {
 				this.model.init(taille);
 			}
 			else if(this.view.getChoixLvl() == 1) {
-				//this.model.init("lvl" + i + ".txt");
-				this.model.init("tmp.txt");
+				this.model.init("lvl" + i + ".txt");
 			}
 			else if(this.view.getChoixLvl() == 2) {
 				DND dnd = new DND(15, this);
@@ -101,14 +100,15 @@ public class Moteur extends Thread {
 			this.frame = view.getFrame();
 
 
-
+			//new Music();
 			parti : while (parti) {
 				try {
-					Thread.sleep(10);
+					Thread.sleep(this.model.getSpeed());
 				} catch (InterruptedException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				
 				this.frame.repaint();
 
 				while(!running)
