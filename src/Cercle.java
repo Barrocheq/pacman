@@ -23,7 +23,7 @@ class Cercle extends Thread{
     
     public void paintCercle(Graphics g,int SCALE) {
 		Graphics2D g2 = (Graphics2D) g;
-
+		g2.setColor(Color.WHITE);
 		g2.drawOval((this.i*SCALE)-((this.size+50)/2), (SCALE*this.j)-((this.size+50)/2), this.size+50, this.size+50);
 		g2.setStroke(new BasicStroke(2));
 		g2.drawOval((this.i*SCALE)-((this.size+100)/2), (SCALE*this.j)-((this.size+100)/2), this.size+100, this.size+100);
