@@ -105,6 +105,7 @@ public class View {
 		pan.add(jRandom);
 		pan.add(jLevel);
 		pan.add(jDnD);
+		pan.setBackground(Color.BLACK);
 
 		jRandom.addActionListener(new ActionListener() {
 			@Override

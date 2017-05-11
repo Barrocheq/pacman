@@ -2,8 +2,6 @@
     - Check le refresh avec le param
     - Taille sur Windows / Linux
     - Placement Dnd
-    - Lecture / Ecriture des Monstre
-    - Gestion si champs DND n'est pas un integer
  */
 
 import java.io.IOException;
