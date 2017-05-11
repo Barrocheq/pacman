@@ -18,25 +18,35 @@ public class Model {
 	private Hero hero;
 	private Monstre[] Lmonstre;
 	private boolean state;
+	private View view;
 	private BonbonMagique mangeBonbon;
 	private int Score;
 	private String nom;
 	private Cercle Cercle;
-	
+	public float loading;
+
+	public int getLoading() {
+		return (int)loading;
+	}
+
+	public void setLoading(int loading) {
+		this.loading = loading;
+	}
+
+
 
 	public Model() {
 		this.nom = "default";
 	}
 
-	public void init(String f) {
+	public void init(String f, View v) throws IOException {
 
 		this.state = false;
 
-		try {
-			this.setFromFile(f);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		this.view = v;
+
+		this.setFromFile(f);
+
 	}
 
 	public void setMap(Cell[][] map) {
@@ -97,80 +107,89 @@ public class Model {
 
 	public void setFromFile(String fileName) throws IOException {
 
-		// System.out.println(fileName);
 
-		try {
-			String line;
-			int i = 0, j = 0, indexMonster = -1;
-			BufferedReader file = new BufferedReader(new FileReader(fileName));
-			while ((line = file.readLine()) != null) {
-				if (i == 0) {
-					String[] config = line.split(",");
-					this.sizeL = Integer.parseInt(config[0]);
-					this.sizeH = Integer.parseInt(config[1]);
-					this.speed = Integer.parseInt(config[2]);
-					this.respawnMonster = Integer.parseInt(config[3]);
-					this.timeToEat = Integer.parseInt(config[4]);
-					this.numberOfMonster = Integer.parseInt(config[5]);
+		String line;
+		int i = 0, j = 0, indexMonster = -1;
+		BufferedReader file = new BufferedReader(new FileReader(fileName));
+		while ((line = file.readLine()) != null) {
+			if (i == 0) {
+				String[] config = line.split(",");
+				this.sizeL = Integer.parseInt(config[0]);
+				this.sizeH = Integer.parseInt(config[1]);
+				this.speed = Integer.parseInt(config[2]);
+				this.respawnMonster = Integer.parseInt(config[3]);
+				this.timeToEat = Integer.parseInt(config[4]);
+				this.numberOfMonster = Integer.parseInt(config[5]);
 
-					this.Lmonstre = new Monstre[numberOfMonster];
-					this.map = new Cell[this.sizeL][this.sizeH];
+				this.Lmonstre = new Monstre[numberOfMonster];
+				this.map = new Cell[this.sizeL][this.sizeH];
 
-					for (int k = 0; k < sizeL; k++)
-						for (int n = 0; n < sizeH; n++)
-							this.map[k][n] = new Cell(0, k, n, 0);
+				for (int k = 0; k < sizeL; k++)
+					for (int n = 0; n < sizeH; n++)
+						this.map[k][n] = new Cell(0, k, n, 0);
 
-				} else {
-					String[] symbol = line.split("");
+			} else {
+				String[] symbol = line.split("");
 
-					for (String s : symbol) {
-						if (s.equals("#")) {
-							this.map[j][i - 1] = new Cell(0, j, i - 1, 0);
-						} else if (s.equals(".")) {
-							this.map[j][i - 1] = new Cell(1, j, i - 1, 1);
-						} else if (s.equals("o")) {
-							this.map[j][i - 1] = new Cell(1, j, i - 1, 2);
-						} else if (s.equals("C")) {
-							this.map[j][i - 1] = new Cell(1, j, i - 1, 0);
-							this.hero = new Hero(this.map[j][i - 1], this);
-						} else if (Integer.parseInt(s) >= 0 && Integer.parseInt(s) <= 9) {
-							indexMonster++;
-							if (indexMonster == numberOfMonster) {
-								System.err.println("Erreur Monstre : config et description");
-								System.exit(0);
-							}
+				for (String s : symbol) {
+					if (s.equals("#")) {
+						this.map[j][i - 1] = new Cell(0, j, i - 1, 0);
+					} else if (s.equals(".")) {
+						this.map[j][i - 1] = new Cell(1, j, i - 1, 1);
+					} else if (s.equals("o")) {
+						this.map[j][i - 1] = new Cell(1, j, i - 1, 2);
+					} else if (s.equals("C")) {
+						this.map[j][i - 1] = new Cell(1, j, i - 1, 0);
+						this.hero = new Hero(this.map[j][i - 1], this);
+					} else if (Integer.parseInt(s) >= 0 && Integer.parseInt(s) <= 9) {
+						indexMonster++;
+						if (indexMonster == numberOfMonster) {
+							System.err.println("Erreur Monstre : config et description");
+							System.exit(0);
+						}
 
-							this.map[j][i - 1] = new Cell(0, j, i - 1, 0);
+						this.map[j][i - 1] = new Cell(0, j, i - 1, 0);
 
-							if(Integer.parseInt(s) == 0)
-								this.Lmonstre[indexMonster] = new Monstre(this.map[j][i - 1], this, this.respawnMonster, this.speed);
-							else if (Integer.parseInt(s) == 1)
-								this.Lmonstre[indexMonster] = new Monstre2(this.map[j][i - 1], this, this.respawnMonster, this.speed);
-							else if (Integer.parseInt(s) == 2)
-								this.Lmonstre[indexMonster] = new Monstre3(this.map[j][i - 1], this, this.respawnMonster, this.speed);
-							else if (Integer.parseInt(s) == 3)
-								this.Lmonstre[indexMonster] = new Monstre4(this.map[j][i - 1], this, this.respawnMonster, this.speed);
-							else
-								this.Lmonstre[indexMonster] = new Monstre(this.map[j][i - 1], this, this.respawnMonster, this.speed);
+						if(Integer.parseInt(s) == 0)
+							this.Lmonstre[indexMonster] = new Monstre(this.map[j][i - 1], this, this.respawnMonster, this.speed);
+						else if (Integer.parseInt(s) == 1)
+							this.Lmonstre[indexMonster] = new Monstre2(this.map[j][i - 1], this, this.respawnMonster, this.speed);
+						else if (Integer.parseInt(s) == 2)
+							this.Lmonstre[indexMonster] = new Monstre3(this.map[j][i - 1], this, this.respawnMonster, this.speed);
+						else if (Integer.parseInt(s) == 3)
+							this.Lmonstre[indexMonster] = new Monstre4(this.map[j][i - 1], this, this.respawnMonster, this.speed);
+						else
+							this.Lmonstre[indexMonster] = new Monstre(this.map[j][i - 1], this, this.respawnMonster, this.speed);
 
-						} else
-							System.err.println("Symbol non reconnu lors de l'initialisation du tableau : " + s);
 
-						j++;
+					} else
+						System.err.println("Symbol non reconnu lors de l'initialisation du tableau : " + s);
 
+
+					loading = ((float)((i-1)*sizeH + j) / (float)(sizeH * sizeL)) * 100;
+
+					//System.out.println(    (     (float)(     (i*sizeL) + j    )/   (float)(  (i*(sizeL+1)) -1 ))  * 100);
+
+
+					j++;
+
+					this.view.loading(this);
+
+					try {
+						Thread.sleep(10);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
 					}
+
+//						System.out.println(loading);
+
 				}
-
-				j = 0;
-				i++;
 			}
-			file.close();
-		} catch (FileNotFoundException e) {
-			System.out.println("File Not Found");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 
+			j = 0;
+			i++;
+		}
+		file.close();
 	}
 
 	public Monstre[] getMonstre() {

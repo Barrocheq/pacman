@@ -14,7 +14,6 @@ public class Moteur extends Thread {
 	private Controller controller;
 	private boolean running;
 
-
 	/**
 	 * Constructeur par defaut
 	 */
@@ -70,8 +69,11 @@ public class Moteur extends Thread {
 				this.model.init(taille);
 			}
 			else if(this.view.getChoixLvl() == 1) {
-				//this.model.init("lvl" + i + ".txt");
-				this.model.init("tmp.txt");
+				try {
+					this.model.init("lvl" + i + ".txt", this.view);
+				} catch (IOException e) {
+					this.model.init(taille);
+				}
 			}
 			else if(this.view.getChoixLvl() == 2) {
 				DND dnd = new DND(15, this);
@@ -84,7 +86,11 @@ public class Moteur extends Thread {
 						e.printStackTrace();
 					}
 
-					this.model.init(dnd.getNameFile());
+					try {
+						this.model.init(dnd.getNameFile(), this.view);
+					} catch (IOException e) {
+						this.model.init(taille);
+					}
 				}
 
 			}

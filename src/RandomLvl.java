@@ -98,7 +98,6 @@ public class RandomLvl  {
             if(check(this.i + nextI, this.j + nextJ, 4)) {
                 this.map[this.i+this.d.dI()][this.j+this.d.dJ()] = new Cell(1,this.i+this.d.dI(),this.j+this.d.dJ(),1);
                 nbTrou--;
-               // System.out.println(nbTrou);
                 this.i = this.i + nextI;
                 this.j = this.j + nextJ;
 
@@ -125,7 +124,6 @@ public class RandomLvl  {
             if(check(this.i + nextI, this.j + nextJ, 2)) {
                 this.map[this.i+this.d.dI()][this.j+this.d.dJ()] = new Cell(1,this.i+this.d.dI(),this.j+this.d.dJ(),1);
                 nbTrouSupple--;
-                System.out.println(nbTrouSupple);
                 this.i = this.i + nextI;
                 this.j = this.j + nextJ;
 
