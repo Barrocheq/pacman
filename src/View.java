@@ -88,10 +88,12 @@ public class View {
 		this.frame.setVisible(true);
 	}
 
-	public void menu()  {
+	public void menu(Model m)  {
 		this.glass.setVisible(false);
 
-		this.frame.setSize(500, 300);
+		this.model = m;
+
+		this.frame.setSize(600, 300);
 
 		cp.removeAll();
 
@@ -100,6 +102,8 @@ public class View {
 		JButton jRandom = new JButton("Random");
 		JButton jLevel = new JButton("Level");
 		JButton jDnD = new JButton("Drag&Drop");
+		JCheckBox jCheck = new JCheckBox("Music");
+		jCheck.setForeground(Color.WHITE);
 		
 		JLabel score;
 		try {
@@ -116,7 +120,16 @@ public class View {
 		pan.add(jRandom);
 		pan.add(jLevel);
 		pan.add(jDnD);
+		pan.add(jCheck);
 		pan.setBackground(Color.BLACK);
+
+
+		jCheck.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model.setMusic(jCheck.isSelected());
+			}
+		});
 
 		jRandom.addActionListener(new ActionListener() {
 			@Override

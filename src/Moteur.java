@@ -52,7 +52,7 @@ public class Moteur extends Thread {
 
 
 		while (true) {
-			this.view.menu();
+			this.view.menu(this.model);
 			while(this.view.getWait() && vie == 0) {
 				try {
 					Thread.sleep(100);

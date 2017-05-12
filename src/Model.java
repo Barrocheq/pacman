@@ -24,6 +24,7 @@ public class Model {
 	private String nom;
 	private Cercle Cercle;
 	public float loading;
+	private boolean music;
 
 	public int getLoading() {
 		return (int)loading;
@@ -37,6 +38,15 @@ public class Model {
 
 	public Model() {
 		this.nom = "default";
+		this.music = false;
+	}
+
+	public boolean getMusic() {
+		return music;
+	}
+
+	public void setMusic(boolean music) {
+		this.music = music;
 	}
 
 	public void init(String f, View v) throws IOException {

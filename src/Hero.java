@@ -20,6 +20,8 @@ public class Hero extends Thread{
 	private Color color;
     private Timer timer;
 	private boolean running;
+	private Music m;
+	private boolean runMusic;
 
 	/**
 	 * Constructeur par defaut de la classe Hero
@@ -34,6 +36,8 @@ public class Hero extends Thread{
 		this.stop = false;
 		this.color = Color.yellow;
 		this.running = true;
+		this.runMusic = false;
+		this.m = new Music(this);
 	}
 
 	public Hero(Cell cell) {
@@ -52,6 +56,8 @@ public class Hero extends Thread{
 		this.stop = false;
 		this.color = Color.yellow;
 		this.running = true;
+		this.runMusic = false;
+		this.m = new Music(this);
 
 		//this.cell = r.getMap()[this.cell.geti()][this.cell.getj()];
 	}
@@ -61,6 +67,14 @@ public class Hero extends Thread{
     }
 
 
+	public boolean getRunMusic() {
+		return runMusic;
+	}
+
+	public void setRunMusic(boolean runMusic) {
+		this.runMusic = runMusic;
+	}
+
 	/**
 	 * Fonction de mouvement du Hero
 	 * @param dir direction du mouvement
@@ -68,7 +82,13 @@ public class Hero extends Thread{
 	public void move(Direction dir) {
 		Cell celltemp = this.model.getMap()[this.cell.geti()+dir.dI()][this.cell.getj()+dir.dJ()];
 
+
 		if(celltemp.passable()){
+
+			if(this.model.getMusic())
+				m.launch();
+
+			this.runMusic = true;
 			this.cell = celltemp;
 			int tmpbonbon = this.cell.mangeBonbon();
 

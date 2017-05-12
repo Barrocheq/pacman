@@ -9,12 +9,16 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-public class Music extends Thread{
+public class Music{
 	
 	private Clip clip;
 	private AudioInputStream stream;
+	private Hero myHero;
 	
-	public Music(){
+	public Music(Hero h){
+
+		this.myHero = h;
+
 
 		try {
 		    File soundFile = new File("pacman_chomp.wav");
@@ -22,8 +26,9 @@ public class Music extends Thread{
 		    AudioFormat format = stream.getFormat();
 		    DataLine.Info info = new DataLine.Info(Clip.class, format);
 		    this.clip = (Clip) AudioSystem.getLine(info);
-		    
-		    this.start();
+			this.clip.open(this.stream);
+
+
 		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -31,23 +36,13 @@ public class Music extends Thread{
 
 	}
 	
-	public void run(){
-		while(true){
-			try {
-				this.clip.open(this.stream);
-			} catch (LineUnavailableException | IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+	public void launch() {
+		if (this.myHero.getRunMusic()) {
+			if(!this.clip.isRunning()) {
+				this.clip.start();
+				this.clip.setFramePosition(0);
 			}
-			this.clip.start();
-			
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			this.clip.close();
 		}
 	}
+
 }

@@ -176,7 +176,7 @@ class DND extends Thread{
             Integer.parseInt(refresh);
         } catch (NumberFormatException e) {
             System.out.println("Erreur refresh n'est pas un entier");
-            refresh = "100";
+            refresh = "10";
         }
 
         try {
