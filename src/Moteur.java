@@ -96,9 +96,6 @@ public class Moteur extends Thread {
 			else
 				System.err.println("Errurs choix LVL");
 
-			//this.model.init("lvl" + i + ".txt");
-			//this.model.init(taille);
-
 			this.model.startHero();
 			this.model.startMonstre();
 
@@ -136,7 +133,7 @@ public class Moteur extends Thread {
 					synchronized (this.model) {
 						for (Monstre m : this.model.getMonstre()) {
 							if (m != null && this.model.getHero().getCell().equals(m.getCell())) {
-								m.meur();
+								m.dead();
 								this.model.incScore(20);
 							}
 						}

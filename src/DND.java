@@ -27,53 +27,18 @@ class DND extends Thread{
     private ArrayList<Monstre> Lmonstre;
     private String fileName;
 
-    public void setHero(Hero hero) {
-        this.hero = hero;
-    }
 
-    public Panel getPanel() {
-        return panel;
-    }
-
-
-    public void setSizeFrame(int sizeH, int sizeL) {
-
-        String os = System.getProperty("os.name").toLowerCase();
-
-
-        if (os.contains("win"))
-            this.frame.setSize(((sizeL + 1) * View.SCALE), ((sizeH + 2) * View.SCALE));
-        else if (os.contains("nux") || os.contains("nix"))
-            this.frame.setSize(((sizeL + 1) * View.SCALE), ((sizeH + 2) * View.SCALE));
-        else
-            this.frame.setSize((sizeL) * View.SCALE, (sizeH) * View.SCALE + 22);
-
-
-
-    }
-
-
-    public void setFakeMonster(Monstre fakeMonster) {
-        this.fakeMonster = fakeMonster;
-    }
-
-    public void setFakeMonster2(Monstre2 fakeMonster2) {
-        this.fakeMonster2 = fakeMonster2;
-    }
-
-    public void setFakeMonster3(Monstre3 fakeMonster3) {
-        this.fakeMonster3 = fakeMonster3;
-    }
-
-    public void setFakeMonster4(Monstre4 fakeMonster4) {
-        this.fakeMonster4 = fakeMonster4;
-    }
-
+    /**
+     * Constructeur
+     * @param size taille du niveau
+     */
     public DND(int size, Moteur moteur){
 
         Lmonstre = new ArrayList<>();
 
         this.size = size;
+
+        // Création de la map de base
         this.map = new Cell[this.size+6][this.size];
         for(int i=0; i<size+6;i++){
             for(int j=0;j<size;j++){
@@ -85,6 +50,8 @@ class DND extends Thread{
             }
         }
 
+
+        // Placement des "objets"
         this.map[size+1][2] = new Cell(0,size+1,2,0);
         this.fakeCell = new Cell(0, size+1,2, 0);
 
@@ -104,24 +71,21 @@ class DND extends Thread{
         this.map[size+1][8] = new Cell(1, size+1, 8, 0);
         this.fakeMonster4 = new Monstre4(this.map[size+1][8]);
 
-
-
-
-
         this.hero = new Hero(this.map[size+1][4]);
         this.fakeHero = new Hero(this.map[size+1][4]);
 
+
+
+        // Création de la frame
         frame = new JFrame();
         setSizeFrame(size, size+6);
         frame.setTitle("PacMan");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         Container cp = frame.getContentPane();
-        //cp.setLayout(null);
 
         panel = new Panel(this);
         panel.setSize(size, size);
-        //panel.setLayout(null);
         cp.add(panel);
 
         JButton valider = new JButton("Valider");
@@ -142,9 +106,7 @@ class DND extends Thread{
         panel.add(name);
 
 
-
-
-
+        // Action Listener
         valider.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -175,10 +137,88 @@ class DND extends Thread{
 
     }
 
+    // GETTEURS & SETTEUR
+    public void setHero(Hero hero) {
+        this.hero = hero;
+    }
+
+    public Panel getPanel() {
+        return panel;
+    }
+
+
+    public void setSizeFrame(int sizeH, int sizeL) {
+
+        String os = System.getProperty("os.name").toLowerCase();
+
+
+        if (os.contains("win"))
+            this.frame.setSize(((sizeL + 1) * View.SCALE), ((sizeH + 2) * View.SCALE));
+        else if (os.contains("nux") || os.contains("nix"))
+            this.frame.setSize(((sizeL + 1) * View.SCALE), ((sizeH + 2) * View.SCALE));
+        else
+            this.frame.setSize((sizeL) * View.SCALE, (sizeH) * View.SCALE + 22);
+
+    }
+
     public String getNameFile() {
         return this.fileName;
     }
 
+    public JFrame getFrame(){
+        return this.frame;
+    }
+
+    public Hero getFakeHero() {
+        return fakeHero;
+    }
+
+    public Cell[][] getMap(){
+        return this.map;
+    }
+
+    public int getSize(){
+        return this.size;
+    }
+
+    public Hero getHero() {
+        return hero;
+    }
+
+    public void setLmonstre(Monstre monstre) {
+        this.Lmonstre.add(monstre);
+    }
+
+    public ArrayList<Monstre> getLmonstre() {
+        return Lmonstre;
+    }
+
+    public Monstre getFakeMonster() {
+        return fakeMonster;
+    }
+    public Monstre2 getFakeMonster2() {
+        return fakeMonster2;
+    }
+    public Monstre3 getFakeMonster3() {
+        return fakeMonster3;
+    }
+    public Monstre4 getFakeMonster4() {
+        return fakeMonster4;
+    }
+
+    public Cell getFakeCell() {
+        return fakeCell;
+    }
+
+
+    /**
+     * Sauvegarde de la map dans un fichier
+     * @param fileName nom du fichier de sauvegarde
+     * @param refresh temps de refresh de la partie
+     * @param respawn temps de respawn des monstre
+     * @param timeToEat temps bonbonMagique
+     * @throws IOException
+     */
     public void MapToFile(String fileName, String refresh, String respawn ,String timeToEat) throws IOException {
 
         try {
@@ -249,57 +289,11 @@ class DND extends Thread{
         file.close();
     }
 
-    public JFrame getFrame(){
-        return this.frame;
-    }
 
-    public Hero getFakeHero() {
-        return fakeHero;
-    }
-
-    public Cell[][] getMap(){
-        return this.map;
-    }
-
-    public int getSize(){
-        return this.size;
-    }
-
-    public Hero getHero() {
-        return hero;
-    }
-
-    public void setLmonstre(Monstre monstre) {
-        this.Lmonstre.add(monstre);
-    }
-
-    public ArrayList<Monstre> getLmonstre() {
-        return Lmonstre;
-    }
-
-    public Monstre getFakeMonster() {
-        return fakeMonster;
-    }
-    public Monstre2 getFakeMonster2() {
-        return fakeMonster2;
-    }
-    public Monstre3 getFakeMonster3() {
-        return fakeMonster3;
-    }
-    public Monstre4 getFakeMonster4() {
-        return fakeMonster4;
-    }
-
-    public Cell getFakeCell() {
-        return fakeCell;
-    }
-
-    public void setFakeCell(Cell fakeCell) {
-        this.fakeCell = fakeCell;
-    }
-
+    /**
+     * Lancement du Thread
+     */
     public void run(){
-
         while(true){
             this.frame.repaint();
             try {
@@ -314,6 +308,9 @@ class DND extends Thread{
     }
 }
 
+/**
+ * Creation du Panel
+ */
 class Panel extends JPanel{
 
     private DND dnd;
@@ -335,6 +332,8 @@ class Panel extends JPanel{
 
         this.dnd.getFakeCell().paintCell(g2, this.dnd.getFakeCell().geti(), this.dnd.getFakeCell().getj(), View.SCALE);
 
+
+        // Dessins des faux objets
         try {
             this.dnd.getHero().paintHero(g2, View.SCALE);
             this.dnd.getFakeHero().paintHero(g2, View.SCALE);

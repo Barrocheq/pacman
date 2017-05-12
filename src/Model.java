@@ -5,6 +5,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+
+/**
+ * Classe gerant les variables
+ */
 public class Model {
 
 	private Cell[][] map;
@@ -27,12 +31,18 @@ public class Model {
 	private boolean music;
 	private boolean chargementR;
 
-	public int getLoading() {
-		return (int)loading;
+	public Model() {
+		this.nom = "default";
+		this.music = false;
+		this.chargementR = false;
 	}
 
 
+	// GETTEURS ET SETTEURS
 
+	public int getLoading() {
+		return (int)loading;
+	}
 	public void setLoading(int loading) {
 		this.loading = loading;
 	}
@@ -45,11 +55,6 @@ public class Model {
 		this.chargementR = chargementR;
 	}
 
-	public Model() {
-		this.nom = "default";
-		this.music = false;
-		this.chargementR = false;
-	}
 
 	public void setNom(String nom) {
 		this.nom = nom;
@@ -63,17 +68,90 @@ public class Model {
 		this.music = music;
 	}
 
-	public void init(String f, View v) throws IOException {
+	public Monstre[] getMonstre() {
+		return this.Lmonstre;
+	}
 
-		this.state = false;
+	public Hero getHero() {
+		return this.hero;
+	}
 
-		this.view = v;
+	public Cell[][] getMap() {
+		return this.map;
+	}
 
-		this.setFromFile(f);
+	public void setState(boolean state) {
+		this.state = state;
+	}
+
+	public int getSize() {
+		return this.size;
+	}
+
+	public int getSizeH() {
+		return this.sizeH;
+	}
+
+	public int getSizeL() {
+		return this.sizeL;
+	}
+
+	public boolean getState() {
+		return this.state;
+	}
+
+	public void saveScore() throws IOException {
+
+		BufferedWriter file = new BufferedWriter(new FileWriter("score.txt",true	));
+		file.append(this.nom+":"+Integer.toString(this.Score));
+		file.newLine();
+		file.close();
+		this.Score = 0;
 
 	}
 
+	public BonbonMagique getMangeBonbon() {
+		return mangeBonbon;
+	}
 
+	public void incScore(int i) {
+		this.Score += i;
+
+	}
+
+	public int getScore(){
+		return this.Score;
+	}
+	public int getSpeed(){
+		return this.speed;
+	}
+	public void setCercle(Cercle cercle){
+		this.Cercle = cercle;
+	}
+
+	public Cercle getCercle(){
+		return this.Cercle;
+	}
+
+
+	/**
+	 * Initialisation du model
+	 * @param f nom du fichier
+	 * @param v view du fichier
+	 * @throws IOException
+	 */
+	public void init(String f, View v) throws IOException {
+
+		this.state = false;
+		this.view = v;
+		this.setFromFile(f);
+	}
+
+
+	/**
+	 * Initialisation du model
+	 * @param size taille du lvl
+	 */
 	public void init(int size) {
 		this.sizeL = size;
 		this.sizeH = size;
@@ -92,6 +170,9 @@ public class Model {
 		this.generateMonster();
 	}
 
+	/**
+	 * Génére des montres aléatoirement
+	 */
 	public void generateMonster() {
 		int nbMonster = this.sizeH / 4;
 		int i = 0;
@@ -104,8 +185,6 @@ public class Model {
 		while (nbMonster > 0) {
 			randI = (int) (Math.random() * ((this.sizeH - 1) - 1)) + 1;
 			randJ = (int) (Math.random() * ((this.sizeH - 1) - 1)) + 1;
-			// randI = (int)(Math.random() * (this.sizeH-3)) + 3;
-			// randJ = (int)(Math.random() * (this.sizeH-3)) + 3;
 
 			if (!(this.map[randI][randJ].passable())) {
 				this.Lmonstre[i] = new Monstre(this.map[randI][randJ], this, this.respawnMonster);
@@ -116,8 +195,12 @@ public class Model {
 	}
 
 
+	/**
+	 * Creation d'un plateau avec la lecture d'un fichier
+	 * @param fileName nom du fichier
+	 * @throws IOException
+	 */
 	public void setFromFile(String fileName) throws IOException {
-
 
 		String line;
 		int i = 0, j = 0, indexMonster = -1;
@@ -201,44 +284,24 @@ public class Model {
 		file.close();
 	}
 
-	public Monstre[] getMonstre() {
-		return this.Lmonstre;
-	}
-
-	public Hero getHero() {
-		return this.hero;
-	}
-
-	public Cell[][] getMap() {
-		return this.map;
-	}
-
-	public void setState(boolean state) {
-		this.state = state;
-	}
-
-	public int getSize() {
-		return this.size;
-	}
-
-	public int getSizeH() {
-		return this.sizeH;
-	}
-
-	public int getSizeL() {
-		return this.sizeL;
-	}
-
+	/**
+	 * Permet de lancer le Hero
+	 */
 	public void startHero() {
 		this.hero.start();
 	}
 
+	/**
+	 * Permet de lancer les monstre
+	 */
 	public void startMonstre() {
-
 		for (Monstre m : this.Lmonstre)
 			m.start();
 	}
 
+	/**
+	 * Permet d'arreter le jeu et de "killer" toutes les threads
+	 */
 	public void stop() {
 		this.hero.stopHero();
 
@@ -250,6 +313,9 @@ public class Model {
 		this.Cercle = null;
 	}
 
+	/**
+	 * Retourne le nombre de bonbon
+	 */
 	public int nbBonbon() {
 		int res = 0;
 		for (Cell[] c : this.map) {
@@ -262,14 +328,18 @@ public class Model {
 		return res;
 	}
 
-	public boolean getState() {
-		return this.state;
-	}
 
+	/**
+	 * Termine le "mode" bonbonrouge
+	 */
 	public void finEat() {
 		this.mangeBonbon = null;
 	}
 
+
+	/**
+	 * Lancement du bonbonRouge (bonbonMagique)
+	 */
 	public void mangeBonbonRouge() {
 		if (this.mangeBonbon != null) {
 			this.mangeBonbon.addTime(this.timeToEat);
@@ -279,37 +349,7 @@ public class Model {
 		this.Cercle = new Cercle(this);
 	}
 
-	public BonbonMagique getMangeBonbon() {
-		return mangeBonbon;
-	}
 
-	public void incScore(int i) {
-		this.Score += i;
 
-	}
-	
-	public int getScore(){
-		return this.Score;
-	}
 
-	public void saveScore() throws IOException {
-		
-		BufferedWriter file = new BufferedWriter(new FileWriter("score.txt",true	));
-		file.append(this.nom+":"+Integer.toString(this.Score));
-		file.newLine();
-		file.close();
-		this.Score = 0;
-		
-	}
-	
-	public int getSpeed(){
-		return this.speed;
-	}
-	public void setCercle(Cercle cercle){
-		this.Cercle = cercle;
-	}
-	
-	public Cercle getCercle(){
-		return this.Cercle;
-	}
 }

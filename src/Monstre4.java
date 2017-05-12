@@ -1,5 +1,9 @@
 import java.awt.Color;
 
+/**
+ * Classe heritant de monstre
+ * Fonction : Suit sur i et j
+ */
 public class Monstre4 extends Monstre {
 
 	public Monstre4(Cell cell) {

@@ -42,22 +42,19 @@ public class Cell {
 		}
 	}
 
+	// GETTEURS ET SETTEURS
 	public void setI(int i) {
 		this.i = i;
 	}
-
 	public void setJ(int j) {
 		this.j = j;
 	}
-
 	public int geti(){
 		return i;
 	}
-	
 	public int getStats(){
 		return this.stats;
 	}
-	
 	public int getj(){
 		return j;
 	}

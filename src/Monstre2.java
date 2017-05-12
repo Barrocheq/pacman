@@ -1,5 +1,9 @@
 import java.awt.Color;
 
+/**
+ * Classe heritant de monstre
+ * Fonction : Suit si sur la ligne i ou j
+ */
 public class Monstre2 extends Monstre {
 
 	public Monstre2(Cell cell, Model model, int repop) {

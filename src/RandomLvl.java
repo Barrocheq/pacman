@@ -1,7 +1,5 @@
-import java.util.Random;
-
 /**
- * Created by Quentin on 09/05/2017.
+ * Classe qui genere une maps aléatoire
  */
 public class RandomLvl  {
     private Cell[][] map;
@@ -15,6 +13,11 @@ public class RandomLvl  {
     private Hero hero;
     private Model model;
 
+
+    /**
+     * Consteurs
+     * @param m model du jeu
+     */
     public RandomLvl(Model m ) {
         this.i = 1;
         this.j = 1;
@@ -22,6 +25,8 @@ public class RandomLvl  {
         this.model = m;
     }
 
+
+    // GETTEURS ET SETTEURS
     public Cell[][] getMap() {
         return map;
     }
@@ -30,12 +35,31 @@ public class RandomLvl  {
         return size;
     }
 
+    public int getNbTrou() {
+        return nbTrou;
+    }
+
+    public Hero getHero() {
+        return hero;
+    }
+
+
+
+    /**
+     * Initialisation du générateurs
+     * @param size taille de la map a générer
+     */
     public void init(int size) {
 
         this.size = size;
 
+        // Nombre de trou a faire
         this.nbTrou = (size/2) * (size/2) - 1;
+
+        // Nombre de trou supplémentaire pour créer des "boucles"
         this.nbTrouSupple = size;
+
+        // Nombre de bonbonRouge a générer
         this.nbRouge = size/4;
         this.map = new Cell[size][size];
 
@@ -62,19 +86,15 @@ public class RandomLvl  {
 
     }
 
-    public int getNbTrou() {
-        return nbTrou;
-    }
 
-    public Hero getHero() {
-        return hero;
-    }
-
+    /**
+     * Fonction de génération
+     */
     public void make() {
         int nextI = 0;
         int nextJ = 0;
 
-        View v = new View();
+        View v = new View(); // permet d'afficher la création
 
         while (nbTrou > 0) {
             if(model.getChargementR()) {
@@ -182,6 +202,9 @@ public class RandomLvl  {
         return nbWall == 0;
     }
 
+    /**
+     * Fonction de génération aléatoire des bonbonMagique
+     */
     public void generateSupBonbon() {
 
         while (this.nbRouge > 0) {

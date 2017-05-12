@@ -3,6 +3,9 @@ import java.awt.event.*;
 
 import javax.swing.JFrame;
 
+/**
+ * Classe qui detecte les évenements utilisateurs
+ */
 public class Controller extends KeyAdapter implements MouseListener, MouseMotionListener{
 
 	private Model model;
@@ -19,11 +22,19 @@ public class Controller extends KeyAdapter implements MouseListener, MouseMotion
         this.pause = false;
 	}
 
+    /**
+     * Constructeur moteur
+     * @param moteur moteur du jeu
+     */
     public Controller(Moteur moteur) {
         this.moteur = moteur;
         this.pause = false;
     }
 
+    /**
+     * Constructeur appeler puor le DND
+     * @param dnd
+     */
     public Controller(DND dnd) {
         // TODO Auto-generated constructor stub
         this.dnd = dnd;
@@ -33,11 +44,18 @@ public class Controller extends KeyAdapter implements MouseListener, MouseMotion
         this.pause = false;
     }
 
+    /**
+     * Initialisation du constructeur
+     * @param model model du jeu
+     * @param view view du jeu
+     */
 	public void init(Model model, View view) {
         this.model = model;
         JFrame frame = view.getFrame();
         this.view = view;
-        //frame.addKeyListener(this);
+
+
+        // Permets de gerer les fleches
         frame.addKeyListener(new KeyAdapter() {
 
             @Override
@@ -113,6 +131,7 @@ public class Controller extends KeyAdapter implements MouseListener, MouseMotion
 			this.model.getHero().nextDir(Direction.WEST);
 		}
 
+		// Barre espace
         if (Character.isSpaceChar(e.getKeyChar())) {
             synchronized (this.moteur) {
 
@@ -166,6 +185,10 @@ public class Controller extends KeyAdapter implements MouseListener, MouseMotion
 
     }
 
+    /**
+     * Gestion du DND
+     * @param e
+     */
     @Override
     public void mousePressed(MouseEvent e) {
         if(e.getX()/View.SCALE==dnd.getSize()+1 && (e.getY()/View.SCALE)==2){
@@ -185,6 +208,10 @@ public class Controller extends KeyAdapter implements MouseListener, MouseMotion
         }
     }
 
+    /**
+     * Gestion du DND
+     * @param e
+     */
     @Override
     public void mouseReleased(MouseEvent e) {
         if(e.getX()/View.SCALE>0 && e.getX()/View.SCALE<this.dnd.getSize()-1 && e.getY()/View.SCALE>0 && e.getY()/View.SCALE<this.dnd.getSize()-1){

@@ -1,5 +1,8 @@
 import java.awt.Color;
-
+/**
+ * Classe heritant de monstre
+ * Fonction : Suit si sur la ligne i ou j + tourne au meme endroit
+ */
 public class Monstre3 extends Monstre{
 
 	

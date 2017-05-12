@@ -7,6 +7,9 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+/**
+ * Classe mère decrivant les monstre
+ */
 public class Monstre extends Thread{
 
 	protected Cell cell;
@@ -23,6 +26,12 @@ public class Monstre extends Thread{
 	private boolean running;
 
 
+	/**
+	 * Constructeur
+	 * @param cell cellule du monstre
+	 * @param model model du jeu
+	 * @param repop temps de respawn des monstres
+	 */
 	public Monstre(Cell cell,Model model,int repop) {
 		this.ScaleX = 0;
 		this.ScaleY = 0;
@@ -38,6 +47,11 @@ public class Monstre extends Thread{
 
 	}
 
+	/**
+	 * Constructeur
+	 * @param cell cellule du monstre
+	 * @param color couleurs du monstre
+	 */
 	public Monstre(Cell cell, Color color) {
 		this.ScaleX = 0;
 		this.ScaleY = 0;
@@ -49,7 +63,14 @@ public class Monstre extends Thread{
 		this.model = null;
 		this.running = true;
 	}
-	
+
+	/**
+	 * Constructeur
+	 * @param cell cellule du monstre
+	 * @param model model du jeu
+	 * @param repop temps de respawn du montre
+	 * @param color coleur du monstre
+	 */
 	protected Monstre(Cell cell,Model model,int repop,Color color) {
 		this.ScaleX = 0;
 		this.ScaleY = 0;
@@ -65,6 +86,10 @@ public class Monstre extends Thread{
 
 	}
 
+	/**
+	 * Permet de faire bouger un monstre
+	 * @param dir Enumeration Direction qui correspond au sens du mouvement
+	 */
 	public void move(Direction dir){
 		Cell celltemp = this.map[this.cell.geti()+dir.dI()][this.cell.getj()+dir.dJ()];
 		if(celltemp.passable()){
@@ -73,13 +98,19 @@ public class Monstre extends Thread{
 		}
 	}
 
+	// GETTEURS ET SETTEURS
 	public void setCell(Cell cell) {
 		this.cell = cell;
 	}
 	public Cell getCell() {
 		return this.cell;
 	}
-	
+
+
+	/**
+	 * Calcule des mouvements possible pour un monstre
+	 * @return les directions possibles
+	 */
 	public Direction[] movePossible() {
 		int i = 0;
 		Direction[] tmp = new Direction[4];
@@ -111,21 +142,33 @@ public class Monstre extends Thread{
 		}
 		return res;
 	}
-	
+
+	/**
+	 * Choisis la direction du monstre
+	 * @return Enum DIR
+	 */
 	public Direction Dir(){
 		Direction[] dirs = movePossible();
 		if(dirs==null)return null;
 		return dirs[(int) (dirs.length*Math.random())];
-		
 	}
-	
-	public void meur(){
+
+	/**
+	 * Tue un monstre
+	 */
+	public void dead(){
 		this.vivant = false;
 		this.cell=this.cellpop;
 		this.lastMove = null;
 	}
 
 
+	/**
+	 * Dessin du montre
+	 * @param g2d
+	 * @param scale taille du SCALE
+	 * @throws IOException
+	 */
 	public void paintMonstre(Graphics2D g2d, int scale) throws IOException {
 		if(this.vivant){
 			//g2d.drawImage(image, this.cell.geti() * scale, this.cell.getj() * scale, scale, scale, null);
@@ -188,20 +231,26 @@ public class Monstre extends Thread{
 	}
 
 
+	/**
+	 * Arrete le Thread
+	 */
     public void stopMonstre() {
         this.stop = true;
     }
 
-	public void pauseThread() throws InterruptedException {
-		running = false;
-	}
 
+	/**
+	 * GESTION PAUSE
+	 */
+	public void pauseThread() { running = false;}
 	public void resumeThread() {
 		running = true;
 	}
 
 
-
+	/**
+	 * Fonction de lancement du Thread
+	 */
 	@Override
 	public void run() {
 		while(!stop){

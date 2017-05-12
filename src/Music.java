@@ -9,15 +9,23 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+
+/**
+ * Classe qui gere la musique du jeu lorsqu'elle est activé
+ */
 public class Music{
 	
 	private Clip clip;
 	private Hero myHero;
-	
+
+
+	/**
+	 * Constructeur
+	 * @param h hero qui lance la musique
+	 */
 	public Music(Hero h){
 
 		this.myHero = h;
-
 
 		try {
 		    File soundFile = new File("pacman_chomp.wav");
@@ -34,7 +42,10 @@ public class Music{
 		}
 
 	}
-	
+
+	/**
+	 * Lancement de la musique
+	 */
 	public void launch() {
 		if (this.myHero.getRunMusic()) {
 			if(!this.clip.isRunning()) {

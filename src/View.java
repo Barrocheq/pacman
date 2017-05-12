@@ -8,6 +8,9 @@ import java.io.IOException;
 
 import javax.swing.*;
 
+/**
+ * Classe View
+ */
 public class View {
 
 	private JFrame frame;
@@ -19,9 +22,6 @@ public class View {
 	private boolean wait;
 	private int choixLvl; // Random = 0, lvl = 1, DnD = 2
 
-	public int getChoixLvl() {
-		return choixLvl;
-	}
 
 	/**
 	 * Constructeur pour niveau de base
@@ -42,6 +42,9 @@ public class View {
 		glass.add(label);
 	}
 
+	/**
+	 * Met en pause le jeu
+	 */
 	public void setPause() {
 		this.label.setForeground(Color.RED);
 		this.label.setText("Pause");
@@ -50,19 +53,18 @@ public class View {
 		this.glass.setVisible(true);
 	}
 
+	/**
+	 * Relache la pause
+	 */
 	public void releasedPause() {
 		this.label.setFont(new Font("Courier", Font.BOLD, SCALE));
 		this.glass.setVisible(false);
 	}
 
-	public void setWait(boolean wait) {
-		this.wait = wait;
-	}
-
-	public boolean getWait() {
-		return this.wait;
-	}
-
+	/**
+	 * Barre de chargement des niveaux
+	 * @param m
+	 */
 	public void loading(Model m) {
 		cp.removeAll();
 
@@ -77,6 +79,10 @@ public class View {
 		this.frame.setVisible(true);
 	}
 
+	/**
+	 * Creation de notre menu
+	 * @param m model du jeu
+	 */
 	public void menu(Model m)  {
 		this.glass.setVisible(false);
 
@@ -95,7 +101,7 @@ public class View {
 		jCheck.setForeground(Color.WHITE);
 		JCheckBox jChargement = new JCheckBox("Chargement");
 		jChargement.setForeground(Color.WHITE);
-		JTextField jNom = new JTextField("Nom");
+		JTextField jNom = new JTextField("Default");
 
 		
 		JLabel score;
@@ -170,6 +176,11 @@ public class View {
 	}
 
 
+	/**
+	 * Permet de définir la taille exact en fonction de l'os
+	 * @param sizeH taille Height du plateau
+	 * @param sizeL taille Width du plateau
+	 */
 	public void setSizeFrame(int sizeH, int sizeL) {
 
 		String os = System.getProperty("os.name").toLowerCase();
@@ -186,18 +197,13 @@ public class View {
 
 	}
 
-	public void init(int size) {
-		// this.model = model;
-		cp.removeAll();
 
-		setSizeFrame(size, size);
-
-		cp.revalidate();
-		cp.repaint();
-
-		this.frame.setVisible(true);
-	}
-
+	/**
+	 * Initialisaiton de la vie grace au model
+	 * @param model model du jeu
+	 * @param sizeH taille Height du plateau
+	 * @param sizeL taille Width du plateau
+	 */
 	public void init(Model model, int sizeH, int sizeL) {
 
 		this.model = model;
@@ -213,6 +219,13 @@ public class View {
 		this.frame.setVisible(true);
 	}
 
+	/**
+	 * Initialisaiton de la vie grace au RandomLvl
+	 * @param model model du jeu grace au Random
+	 * @param sizeH taille Height du plateau
+	 * @param sizeL taille Width du plateau
+	 * @param see active ou non la vue de la génération
+	 */
 	public void init(RandomLvl model, int sizeH, int sizeL, boolean see) {
 		// this.glass.setLayout(null);
 		label.setForeground(Color.WHITE);
@@ -225,10 +238,11 @@ public class View {
 		this.frame.setVisible(see);
 	}
 
-	public JFrame getFrame() {
-		return this.frame;
-	}
 
+	/**
+	 * Affichage des qu'on a été mangé
+	 * @param vie nombre de vie restante
+	 */
 	public void perdu(int vie) {
 		for (int i = 0; i < 5; i++) {
 			this.label.setFont(new Font("Courier", Font.BOLD, SCALE - SCALE/4));
@@ -244,7 +258,10 @@ public class View {
 
 		}
 	}
-	
+
+	/**
+	 * Affiche le meilleurs Score
+	 */
 	public String Best() throws IOException{
 		BufferedReader file = new BufferedReader(new FileReader("score.txt"));
 		String line;
@@ -259,8 +276,25 @@ public class View {
 		file.close();
 		return Integer.toString(res);
 	}
+
+	// GETTEURS ET SETTEURS
+	public void setWait(boolean wait) {
+		this.wait = wait;
+	}
+	public boolean getWait() {
+		return this.wait;
+	}
+	public JFrame getFrame() {
+		return this.frame;
+	}
+	public int getChoixLvl() {
+		return choixLvl;
+	}
 }
 
+/**
+ * Classe qui affiche la constructeur du niveau
+ */
 class Construction extends JPanel {
 	private RandomLvl model;
 	private boolean anim = true;
