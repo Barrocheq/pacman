@@ -153,11 +153,15 @@ class DND extends Thread{
 
 
         if (os.contains("win"))
-            this.frame.setSize(((sizeL + 1) * View.SCALE), ((sizeH + 2) * View.SCALE));
+            this.frame.setSize(((sizeL + 1) * View.SCALE)-8, ((sizeH + 2) * View.SCALE)-4);
+        else if (os.contains("linux"))
+            this.frame.setSize(((sizeL)*View.SCALE),((sizeH+1)*View.SCALE)+7);
         else if (os.contains("nux") || os.contains("nix"))
             this.frame.setSize(((sizeL + 1) * View.SCALE), ((sizeH + 2) * View.SCALE));
         else
             this.frame.setSize((sizeL) * View.SCALE, (sizeH) * View.SCALE + 22);
+
+
 
     }
 

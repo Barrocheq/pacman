@@ -188,6 +188,8 @@ public class View {
 
 		if (os.contains("win"))
 			this.frame.setSize(((sizeL + 1) * SCALE)-8, ((sizeH + 2) * SCALE)-4);
+		else if (os.contains("linux"))
+			this.frame.setSize(((sizeL)*SCALE),((sizeH+1)*SCALE)+7);
 		else if (os.contains("nux") || os.contains("nix"))
 			this.frame.setSize(((sizeL + 1) * SCALE), ((sizeH + 2) * SCALE));
 		else
