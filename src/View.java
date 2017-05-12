@@ -97,11 +97,15 @@ public class View {
 		JButton jRandom = new JButton("Random");
 		JButton jLevel = new JButton("Level");
 		JButton jDnD = new JButton("Drag&Drop");
-		JCheckBox jCheck = new JCheckBox("Music");
-		jCheck.setForeground(Color.WHITE);
+		JCheckBox jMusic = new JCheckBox("Music");
+		jMusic.setForeground(Color.WHITE);
+		jMusic.setBackground(Color.BLACK);
 		JCheckBox jChargement = new JCheckBox("Chargement");
 		jChargement.setForeground(Color.WHITE);
+		jChargement.setBackground(Color.BLACK);
 		JTextField jNom = new JTextField("Default");
+		jNom.setBackground(Color.BLACK);
+		jNom.setForeground(Color.WHITE);
 
 		
 		JLabel score;
@@ -117,7 +121,7 @@ public class View {
 		// cp.setLayout(new FlowLayout());
 
 		pan.add(jNom);
-		pan.add(jCheck);
+		pan.add(jMusic);
 		pan.add(jChargement);
 		pan.add(jRandom);
 		pan.add(jLevel);
@@ -125,10 +129,10 @@ public class View {
 		pan.setBackground(Color.BLACK);
 
 
-		jCheck.addActionListener(new ActionListener() {
+		jMusic.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				model.setMusic(jCheck.isSelected());
+				model.setMusic(jMusic.isSelected());
 			}
 		});
 
@@ -268,15 +272,18 @@ public class View {
 		BufferedReader file = new BufferedReader(new FileReader("score.txt"));
 		String line;
 		int res = 0;
-		int cut;
+		String[] cut;
+		String name = "";
 		while ((line = file.readLine()) != null) {
-			cut = Integer.parseInt(line.split(":")[1]);
-			if(res<cut){
-				res = cut;
+			cut = line.split(":");
+			
+			if(res<Integer.parseInt(cut[1])){
+				name = cut[0];
+				res = Integer.parseInt(cut[1]);
 			}
 		}
 		file.close();
-		return Integer.toString(res);
+		return name+" "+Integer.toString(res);
 	}
 
 	// GETTEURS ET SETTEURS
