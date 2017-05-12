@@ -1,14 +1,15 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
 
-public class Controller implements KeyListener, MouseListener, MouseMotionListener{
+public class Controller extends KeyAdapter implements MouseListener, MouseMotionListener{
 
 	private Model model;
 	private Moteur moteur;
-	private JFrame frame;
-	private View view;
+    private View view;
     private DND dnd;
     private int cell;
     private boolean pause;
@@ -44,10 +45,44 @@ public class Controller implements KeyListener, MouseListener, MouseMotionListen
 
 	public void init(Model model, View view) {
         this.model = model;
-        this.frame = view.getFrame();
+        JFrame frame = view.getFrame();
         this.view = view;
-        this.frame.addKeyListener(this);
-        this.frame.setFocusable(true);
+        //frame.addKeyListener(this);
+        frame.addKeyListener(new KeyAdapter() {
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+                myKeyEvt(e, "keyTyped");
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                myKeyEvt(e, "keyReleased");
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                myKeyEvt(e, "keyPressed");
+            }
+
+            private void myKeyEvt(KeyEvent e, String text) {
+                int key = e.getKeyCode();
+                if (key == KeyEvent.VK_KP_LEFT || key == KeyEvent.VK_LEFT) {
+                    model.getHero().nextDir(Direction.WEST);
+                } else if (key == KeyEvent.VK_KP_RIGHT || key == KeyEvent.VK_RIGHT) {
+                    model.getHero().nextDir(Direction.EAST);
+                } else if (key == KeyEvent.VK_KP_UP || key == KeyEvent.VK_UP) {
+                    model.getHero().nextDir(Direction.NORTH);
+                } else if (key == KeyEvent.VK_KP_DOWN || key == KeyEvent.VK_DOWN) {
+                    model.getHero().nextDir(Direction.SOUTH);
+                }
+
+            }
+
+
+        });
+        frame.addKeyListener(this);
+        frame.setFocusable(true);
         this.pause = false;
     }
 
@@ -64,27 +99,31 @@ public class Controller implements KeyListener, MouseListener, MouseMotionListen
 	}
 
 
+	public void  myKeyEvt(KeyEvent e) {
+        System.out.println(e);
+    }
+
     /**
      * Fonction de capture de nos evenements
      * @param e
      */
 	@Override
 	public synchronized void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
 
-		if (e.getKeyChar() == 'z') {
+
+		if (e.getKeyChar() ==  'z' || e.getKeyChar() ==  'Z') {
 			this.model.getHero().nextDir(Direction.NORTH);
 		}
 
-		if (e.getKeyChar() == 's') {
-			this.model.getHero().nextDir(Direction.SOUTH);
+		if (e.getKeyChar() ==  's' || e.getKeyChar() ==  'S'){
+            this.model.getHero().nextDir(Direction.SOUTH);
 		}
 
-		if (e.getKeyChar() == 'd') {
+		if (e.getKeyChar() ==  'd' || e.getKeyChar() ==  'D') {
 			this.model.getHero().nextDir(Direction.EAST);
 		}
 
-		if (e.getKeyChar() == 'q') {
+		if (e.getKeyChar() ==  'q' || e.getKeyChar() ==  'Q') {
 			this.model.getHero().nextDir(Direction.WEST);
 		}
 

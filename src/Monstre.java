@@ -229,7 +229,10 @@ public class Monstre extends Thread{
 					this.ScaleY = 0;
 	
 	                if(stop) break;
-					this.move(dir);
+
+	                synchronized (this.model) {
+						this.move(dir);
+					}
 				}
 			} else{
 				try {

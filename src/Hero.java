@@ -122,10 +122,7 @@ public class Hero extends Thread{
 	public boolean nextIsPassable() {
 		if(this.lastDir == null)
 			return false;
-		else if (this.model.getMap()[this.cell.geti()+lastDir.dI()][this.cell.getj()+lastDir.dJ()].passable())
-			return true;
-		else
-			return false;
+		else return this.model.getMap()[this.cell.geti() + lastDir.dI()][this.cell.getj() + lastDir.dJ()].passable();
 
 	}
 
@@ -297,7 +294,9 @@ public class Hero extends Thread{
 					this.ScaleY = 0;
 
 					if(stop) break;
-					this.move(this.lastDir);
+					synchronized (this.model) {
+						this.move(this.lastDir);
+					}
 					this.nextDir = null;
 				} else if (this.lastDir != null && this.model.getMap()[this.cell.geti() + this.lastDir.dI()][this.cell.getj() + this.lastDir.dJ()].passable()) {
 
@@ -318,7 +317,10 @@ public class Hero extends Thread{
 					this.ScaleY = 0;
 
 					if(stop) break;
-					this.move(this.lastDir);
+
+					synchronized (this.model) {
+						this.move(this.lastDir);
+					}
 				}
 			}
 		}

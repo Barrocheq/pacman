@@ -35,7 +35,7 @@ public class BonbonMagique extends Thread {
 
 
     public void run(){
-        synchronized (this.model) {
+        //synchronized (this.model) {
             this.model.setState(true);
             this.model.getHero().setColor(Color.red);
 
@@ -64,6 +64,6 @@ public class BonbonMagique extends Thread {
             this.model.getHero().setColor(Color.yellow);
             this.model.setState(false);
             this.model.finEat();
-        }
+        //}
     }
 }

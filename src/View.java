@@ -1,11 +1,4 @@
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Rectangle2D;
@@ -19,7 +12,6 @@ public class View {
 
 	private JFrame frame;
 	public static final int SCALE = 30;
-	private plateau plateau;
 	private Model model;
 	public JLabel label;
 	private Container cp;
@@ -46,7 +38,7 @@ public class View {
 		this.glass = (JPanel) this.frame.getGlassPane();
 		label = new JLabel();
 		label.setForeground(Color.RED);
-		label.setFont(new Font("Courier", Font.BOLD, this.SCALE));
+		label.setFont(new Font("Courier", Font.BOLD, this.SCALE - this.SCALE/4));
 		glass.add(label);
 	}
 
@@ -68,10 +60,7 @@ public class View {
 	}
 
 	public boolean getWait() {
-		if (this.wait)
-			return true;
-		else
-			return false;
+		return this.wait;
 	}
 
 	public void loading(Model m) {
@@ -98,12 +87,16 @@ public class View {
 		cp.removeAll();
 
 		JPanel pan = new JPanel();
-		pan.setLayout(new FlowLayout());
+		pan.setLayout(new GridLayout(2, 4));
 		JButton jRandom = new JButton("Random");
 		JButton jLevel = new JButton("Level");
 		JButton jDnD = new JButton("Drag&Drop");
 		JCheckBox jCheck = new JCheckBox("Music");
 		jCheck.setForeground(Color.WHITE);
+		JCheckBox jChargement = new JCheckBox("Chargement");
+		jChargement.setForeground(Color.WHITE);
+		JTextField jNom = new JTextField("Nom");
+
 		
 		JLabel score;
 		try {
@@ -116,11 +109,13 @@ public class View {
 		}
 
 		// cp.setLayout(new FlowLayout());
-		
+
+		pan.add(jNom);
+		pan.add(jCheck);
+		pan.add(jChargement);
 		pan.add(jRandom);
 		pan.add(jLevel);
 		pan.add(jDnD);
-		pan.add(jCheck);
 		pan.setBackground(Color.BLACK);
 
 
@@ -131,9 +126,17 @@ public class View {
 			}
 		});
 
+		jChargement.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model.setChargementR(jChargement.isSelected());
+			}
+		});
+
 		jRandom.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				model.setNom(jNom.getText());
 				wait = false;
 				choixLvl = 0;
 			}
@@ -142,6 +145,7 @@ public class View {
 		jLevel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				model.setNom(jNom.getText());
 				wait = false;
 				choixLvl = 1;
 			}
@@ -150,6 +154,7 @@ public class View {
 		jDnD.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				model.setNom(jNom.getText());
 				wait = false;
 				choixLvl = 2;
 			}
@@ -199,8 +204,8 @@ public class View {
 		cp.removeAll();
 
 		setSizeFrame(sizeH, sizeL);
-		this.plateau = new plateau(this.model); // Dessins du plateau
-		cp.add(this.plateau);
+		plateau plateau = new plateau(this.model);
+		cp.add(plateau);
 
 		cp.revalidate();
 		cp.repaint();
@@ -226,6 +231,7 @@ public class View {
 
 	public void perdu(int vie) {
 		for (int i = 0; i < 5; i++) {
+			this.label.setFont(new Font("Courier", Font.BOLD, this.SCALE - this.SCALE/4));
 			this.label.setText("VIE RESTANTES: " + ( 3 - vie));
 			this.glass.setVisible(true);
 			glass.repaint();
@@ -259,7 +265,6 @@ class Construction extends JPanel {
 	private RandomLvl model;
 	private boolean anim = true;
 	private int i = 0;
-	private int SCALE = View.SCALE;
 	private int op = 1;
 
 	/**
@@ -284,13 +289,14 @@ class Construction extends JPanel {
 		RenderingHints hints = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setRenderingHints(hints);
 
+		int SCALE = View.SCALE;
 		for (int i = 0; i < this.model.getSize(); i++) {
 			for (int j = 0; j < this.model.getSize(); j++) {
-				this.model.getMap()[i][j].paintCell(g2, i * this.SCALE, j * this.SCALE, this.SCALE);
+				this.model.getMap()[i][j].paintCell(g2, i * SCALE, j * SCALE, SCALE);
 			}
 		}
 
-		Rectangle2D rect = new Rectangle2D.Double(0, 0, this.SCALE * model.getSize(), this.SCALE * model.getSize());
+		Rectangle2D rect = new Rectangle2D.Double(0, 0, SCALE * model.getSize(), SCALE * model.getSize());
 		g2.setPaint(new Color(0, 0, 0, this.model.getNbTrou() * (255 / (8 * 8))));
 		g2.fill(rect);
 
@@ -298,9 +304,9 @@ class Construction extends JPanel {
 			op = 255;
 
 		try {
-			this.model.getHero().paintHero(g2, this.SCALE);
-		} catch (IOException e) {
-			e.printStackTrace();
+			this.model.getHero().paintHero(g2, SCALE);
+		} catch (Exception e) {
+			//e.printStackTrace();
 		}
 
 	}

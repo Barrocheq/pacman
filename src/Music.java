@@ -12,7 +12,6 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 public class Music{
 	
 	private Clip clip;
-	private AudioInputStream stream;
 	private Hero myHero;
 	
 	public Music(Hero h){
@@ -22,11 +21,11 @@ public class Music{
 
 		try {
 		    File soundFile = new File("pacman_chomp.wav");
-		    this.stream = AudioSystem.getAudioInputStream(soundFile);
+			AudioInputStream stream = AudioSystem.getAudioInputStream(soundFile);
 		    AudioFormat format = stream.getFormat();
 		    DataLine.Info info = new DataLine.Info(Clip.class, format);
 		    this.clip = (Clip) AudioSystem.getLine(info);
-			this.clip.open(this.stream);
+			this.clip.open(stream);
 
 
 		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {

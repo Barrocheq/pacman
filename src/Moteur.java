@@ -11,7 +11,6 @@ public class Moteur extends Thread {
 	private JFrame frame;
 	private View view;
 	private Model model;
-	private Controller controller;
 	private boolean running;
 
 	/**
@@ -20,8 +19,8 @@ public class Moteur extends Thread {
 	public Moteur() {
 		this.model = new Model();
 		this.view = new View();
-		this.controller = new Controller(this);
-		this.controller.init(this.model, this.view);
+		Controller controller = new Controller(this);
+		controller.init(this.model, this.view);
 
 		this.frame = null;
 
@@ -47,7 +46,7 @@ public class Moteur extends Thread {
 		
 		boolean parti = true;
 		int i = -1;
-		int taille = 9;
+		int taille = 7;
 		int vie = 0;
 
 
@@ -134,36 +133,40 @@ public class Moteur extends Thread {
 					parti = false;
 					break;
 				} else if (this.model.getState()) {
-					for (Monstre m : this.model.getMonstre()) {
-						if (m != null && this.model.getHero().getCell().equals(m.getCell())) {
-							m.meur();
-							this.model.incScore(20);
+					synchronized (this.model) {
+						for (Monstre m : this.model.getMonstre()) {
+							if (m != null && this.model.getHero().getCell().equals(m.getCell())) {
+								m.meur();
+								this.model.incScore(20);
+							}
 						}
 					}
 				} else {
-					for (Monstre m : this.model.getMonstre()) {
-						if (this.model.getHero().getCell().equals(m.getCell())) {
-							this.model.stop();
-							this.view.setWait(true);
-							vie++;
-							this.view.perdu(vie);
-							taille -=2;
-							i--;
+					synchronized (this.model) {
+						for (Monstre m : this.model.getMonstre()) {
+							if (this.model.getHero().getCell().equals(m.getCell())) {
+								this.model.stop();
+								this.view.setWait(true);
+								vie++;
+								this.view.perdu(vie);
+								taille -= 2;
+								i--;
 
-							if(vie == 3){
-								i = -1;
-								taille = 5;
-								vie = 0;
-								try {
-									this.model.saveScore();
-								} catch (IOException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
+								if (vie == 3) {
+									i = -1;
+									taille = 5;
+									vie = 0;
+									try {
+										this.model.saveScore();
+									} catch (IOException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
 								}
+
+
+								break parti;
 							}
-
-
-							break parti;
 						}
 					}
 				}

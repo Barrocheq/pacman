@@ -25,20 +25,34 @@ public class Model {
 	private Cercle Cercle;
 	public float loading;
 	private boolean music;
+	private boolean chargementR;
 
 	public int getLoading() {
 		return (int)loading;
 	}
 
+
+
 	public void setLoading(int loading) {
 		this.loading = loading;
 	}
 
+	public boolean getChargementR() {
+		return chargementR;
+	}
 
+	public void setChargementR(boolean chargementR) {
+		this.chargementR = chargementR;
+	}
 
 	public Model() {
 		this.nom = "default";
 		this.music = false;
+		this.chargementR = false;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
 	}
 
 	public boolean getMusic() {
@@ -66,7 +80,7 @@ public class Model {
 		timeToEat = 5000;
 		this.speed = 10;
 
-		RandomLvl lvl = new RandomLvl();
+		RandomLvl lvl = new RandomLvl(this);
 		lvl.init(size);
 		// this.map = new Cell[size][size];
 		this.map = lvl.getMap();

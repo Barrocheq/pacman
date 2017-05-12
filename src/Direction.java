@@ -18,7 +18,7 @@ enum Direction {
 	 * @param di coordonnée i
 	 * @param dj coordonnée j
 	 */
-	private Direction(int di, int dj) {
+    Direction(int di, int dj) {
 		this.dI = di;
 		this.dJ = dj;
 	}

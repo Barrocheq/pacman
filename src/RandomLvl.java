@@ -13,19 +13,13 @@ public class RandomLvl  {
     private int size;
     private int nbRouge;
     private Hero hero;
+    private Model model;
 
-    public RandomLvl() {
+    public RandomLvl(Model m ) {
         this.i = 1;
         this.j = 1;
 
-    }
-
-    public RandomLvl(int size) {
-        this.size = size;
-        this.i = 1;
-        this.j = 1;
-
-        init(this.size);
+        this.model = m;
     }
 
     public Cell[][] getMap() {
@@ -60,6 +54,12 @@ public class RandomLvl  {
        make();
        generateSupBonbon();
 
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public int getNbTrou() {
@@ -77,7 +77,7 @@ public class RandomLvl  {
         View v = new View();
 
         while (nbTrou > 0) {
-            if(false) {
+            if(model.getChargementR()) {
                 v.init(this, this.getSize(), this.getSize(), true);
                 this.hero = new Hero(this.map[i][j], this);
             }
@@ -108,7 +108,8 @@ public class RandomLvl  {
         }
 
         while (nbTrouSupple > 0) {
-            //v.init(this, this.getSize(), this.getSize(), true);
+            if(model.getChargementR())
+                v.init(this, this.getSize(), this.getSize(), true);
             this.d = Direction.random();
             nextI = this.d.dI() * 2;
             nextJ = this.d.dJ() * 2;
