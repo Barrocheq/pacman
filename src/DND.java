@@ -32,21 +32,23 @@ class DND extends Thread{
     }
 
 
-    public void setSizeFrame(int sizeH, int sizeL) {
+	public void setSizeFrame(int sizeH, int sizeL) {
 
-        String os = System.getProperty("os.name").toLowerCase();
-
-
-        if (os.contains("win"))
-            this.frame.setSize(((sizeL + 1) * View.SCALE), ((sizeH + 2) * View.SCALE));
-        else if (os.contains("nux") || os.contains("nix"))
-            this.frame.setSize(((sizeL + 1) * View.SCALE), ((sizeH + 2) * View.SCALE));
-        else
-            this.frame.setSize((sizeL) * View.SCALE, (sizeH) * View.SCALE + 22);
+		String os = System.getProperty("os.name").toLowerCase();
 
 
+		if (os.contains("win"))
+			this.frame.setSize(((sizeL + 1) * View.SCALE)-8, ((sizeH + 2) * View.SCALE)-4);
+		else if (os.contains("linux"))
+			this.frame.setSize(((sizeL)*View.SCALE),((sizeH+1)*View.SCALE)+7);
+		else if (os.contains("nux") || os.contains("nix"))
+			this.frame.setSize(((sizeL + 1) * View.SCALE), ((sizeH + 2) * View.SCALE));
+		else
+			this.frame.setSize((sizeL) * View.SCALE, (sizeH) * View.SCALE + 22);
 
-    }
+
+
+	}
 
 
     public void setFakeMonster(Monstre fakeMonster) {
