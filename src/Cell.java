@@ -5,8 +5,8 @@ import java.awt.geom.Rectangle2D;
 
 public class Cell {
 	
-	private int stats; //0 = mur; 1 = libre
-	private Color color;//mur = GRAY; libre = WHITE
+	private final int stats; //0 = mur; 1 = libre
+	private final Color color;//mur = GRAY; libre = WHITE
 	private Color colorBonbon;//1=bleu;2=red
 	private int i;
 	private int j;

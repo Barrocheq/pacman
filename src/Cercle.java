@@ -1,13 +1,12 @@
 
-import javax.swing.*;
 import java.awt.*;
 
 class Cercle extends Thread{
 	
-	private Model model;
+	private final Model model;
 	private int size;
-	private int i;
-	private int j;
+	private final int i;
+	private final int j;
 	private boolean running;
 
     public Cercle(Model model) {
@@ -47,7 +46,7 @@ class Cercle extends Thread{
     }
 
 
-	public void pauseThread() throws InterruptedException {
+	public void pauseThread() {
 		this.running = false;
 	}
 

@@ -7,6 +7,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
+/**
+ * Classe Drag and Drop pour la création de niveau
+ */
 class DND extends Thread{
 
     private Panel panel;
@@ -134,6 +138,9 @@ class DND extends Thread{
         JTextField refresh = new JTextField("Refresh (millisec)");
         panel.add(refresh);
 
+        JTextField name = new JTextField("tmp");
+        panel.add(name);
+
 
 
 
@@ -142,8 +149,11 @@ class DND extends Thread{
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    MapToFile("tmp.txt", refresh.getText(), respawn.getText(), eat.getText());
-                    frame.setVisible(false);
+
+                    if(hero.getCell().getj() != 4 || hero.getCell().geti() != size + 1) {
+                        MapToFile(name.getText()+".txt", refresh.getText(), respawn.getText(), eat.getText());
+                        frame.setVisible(false);
+                    }
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -171,7 +181,6 @@ class DND extends Thread{
 
     public void MapToFile(String fileName, String refresh, String respawn ,String timeToEat) throws IOException {
 
-
         try {
             Integer.parseInt(refresh);
         } catch (NumberFormatException e) {
@@ -194,7 +203,6 @@ class DND extends Thread{
         }
 
 
-        //System.out.println("i : " + this.hero.getCell().geti() + ", j " + this.hero.getCell().getj());
 
         this.fileName = fileName;
         BufferedWriter file = new BufferedWriter(new FileWriter(fileName));
@@ -321,7 +329,6 @@ class Panel extends JPanel{
             for(int j=0;j<this.dnd.getSize();j++){
                 if(this.dnd.getMap()[i][j] != null){
                     this.dnd.getMap()[i][j].paintCell(g2, i*View.SCALE, j*View.SCALE, View.SCALE);
-                    //System.out.println(i+" "+j);
                 }
             }
         }

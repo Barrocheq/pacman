@@ -120,7 +120,6 @@ public class RandomLvl  {
                 continue;
             }
 
-            //System.out.println("b");
 
             if(check(this.i + nextI, this.j + nextJ, 2)) {
                 this.map[this.i+this.d.dI()][this.j+this.d.dJ()] = new Cell(1,this.i+this.d.dI(),this.j+this.d.dJ(),1);
@@ -174,9 +173,6 @@ public class RandomLvl  {
             try {
                 this.map[nI + newI][nJ + newJ].passable();
             } catch (ArrayIndexOutOfBoundsException e) {
-                //System.out.println("OUT OF BOUND");
-                //fourWall = false;
-                //nbWall--;
                 continue;
             }
 

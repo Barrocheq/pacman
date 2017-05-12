@@ -88,7 +88,6 @@ public class Model {
 		this.hero = new Hero(this.map[1][1], this);
 		this.map[1][1] = new Cell(1, 1, 1, 0);
 
-		//System.out.println("Go");
 
 		this.generateMonster();
 	}
@@ -180,7 +179,6 @@ public class Model {
 
 					loading = ((float)((i-1)*sizeH + j) / (float)(sizeH * sizeL)) * 100;
 
-					//System.out.println(    (     (float)(     (i*sizeL) + j    )/   (float)(  (i*(sizeL+1)) -1 ))  * 100);
 
 
 					j++;
@@ -193,7 +191,6 @@ public class Model {
 						e.printStackTrace();
 					}
 
-//						System.out.println(loading);
 
 				}
 			}
@@ -237,7 +234,6 @@ public class Model {
 	}
 
 	public void startMonstre() {
-		System.out.println(this.Lmonstre.length);
 
 		for (Monstre m : this.Lmonstre)
 			m.start();

@@ -40,8 +40,6 @@ public class Monstre3 extends Monstre{
 			this.i = 0;
 			this.j = 0;
 			this.lastDir = null;
-			System.out.println("test");
-			System.out.println(this.nextDir);
 			return this.nextDir;
 			
 		}else if(this.lastDir!=null){

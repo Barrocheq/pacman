@@ -38,20 +38,20 @@ public class View {
 		this.glass = (JPanel) this.frame.getGlassPane();
 		label = new JLabel();
 		label.setForeground(Color.RED);
-		label.setFont(new Font("Courier", Font.BOLD, this.SCALE - this.SCALE/4));
+		label.setFont(new Font("Courier", Font.BOLD, SCALE - SCALE/4));
 		glass.add(label);
 	}
 
 	public void setPause() {
 		this.label.setForeground(Color.RED);
 		this.label.setText("Pause");
-		this.label.setFont(new Font("Courier", Font.BOLD, this.SCALE * 2 ));
+		this.label.setFont(new Font("Courier", Font.BOLD, SCALE * 2 ));
 
 		this.glass.setVisible(true);
 	}
 
 	public void releasedPause() {
-		this.label.setFont(new Font("Courier", Font.BOLD, this.SCALE));
+		this.label.setFont(new Font("Courier", Font.BOLD, SCALE));
 		this.glass.setVisible(false);
 	}
 
@@ -231,7 +231,7 @@ public class View {
 
 	public void perdu(int vie) {
 		for (int i = 0; i < 5; i++) {
-			this.label.setFont(new Font("Courier", Font.BOLD, this.SCALE - this.SCALE/4));
+			this.label.setFont(new Font("Courier", Font.BOLD, SCALE - SCALE/4));
 			this.label.setText("VIE RESTANTES: " + ( 3 - vie));
 			this.glass.setVisible(true);
 			glass.repaint();

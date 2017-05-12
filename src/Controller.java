@@ -1,7 +1,5 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
 
@@ -13,14 +11,6 @@ public class Controller extends KeyAdapter implements MouseListener, MouseMotion
     private DND dnd;
     private int cell;
     private boolean pause;
-
-    public boolean getPause() {
-        return pause;
-    }
-
-    public void setPause(boolean pause) {
-        this.pause = pause;
-    }
 
     /**
      * Constructeur par defaut
@@ -52,20 +42,20 @@ public class Controller extends KeyAdapter implements MouseListener, MouseMotion
 
             @Override
             public void keyTyped(KeyEvent e) {
-                myKeyEvt(e, "keyTyped");
+                myKeyEvt(e);
             }
 
             @Override
             public void keyReleased(KeyEvent e) {
-                myKeyEvt(e, "keyReleased");
+                myKeyEvt(e);
             }
 
             @Override
             public void keyPressed(KeyEvent e) {
-                myKeyEvt(e, "keyPressed");
+                myKeyEvt(e);
             }
 
-            private void myKeyEvt(KeyEvent e, String text) {
+            private void myKeyEvt(KeyEvent e) {
                 int key = e.getKeyCode();
                 if (key == KeyEvent.VK_KP_LEFT || key == KeyEvent.VK_LEFT) {
                     model.getHero().nextDir(Direction.WEST);
@@ -98,10 +88,6 @@ public class Controller extends KeyAdapter implements MouseListener, MouseMotion
 
 	}
 
-
-	public void  myKeyEvt(KeyEvent e) {
-        System.out.println(e);
-    }
 
     /**
      * Fonction de capture de nos evenements
@@ -182,9 +168,6 @@ public class Controller extends KeyAdapter implements MouseListener, MouseMotion
 
     @Override
     public void mousePressed(MouseEvent e) {
-        System.out.println("Pressed");
-        System.out.println("X: "+((e.getX()/View.SCALE)));
-        System.out.println("Y: "+((e.getY()/View.SCALE)));
         if(e.getX()/View.SCALE==dnd.getSize()+1 && (e.getY()/View.SCALE)==2){
             this.cell = 1;
         } else if (e.getX()/View.SCALE==dnd.getSize()+3 && (e.getY()/View.SCALE)==2) {
@@ -204,7 +187,6 @@ public class Controller extends KeyAdapter implements MouseListener, MouseMotion
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        System.out.println("Released");
         if(e.getX()/View.SCALE>0 && e.getX()/View.SCALE<this.dnd.getSize()-1 && e.getY()/View.SCALE>0 && e.getY()/View.SCALE<this.dnd.getSize()-1){
             if(this.cell == 1){
                 this.dnd.getMap()[(e.getX()/View.SCALE)][(e.getY()/View.SCALE)] = new Cell(0,e.getX()/View.SCALE,(e.getY()/View.SCALE),0);
