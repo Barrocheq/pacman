@@ -160,7 +160,6 @@ public class Model {
 
 		RandomLvl lvl = new RandomLvl(this);
 		lvl.init(size);
-		// this.map = new Cell[size][size];
 		this.map = lvl.getMap();
 
 		this.hero = new Hero(this.map[1][1], this);
@@ -178,7 +177,7 @@ public class Model {
 		int i = 0;
 		int randI;
 		int randJ;
-		this.respawnMonster = 1000;
+		this.respawnMonster = 4000;
 
 		this.Lmonstre = new Monstre[nbMonster];
 
